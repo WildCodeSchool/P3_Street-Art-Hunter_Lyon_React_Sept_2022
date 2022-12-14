@@ -21,6 +21,7 @@ module.exports = {
       },
       dropShadow: {
         photobutton: ["1px 1px 4px #FFFFFF"],
+        bottomtop: ["1px 1px 3px #FFFFFF"],
       },
     },
   },
