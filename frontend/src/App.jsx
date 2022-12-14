@@ -1,12 +1,9 @@
-import Home from "./pages/Home";
-
 import "./App.css";
 
 function App() {
   return (
-    <div className="App">
-      <Home />
-      <p>coucou</p>
+    <div className="text-3xl text-blue-600 bg-regal-blue lg:w-full">
+      Vincent
     </div>
   );
 }
