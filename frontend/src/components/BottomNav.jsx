@@ -1,9 +1,22 @@
 import React, { useState } from "react";
+import camera from "@assets/cameraIcon.png";
 
 export default function BottomNav() {
   const [isActive, setIsActive] = useState("");
   return (
-    <footer className="bottom-0 fixed w-full flex flex-wrap bg-bottom">
+    <footer className="bottom-0 fixed w-full bg-bottom">
+      <div className="flex justify-center">
+        <button
+          type="button"
+          className="relative top-[4.5rem] drop-shadow-photobutton"
+        >
+          <div className="bg-gradient-to-b from-[#6573ED] to-[#14D2E6] rounded-[100%]  w-20  h-20 p-[0.6rem]">
+            <div className="w-full h-full rounded-[100%] bg-gradient-to-b from-bottomdark to-[#454377] flex justify-center items-center">
+              <img src={camera} alt="Camera Icon" className="" />
+            </div>
+          </div>
+        </button>
+      </div>
       <div className="w-full h-[177px] bg-bottomNavGrad bg-cover flex items-end justify-around">
         {isActive === "scores" ? (
           <button
