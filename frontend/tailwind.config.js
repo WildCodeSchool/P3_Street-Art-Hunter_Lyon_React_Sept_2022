@@ -9,6 +9,13 @@ module.exports = {
         bottomlight: "#7971B5",
         bottomdark: "#02051F",
       },
+      boxShadow: {
+        bottomNavRight: "40px 40px 0px 40px #4d4875",
+        bottomNavLeft: "-40px 40px 0px 40px #4d4875",
+      },
+      backgroundImage: {
+        bottomNavGrad: "url('/src/assets/Gradient.png')",
+      },
     },
   },
   plugins: [],
