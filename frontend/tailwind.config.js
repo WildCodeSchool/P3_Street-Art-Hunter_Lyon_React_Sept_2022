@@ -9,12 +9,14 @@ module.exports = {
         bottomlight: "#7971B5",
         bottomdark: "#02051F",
       },
-      boxShadow: {
-        bottomNavRight: "40px 40px 0px 40px #4d4875",
-        bottomNavLeft: "-40px 40px 0px 40px #4d4875",
-      },
       backgroundImage: {
+        "home-image": "url('/src/assets/HomeBackground.png')",
+        "logo-home": "url('/src/assets/LogoHome.png')",
         bottomNavGrad: "url('/src/assets/Gradient.png')",
+      },
+      fontFamily: {
+        "main-font": ["ui-monospace", "VT323"],
+        "secondary-font": ["ui-sans-serif", "Poppins"],
       },
     },
   },
