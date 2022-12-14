@@ -1,14 +1,15 @@
 .logo-container {
-  padding-top: 16rem;
+    padding-top: 16rem;
+    
 }
 
 .h-logo {
-  height: 50vh;
+    height: 50vh;
 }
 
 .flicker-3 {
-  -webkit-animation: flicker-3 2.5s linear infinite both;
-  animation: flicker-3 2.5s linear infinite both;
+	-webkit-animation: flicker-3 2.5s linear infinite both;
+	        animation: flicker-3 2.5s linear infinite both;
 }
 
 /**
@@ -16,7 +17,7 @@
  * animation logo landpage
  * ----------------------------------------
  */
-@-webkit-keyframes flicker-3 {
+ @-webkit-keyframes flicker-3 {
   0%,
   100% {
     opacity: 1;
