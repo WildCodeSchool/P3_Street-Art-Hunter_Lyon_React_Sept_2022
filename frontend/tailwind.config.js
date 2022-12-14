@@ -4,7 +4,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        "regal-blue": "#243c5a",
+        lightblue: "#00FFF2",
+        pink: "#FF66C4",
+        bottomlight: "#7971B5",
+        bottomdark: "#02051F",
       },
     },
   },
