@@ -9,6 +9,14 @@ module.exports = {
         bottomlight: "#7971B5",
         bottomdark: "#02051F",
       },
+      backgroundImage: {
+        "home-image": "url('/src/assets/HomeBackground.png')",
+        "logo-home": "url('/src/assets/LogoHome.png')",
+      },
+      fontFamily: {
+        "main-font": ["ui-monospace", "VT323"],
+        "secondary-font": ["ui-sans-serif", "Poppins"],
+      },
     },
   },
   plugins: [],

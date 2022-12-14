@@ -1,10 +1,10 @@
-import BottomNav from "@components/BottomNav";
 import "./App.css";
+import Home from "@pages/Home";
 
 function App() {
   return (
     <div>
-      <BottomNav />
+      <Home />
     </div>
   );
 }
