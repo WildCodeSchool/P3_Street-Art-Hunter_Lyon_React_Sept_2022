@@ -12,6 +12,9 @@ module.exports = {
       backgroundImage: {
         "home-image": "url('/src/assets/HomeBackground.png')",
         "logo-home": "url('/src/assets/LogoHome.png')",
+        "main-background": "url('/src/assets/MainBack.png')",
+        "menu-burger": "url('/src/assets/burger.svg')",
+        bottomNavGrad: "url('/src/assets/Gradient.png')",
       },
       fontFamily: {
         "main-font": ["ui-monospace", "VT323"],
