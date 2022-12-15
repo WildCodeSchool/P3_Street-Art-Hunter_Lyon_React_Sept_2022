@@ -1,10 +1,11 @@
-import Scores from "@pages/Scores";
+import Home from "@pages/Home";
+
 import "./App.css";
 
 function App() {
   return (
     <div>
-      <Scores />
+      <Home />
     </div>
   );
 }
