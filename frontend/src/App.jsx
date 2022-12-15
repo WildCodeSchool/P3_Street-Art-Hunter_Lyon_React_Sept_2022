@@ -1,13 +1,10 @@
-import BlocConnexion from "./components/BlocConnexion";
 import "./App.css";
-// eslint-disable-next-line import/order, import/no-unresolved
-import Stepper from "@pages/Stepper";
+import Connexion from "./pages/Connexion";
 
 function App() {
   return (
     <div>
-      <BlocConnexion />
-      <Stepper />
+      <Connexion />
     </div>
   );
 }
