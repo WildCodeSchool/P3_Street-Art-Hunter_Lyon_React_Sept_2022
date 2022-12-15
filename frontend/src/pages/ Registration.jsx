@@ -1,10 +1,14 @@
 import React from "react";
+import Header from "@components/Header";
 import Form from "@components/Form";
 
-export default function Registration() {
+function Registration() {
   return (
-    <div>
+    <div className="bg-main-background bg-cover w-full h-screen">
+      <Header />
       <Form />
     </div>
   );
 }
+
+export default Registration;

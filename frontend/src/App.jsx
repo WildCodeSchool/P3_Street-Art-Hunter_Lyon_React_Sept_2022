@@ -1,12 +1,12 @@
-import Form from "@components/Form";
 import "./App.css";
-import Stepper from "@pages/Stepper";
+// eslint-disable-next-line no-unused-vars
+
+import Registration from "@pages/ Registration";
 
 function App() {
   return (
     <div>
-      <Stepper />
-      <Form />
+      <Registration />
     </div>
   );
 }
