@@ -1,12 +1,16 @@
 import React from "react";
 import Header from "../components/Header";
-import BlocConnexion from "../components/BlocConnexion";
+import Allive from "../components/AllLive";
+import Filters from "../components/Filters";
+import SearchBar from "../components/SearchBar";
 
 function Connexion() {
   return (
     <div className="bg-main-background bg-cover w-full h-screen">
       <Header />
-      <BlocConnexion />
+      <Allive />
+      <Filters />
+      <SearchBar />
     </div>
   );
 }
