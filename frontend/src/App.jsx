@@ -1,5 +1,5 @@
-import "./App.css";
 import Scores from "@pages/Scores";
+import "./App.css";
 
 function App() {
   return (
