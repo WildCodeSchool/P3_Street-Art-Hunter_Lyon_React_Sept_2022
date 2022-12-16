@@ -31,7 +31,7 @@ export default function BottomNav() {
         <SwitchButton
           isActive={isActive}
           setIsActive={setIsActive}
-          content="GALLERIE"
+          content="GALERIE"
           styleModif="mb-4"
           bgColor="bottomdark"
         />

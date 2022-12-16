@@ -21,7 +21,7 @@ export default function LeaderBoard({ users }) {
             </td>
             <td className="w-[35vw]">{user.pseudo}</td>
             <td className="w-[20vw]">{user.score}</td>
-            <td className="w-[20vw]">{user.badge}</td>
+            <td className="w-[20vw]">{user.badges}</td>
           </tr>
         ))}
       </table>
