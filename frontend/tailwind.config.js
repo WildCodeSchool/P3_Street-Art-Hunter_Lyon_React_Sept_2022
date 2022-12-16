@@ -15,10 +15,15 @@ module.exports = {
         "main-background": "url('/src/assets/MainBack.png')",
         "menu-burger": "url('/src/assets/burger.svg')",
         bottomNavGrad: "url('/src/assets/Gradient.png')",
+        camera: "url('/src/assets/cameraIcon.png')",
       },
       fontFamily: {
         "main-font": ["ui-monospace", "VT323"],
         "secondary-font": ["ui-sans-serif", "Poppins"],
+      },
+      dropShadow: {
+        photobutton: ["1px 1px 4px #FFFFFF"],
+        bottomtop: ["1px 1px 3px #FFFFFF"],
       },
     },
   },
