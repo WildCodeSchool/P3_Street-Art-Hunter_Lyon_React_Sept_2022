@@ -1,11 +1,13 @@
-import Home from "@pages/Home";
+import BottomNav from "@components/BottomNav";
+import Stepper from "@pages/Stepper";
 
 import "./App.css";
 
 function App() {
   return (
     <div>
-      <Home />
+      <Stepper />
+      <BottomNav />
     </div>
   );
 }

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import camera from "@assets/cameraIcon.png";
 import art from "@assets/artIcon.png";
 import shop from "@assets/shopIcon.png";
+import SwitchButton from "./SwitchButton";
 
 export default function BottomNav() {
   const [isActive, setIsActive] = useState("");
@@ -20,68 +21,26 @@ export default function BottomNav() {
         </button>
       </div>
       <div className="w-full h-[177px] bg-bottomNavGrad drop-shadow-bottomtop bg-cover flex items-end justify-around">
-        {isActive === "scores" ? (
-          <button
-            type="button"
-            className=" from-lightblue bg-gradient-to-br to-pink h-[48px] w-[93px] min-w-fit px-2 rounded-3xl text-black text-3xl font-main-font mb-4"
-          >
-            SCORES
-          </button>
-        ) : (
-          <div className=" from-lightblue bg-gradient-to-br to-pink h-[48px] w-[93px] min-w-fit rounded-3xl mb-4 p-[2px]">
-            <button
-              type="button"
-              className=" bg-bottomdark  h-full w-full min-w-fit px-2 rounded-3xl text-white text-3xl font-main-font mb-4"
-              onClick={() => {
-                setIsActive("scores");
-              }}
-            >
-              SCORES
-            </button>
-          </div>
-        )}
-        {isActive === "gallerie" ? (
-          <button
-            type="button"
-            className=" from-lightblue bg-gradient-to-br to-pink h-[48px] w-[93px] min-w-fit px-2 rounded-3xl text-black text-3xl font-main-font mb-4"
-          >
-            GALLERIE
-          </button>
-        ) : (
-          <div className=" from-lightblue bg-gradient-to-br to-pink h-[48px] w-[93px] min-w-fit rounded-3xl mb-4 p-[2px]">
-            <button
-              type="button"
-              className=" bg-bottomdark  h-full w-full min-w-fit px-2 rounded-3xl text-white text-3xl font-main-font mb-4"
-              onClick={() => {
-                setIsActive("gallerie");
-              }}
-            >
-              GALLERIE
-            </button>
-          </div>
-        )}
-        {isActive === "map" ? (
-          <button
-            type="button"
-            className=" from-lightblue bg-gradient-to-br to-pink h-[48px] w-[93px] min-w-fit px-2 rounded-3xl text-black text-3xl font-main-font mb-4"
-          >
-            MAP
-          </button>
-        ) : (
-          <div className=" from-lightblue bg-gradient-to-br to-pink h-[48px] w-[93px] min-w-fit rounded-3xl mb-4 p-[2px]">
-            <button
-              type="button"
-              className=" bg-bottomdark  h-full w-full min-w-fit px-2 rounded-3xl text-white text-3xl font-main-font mb-4"
-              onClick={() => {
-                setIsActive("map");
-              }}
-            >
-              MAP
-            </button>
-          </div>
-        )}
+        <SwitchButton
+          isActive={isActive}
+          setIsActive={setIsActive}
+          content="SCORES"
+          styleModif="mb-4"
+        />
+        <SwitchButton
+          isActive={isActive}
+          setIsActive={setIsActive}
+          content="GALLERIE"
+          styleModif="mb-4"
+        />
+        <SwitchButton
+          isActive={isActive}
+          setIsActive={setIsActive}
+          content="MAP"
+          styleModif="mb-4"
+        />
       </div>
-      {isActive === "map" ? (
+      {isActive === "MAP" ? (
         <div>
           <button type="button" className=" absolute left-8 top-28">
             <div className="bg-gradient-to-b from-pink to-lightblue rounded-[100%]  w-[3.6rem]  h-[3.6rem] p-[0.2rem]">
