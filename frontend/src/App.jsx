@@ -1,10 +1,10 @@
-import Scores from "@pages/Scores";
+import Stepper from "@pages/Stepper";
 import "./App.css";
 
 function App() {
   return (
     <div>
-      <Scores />
+      <Stepper />
     </div>
   );
 }
