@@ -23,10 +23,15 @@ module.exports = {
         graph4: "url('src/assets/graph4.jpg')",
         graph5: "url('src/assets/graph5.jpg')",
         graph6: "url('src/assets/graph6.jpg')",
+        camera: "url('/src/assets/cameraIcon.png')",
       },
       fontFamily: {
         "main-font": ["ui-monospace", "VT323"],
         "secondary-font": ["ui-sans-serif", "Poppins"],
+      },
+      dropShadow: {
+        photobutton: ["1px 1px 4px #FFFFFF"],
+        bottomtop: ["1px 1px 3px #FFFFFF"],
       },
     },
   },
