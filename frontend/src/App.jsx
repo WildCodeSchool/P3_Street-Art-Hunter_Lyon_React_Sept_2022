@@ -1,10 +1,10 @@
 import "./App.css";
-import Stepper from "@pages/Stepper";
+import AllLive from "@pages/AllLive";
 
 function App() {
   return (
     <div>
-      <Stepper />
+      <AllLive />
     </div>
   );
 }
