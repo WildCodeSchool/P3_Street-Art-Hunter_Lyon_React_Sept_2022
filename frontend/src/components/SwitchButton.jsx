@@ -5,6 +5,7 @@ export default function SwitchButton({
   setIsActive,
   content,
   styleModif,
+  bgColor,
 }) {
   return (
     <div>
@@ -21,7 +22,7 @@ export default function SwitchButton({
         >
           <button
             type="button"
-            className={`bg-bottomdark  h-full w-full min-w-fit px-2 rounded-3xl text-white text-3xl font-main-font ${styleModif}`}
+            className={`bg-${bgColor}  h-full w-full min-w-fit px-2 rounded-3xl text-white text-3xl font-main-font ${styleModif}`}
             onClick={() => {
               setIsActive(content);
             }}

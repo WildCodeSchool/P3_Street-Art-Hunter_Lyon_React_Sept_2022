@@ -26,18 +26,21 @@ export default function BottomNav() {
           setIsActive={setIsActive}
           content="SCORES"
           styleModif="mb-4"
+          bgColor="bottomdark"
         />
         <SwitchButton
           isActive={isActive}
           setIsActive={setIsActive}
           content="GALLERIE"
           styleModif="mb-4"
+          bgColor="bottomdark"
         />
         <SwitchButton
           isActive={isActive}
           setIsActive={setIsActive}
           content="MAP"
           styleModif="mb-4"
+          bgColor="bottomdark"
         />
       </div>
       {isActive === "MAP" ? (

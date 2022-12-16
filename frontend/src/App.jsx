@@ -1,13 +1,11 @@
-import BottomNav from "@components/BottomNav";
-import Stepper from "@pages/Stepper";
+import Scores from "@pages/Scores";
 
 import "./App.css";
 
 function App() {
   return (
     <div>
-      <Stepper />
-      <BottomNav />
+      <Scores />
     </div>
   );
 }
