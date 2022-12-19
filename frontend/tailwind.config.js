@@ -16,6 +16,8 @@ module.exports = {
         "menu-burger": "url('/src/assets/burger.svg')",
         bottomNavGrad: "url('/src/assets/Gradient.png')",
         camera: "url('/src/assets/cameraIcon.png')",
+        tel: "url('/src/assets/tel.svg')",
+        lyon: "url('/src/assets/Lyon.svg')",
       },
       fontFamily: {
         "main-font": ["ui-monospace", "VT323"],
