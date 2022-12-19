@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 function ConnectLandpage() {
   return (
@@ -11,12 +12,14 @@ function ConnectLandpage() {
           S'INSCRIRE
         </button>
         <p className="text-white font-main-font text-[32px]">ou</p>
-        <button
-          type="button"
-          className="text-lightblue border border-lightblue rounded-3xl font-main-font text-[32px] py-1 px-6"
-        >
-          SE CONNECTER
-        </button>
+        <NavLink to="/connexion">
+          <button
+            type="button"
+            className="text-lightblue border border-lightblue rounded-3xl font-main-font text-[32px] py-1 px-6"
+          >
+            SE CONNECTER
+          </button>
+        </NavLink>
       </div>
     </div>
   );

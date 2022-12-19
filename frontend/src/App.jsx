@@ -1,3 +1,4 @@
+import Connexion from "@pages/Connexion";
 import Home from "@pages/Home";
 import Menu from "@pages/Menu";
 import Scores from "@pages/Scores";
@@ -10,6 +11,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
+      <Route path="/connexion" element={<Connexion />} />
       <Route path="/stepper" element={<Stepper />} />
       <Route path="/scores" element={<Scores />} />
       <Route path="/menu" element={<Menu />} />
