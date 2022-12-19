@@ -1,12 +1,10 @@
 import "./App.css";
-import Connexion from "./pages/Connexion";
-// eslint-disable-next-line import/no-extraneous-dependencies
-import "bootstrap/dist/css/bootstrap.min.css";
+import Home from "./pages/Home";
 
 function App() {
   return (
     <div>
-      <Connexion />
+      <Home />
     </div>
   );
 }
