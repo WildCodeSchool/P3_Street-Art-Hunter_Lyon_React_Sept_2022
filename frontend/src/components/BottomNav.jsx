@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
 import camera from "@assets/cameraIcon.png";
 import art from "@assets/artIcon.png";
 import shop from "@assets/shopIcon.png";
@@ -21,13 +22,15 @@ export default function BottomNav() {
         </button>
       </div>
       <div className="w-full h-[177px] bg-bottomNavGrad drop-shadow-bottomtop bg-cover flex items-end justify-around">
-        <SwitchButton
-          isActive={isActive}
-          setIsActive={setIsActive}
-          content="SCORES"
-          styleModif="mb-4 w-[100px] text-3xl"
-          bgColor="bg-bottomdark"
-        />
+        <NavLink to="/scores">
+          <SwitchButton
+            isActive={isActive}
+            setIsActive={setIsActive}
+            content="SCORES"
+            styleModif="mb-4 w-[100px] text-3xl"
+            bgColor="bg-bottomdark"
+          />
+        </NavLink>
         <SwitchButton
           isActive={isActive}
           setIsActive={setIsActive}
