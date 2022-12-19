@@ -1,15 +1,15 @@
+import React from "react";
 import Allive from "@components/AllLive";
 import BottomNav from "@components/BottomNav";
 import Filters from "@components/Filters";
 import Header from "@components/Header";
-import React from "react";
 
-export default function Galerie() {
+export default function Galerie({ allOrLive }) {
   return (
     <div className="bg-main-background text-white font-main-font bg-cover w-full h-screen">
       <Header />
       <Allive />
-      <Filters />
+      <Filters allOrLive={allOrLive} />
       <BottomNav />
     </div>
   );

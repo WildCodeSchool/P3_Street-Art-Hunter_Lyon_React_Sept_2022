@@ -2,7 +2,7 @@ import React from "react";
 
 export default function SearchBar() {
   return (
-    <div className="p-5 backdrop-blur-sm">
+    <div className="pl-5 pr-5 backdrop-blur-sm">
       <input
         id="email-address"
         name="email"

@@ -19,12 +19,14 @@ function Scores() {
     <div className="bg-main-background text-white font-main-font bg-cover w-full h-screen">
       <Header />
       <table className="w-screen text-xl ">
-        <tr className="h-12 text-2xl">
-          <td className="w-[25vw]" />
-          <td className="w-[35vw]">PSEUDO</td>
-          <td className="w-[20vw]">POINTS</td>
-          <td className="w-[20vw]">BADGES</td>
-        </tr>
+        <thead>
+          <tr className="h-12 text-2xl">
+            <td className="w-[25vw]" />
+            <td className="w-[35vw]">PSEUDO</td>
+            <td className="w-[20vw]">POINTS</td>
+            <td className="w-[20vw]">BADGES</td>
+          </tr>
+        </thead>
       </table>
       <LeaderBoard users={users} />
       <div className="h-[3.5rem] pt-3 font-main-font w-screen flex justify-center items-center text-3xl">
