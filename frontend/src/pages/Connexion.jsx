@@ -1,8 +1,11 @@
 import React from "react";
 // eslint-disable-next-line import/no-unresolved
 import Allive from "@components/AllLive";
-import Filters from "@components/Filters";
+import Filters from "../components/Filters";
 import Header from "../components/Header";
+// eslint-disable-next-line import/no-extraneous-dependencies
+import "bootstrap/dist/css/bootstrap.min.css";
+import SearchBar from "../components/SearchBar";
 
 function Connexion() {
   return (
@@ -10,6 +13,7 @@ function Connexion() {
       <Header />
       <Allive />
       <Filters />
+      <SearchBar />
     </div>
   );
 }

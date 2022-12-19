@@ -1,27 +1,30 @@
 import React, { useState } from "react";
-import SwitchButton from "@components/SwitchButton";
+import SwitchButton from "./SwitchButton";
 
 export default function Filters() {
   const [isActive, setIsActive] = useState("");
   return (
-    <div className="w-full h-[80px] bg- drop-shadow-bottomtop flex items-end justify-around">
+    <div className="p-2 w-full h-[80px] bg- drop-shadow-bottomtop flex items-end justify-around">
       <SwitchButton
         isActive={isActive}
         setIsActive={setIsActive}
         content="Artistes"
-        styleModif="mb-4 w-24"
+        styleModif="mb-4 w-24 text-1xl"
+        bgColor="bg-[#28436E]"
       />
       <SwitchButton
         isActive={isActive}
         setIsActive={setIsActive}
         content="oeuvres"
-        styleModif="mb-4 w-24"
+        styleModif="mb-4 w-24 text-1xl"
+        bgColor="bg-[#28436E]"
       />
       <SwitchButton
         isActive={isActive}
         setIsActive={setIsActive}
         content="Shop"
-        styleModif="mb-4 w-24"
+        styleModif="mb-4 w-24 text-1xl"
+        bgColor="bg-[#28436E]"
       />
     </div>
     // <div className="p-0 backdrop-blur-sm flex justify-items-center justify-around">
