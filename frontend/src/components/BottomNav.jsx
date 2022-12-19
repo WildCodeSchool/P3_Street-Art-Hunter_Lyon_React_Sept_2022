@@ -31,20 +31,24 @@ export default function BottomNav() {
             bgColor="bg-bottomdark"
           />
         </NavLink>
-        <SwitchButton
-          isActive={isActive}
-          setIsActive={setIsActive}
-          content="GALERIE"
-          styleModif="mb-4 w-[100px] text-3xl"
-          bgColor="bg-bottomdark"
-        />
-        <SwitchButton
-          isActive={isActive}
-          setIsActive={setIsActive}
-          content="MAP"
-          styleModif="mb-4 w-[100px] text-3xl"
-          bgColor="bg-bottomdark"
-        />
+        <NavLink to="/galerie">
+          <SwitchButton
+            isActive={isActive}
+            setIsActive={setIsActive}
+            content="GALERIE"
+            styleModif="mb-4 w-[100px] text-3xl"
+            bgColor="bg-bottomdark"
+          />
+        </NavLink>
+        <NavLink to="/map">
+          <SwitchButton
+            isActive={isActive}
+            setIsActive={setIsActive}
+            content="MAP"
+            styleModif="mb-4 w-[100px] text-3xl"
+            bgColor="bg-bottomdark"
+          />
+        </NavLink>
       </div>
       {isActive === "MAP" ? (
         <div>
