@@ -1,10 +1,10 @@
-import Stepper from "@pages/Stepper";
+import Home from "@pages/Home";
 import "./App.css";
 
 function App() {
   return (
     <div>
-      <Stepper />
+      <Home />
     </div>
   );
 }
