@@ -1,3 +1,5 @@
+import Registration from "@pages/ Registration";
+import Camera from "@pages/Camera";
 import Connexion from "@pages/Connexion";
 import Home from "@pages/Home";
 import Menu from "@pages/Menu";
@@ -12,6 +14,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/connexion" element={<Connexion />} />
+      <Route path="/inscription" element={<Registration />} />
       <Route path="/stepper" element={<Stepper />} />
       <Route path="/scores" element={<Scores />} />
       <Route path="/menu" element={<Menu />} />
@@ -22,6 +25,7 @@ function App() {
       <Route path="/favoris" element={<Home />} />
       <Route path="/magalerie" element={<Home />} />
       <Route path="/badges" element={<Home />} />
+      <Route path="/camera" element={<Camera />} />
     </Routes>
   );
 }
