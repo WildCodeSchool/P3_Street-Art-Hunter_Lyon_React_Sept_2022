@@ -1,25 +1,26 @@
-import React, { useState } from "react";
+import React from "react";
+import { NavLink } from "react-router-dom";
+
 // eslint-disable-next-line import/no-unresolved, import/extensions
-import SwitchButton from "@components/SwitchButton";
+import SwitchButtonNav from "./SwitchButtonNav";
 
 export default function Allive() {
-  const [isActive, setIsActive] = useState("");
   return (
     <div className="w-9/10 h-[30px] bg- drop-shadow-bottomtop flex items-end justify-around">
-      <SwitchButton
-        isActive={isActive}
-        setIsActive={setIsActive}
-        content="ALL"
-        styleModif="mb-4 w-20 text-2xl"
-        bgColor="bg-[#28436E]"
-      />
-      <SwitchButton
-        isActive={isActive}
-        setIsActive={setIsActive}
-        content="LIVE"
-        styleModif="mb-4 w-20 text-2xl"
-        bgColor="bg-[#28436E]"
-      />
+      <NavLink to="/galerie/all">
+        <SwitchButtonNav
+          content="ALL"
+          styleModif="mb-4 w-20 text-2xl"
+          bgColor="bg-[#28436E]"
+        />
+      </NavLink>
+      <NavLink to="/galerie/live">
+        <SwitchButtonNav
+          content="LIVE"
+          styleModif="mb-4 w-20 text-2xl"
+          bgColor="bg-[#28436E]"
+        />
+      </NavLink>
     </div>
   );
 }
