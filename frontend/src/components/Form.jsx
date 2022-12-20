@@ -15,7 +15,7 @@ function Form() {
             <input
               type="text"
               name="Pseudo"
-              className="bg-transparent pl-2 pr-2 mt-1 mb-1"
+              className="bg-transparent pl-2 pr-2 rounded-[3rem] "
             />
           </div>
         </label>
@@ -25,7 +25,7 @@ function Form() {
             <input
               type="text"
               name="Prénom"
-              className="bg-transparent pl-2 pr-2 mt-1 mb-1"
+              className="bg-transparent pl-2 pr-2 border-none rounded-[3rem]"
             />
           </div>
         </label>
@@ -35,7 +35,7 @@ function Form() {
             <input
               type="text"
               name="name"
-              className=" bg-transparent pl-2 pr-2 mt-1 mb-1"
+              className="relative block w-full appearance-none bg-transparent rounded-full border border-gray-300 px-3 py-2 text-white placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
             />
           </div>
         </label>
@@ -45,7 +45,7 @@ function Form() {
             <input
               type="text"
               name="Adresse-email"
-              className="bg-transparent pl-2 pr-2 mt-1 mb-1"
+              className="relative block w-full appearance-none bg-transparent rounded-full border border-gray-300 px-3 py-2 text-white placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
             />
           </div>
         </label>
@@ -55,7 +55,7 @@ function Form() {
             <input
               type={showPassWord ? "password" : "text"}
               name="Mot-de-passe"
-              className=" bg-transparent pl-2 pr-2 mt-1 mb-1"
+              className="relative block w-full appearance-none bg-transparent rounded-full border border-gray-300 px-3 py-2 text-white placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
             />
 
             {showPassWord ? (
@@ -90,7 +90,7 @@ function Form() {
             <input
               type={showPassWord2 ? "password" : "text"}
               name="Confirmé-le-mot-le-passe"
-              className="bg-transparent pl-2 pr-2 mt-1 mb-1 "
+              className="bg-transparent pl-2 pr-2 border-none rounded-[3rem]"
             />
             {showPassWord2 ? (
               <svg

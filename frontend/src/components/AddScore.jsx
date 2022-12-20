@@ -1,13 +1,15 @@
-import React from "react";
-import Trophy from "@assets/trophy.png";
-import Next from "@assets/next.png";
+/* eslint-disable react/prop-types */
+import React, { useEffect } from "react";
 
-export default function AddScore() {
+export default function AddScore({ points, setShowPoints }) {
+  useEffect(() => {
+    setTimeout(() => {
+      setShowPoints(false);
+    }, 3000);
+  });
   return (
-    <div className="absolute bottom-0 bg-white w-screen h-2/6 rounded-t-[15%] flex flex-col items-center justify-around ">
-      <img src={Trophy} alt="Trophy Icon" className="" />
-      <div className="text-4xl font-main-font "> +20 Points</div>
-      <img src={Next} alt="Next icon" />
+    <div className="text-6xl text-yellow-300 font-main-font blink-2 fixed top-[40vh] w-screen text-center">
+      <div className="fade-out-bottom">+{points} Points</div>
     </div>
   );
 }
