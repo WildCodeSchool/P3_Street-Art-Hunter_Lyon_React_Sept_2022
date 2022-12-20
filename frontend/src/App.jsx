@@ -1,10 +1,10 @@
 import "./App.css";
-import AllLive from "@pages/AllLive";
+import Map from "@pages/Map";
 
 function App() {
   return (
     <div>
-      <AllLive />
+      <Map />
     </div>
   );
 }
