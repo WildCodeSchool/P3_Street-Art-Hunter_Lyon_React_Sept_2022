@@ -27,7 +27,7 @@ export default function BottomNav() {
             bgColor="bg-bottomdark"
           />
         </NavLink>
-        <NavLink to="/galerie/all">
+        <NavLink to="/galerie">
           <SwitchButtonNav
             content="GALERIE"
             styleModif="mb-4 w-[100px] text-3xl"
