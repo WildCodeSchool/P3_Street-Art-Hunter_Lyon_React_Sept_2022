@@ -24,6 +24,8 @@
     "@headlessui/react": "^1.7.5",
     "@heroicons/react": "^2.0.13",
     "axios": "^1.2.1",
-    "bootstrap": "^5.2.3"
+    "bootstrap": "^5.2.3",
+    "react-dom-camera": "^0.3.5",
+    "react-html5-camera-photo": "^1.5.11"
   }
 }
