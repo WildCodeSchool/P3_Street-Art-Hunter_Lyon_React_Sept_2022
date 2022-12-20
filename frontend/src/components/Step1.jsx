@@ -9,7 +9,7 @@ function Step1({ setStep, step }) {
   };
 
   return (
-    <div className="absolute bottom-0 bg-white w-screen h-4/6 rounded-t-[15%] flex flex-col items-center justify-around ">
+    <div className="absolute bottom-0 bg-fondStepper bg-no-repeat bg-contain bg-top bg-whitek  w-screen h-4/6 rounded-t-[15%] flex flex-col items-center justify-around ">
       <div className="flex flex-col inset-x-0 bottom-0">
         <div className="absolute top-1 bg-lyon h-[25vh] w-full bg-no-repeat mt-[2.25rem]" />
         <p className="font-main-font text-center text-2xl mt-[14rem] pr-12 pl-12">

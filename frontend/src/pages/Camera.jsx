@@ -1,12 +1,12 @@
 import React from "react";
-import BottomNav from "@components/BottomNav";
-import Header from "@components/Header";
+import Header from "../components/Header";
+import TakePicture from "../components/TakePicture";
 
 export default function Camera() {
   return (
-    <div>
+    <div className="bg-main-background text-white font-main-font bg-cover w-full h-screen">
       <Header />
-      <BottomNav />
+      <TakePicture />
     </div>
   );
 }
