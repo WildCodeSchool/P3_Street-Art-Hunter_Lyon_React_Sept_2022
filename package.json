@@ -16,6 +16,7 @@
   "author": "Wild Code School",
   "license": "ISC",
   "devDependencies": {
+    "@tailwindcss/forms": "^0.5.3",
     "concurrently": "^7.0.0",
     "husky": "^7.0.0"
   },
@@ -23,6 +24,8 @@
     "leaflet": "^1.9.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-leaflet": "^4.2.0"
+    "react-html5-camera-photo": "^1.5.11",
+    "react-leaflet": "^4.2.0",
+    "react-router-dom": "^6.5.0"
   }
 }

@@ -15,7 +15,7 @@ module.exports = {
         "main-background": "url('/src/assets/MainBack.png')",
         "menu-burger": "url('/src/assets/burger.svg')",
         bottomNavGrad: "url('/src/assets/Gradient.png')",
-        tel: "url('/src/assets/tel.svg')",
+        tel: "url('/src/assets/tel-mieux.png')",
         lyon: "url('/src/assets/Lyon.svg')",
         graph1: "url('src/assets/graph1.jpg')",
         graph2: "url('src/assets/graph2.jpg')",
@@ -27,6 +27,10 @@ module.exports = {
         shop2: "url('src/assets/Shop2.jpg')",
         shop3: "url('src/assets/Shop3.jpg')",
         camera: "url('/src/assets/cameraIcon.png')",
+        step1: "url('/src/assets/Steps.svg')",
+        step3: "url('/src/assets/Step3.png')",
+        step4: "url('/src/assets/registrstep.png')",
+        fondStepper: "url('/src/assets/fond stepper.PNG')",
         localisation: "url('/src/assets/localisation.svg')",
         map: "url('/src/assets/map.svg')",
       },
@@ -40,5 +44,6 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  // eslint-disable-next-line import/no-extraneous-dependencies, global-require
+  plugins: [require("@tailwindcss/forms")],
 };

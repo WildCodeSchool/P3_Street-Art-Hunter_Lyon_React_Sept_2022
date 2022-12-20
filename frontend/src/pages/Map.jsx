@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import L from "leaflet";
 import { MapContainer, TileLayer } from "react-leaflet";
+import BottomNavMap from "../components/BottomNavMap";
 import Header from "../components/Header";
-import BottomNav from "../components/BottomNav";
 import "leaflet/dist/leaflet.css";
 import AddMarkerShop from "../components/AddMarkerShop";
 import AddMarkerArt from "../components/AddMarkerArt";
@@ -50,7 +50,7 @@ function Map() {
         )}
       </MapContainer>
 
-      <BottomNav
+      <BottomNavMap
         handleActiveShop={handleActiveShop}
         handleActiveArt={handleActiveArt}
       />

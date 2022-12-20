@@ -1,13 +1,14 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import camera from "../assets/cameraIcon.png";
-
+import camera from "@assets/cameraIcon.png";
+import art from "@assets/artIcon.png";
+import shop from "@assets/shopIcon.png";
 import SwitchButtonNav from "./SwitchButtonNav";
 
-export default function BottomNav() {
+export default function BottomNavMap({ handleActiveShop, handleActiveArt }) {
   const navigate = useNavigate();
   return (
-    <footer className="bottom-0 fixed w-full bg-bottom z-50">
+    <footer className="bottom-0 fixed w-full bg-bottom">
       <div className="flex justify-center">
         <button
           type="button"
@@ -43,6 +44,30 @@ export default function BottomNav() {
             bgColor="bg-bottomdark"
           />
         </NavLink>
+      </div>
+      <div>
+        <button
+          type="button"
+          className=" absolute left-8 top-28"
+          onClick={handleActiveArt}
+        >
+          <div className="bg-gradient-to-b from-pink to-lightblue rounded-[100%]  w-[3.6rem]  h-[3.6rem] p-[0.2rem]">
+            <div className="w-full h-full rounded-[100%] bg-gradient-to-b from-bottomdark to-[#454377] flex justify-center items-center">
+              <img src={art} alt="Art Icon" className="" />
+            </div>
+          </div>
+        </button>
+        <button
+          type="button"
+          className="  absolute right-8 top-28"
+          onClick={handleActiveShop}
+        >
+          <div className="bg-gradient-to-b from-pink to-lightblue rounded-[100%]  w-[3.6rem]  h-[3.6rem] p-[0.2rem]">
+            <div className="w-full h-full rounded-[100%] bg-gradient-to-b from-bottomdark to-[#454377] flex justify-center items-center">
+              <img src={shop} alt="Shop Icon" className="" />
+            </div>
+          </div>
+        </button>
       </div>
     </footer>
   );
