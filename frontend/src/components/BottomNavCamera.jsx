@@ -1,10 +1,8 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import camera from "../assets/cameraIcon.png";
-
 import SwitchButtonNav from "./SwitchButtonNav";
 
-export default function BottomNav() {
+function BottomNavCamera({ handleTakePhoto }) {
   const navigate = useNavigate();
   return (
     <footer className="bottom-0 fixed w-full bg-bottom z-50">
@@ -12,12 +10,10 @@ export default function BottomNav() {
         <button
           type="button"
           className="relative z-10 top-[4.5rem] drop-shadow-photobutton"
-          onClick={() => navigate("/camera")}
+          onClick={(handleTakePhoto, () => navigate("/galerie/live/oeuvres"))}
         >
           <div className="bg-gradient-to-b from-[#6573ED] to-[#14D2E6] rounded-[100%]  w-20  h-20 p-[0.4rem]">
-            <div className="w-full h-full rounded-[100%] bg-gradient-to-b from-bottomdark to-[#454377] flex justify-center items-center">
-              <img src={camera} alt="Camera Icon" className="" />
-            </div>
+            <div className="w-full h-full rounded-[100%] bg-gradient-to-b from-bottomdark to-[#454377] flex justify-center items-center" />
           </div>
         </button>
       </div>
@@ -47,4 +43,5 @@ export default function BottomNav() {
     </footer>
   );
 }
-/* Base */
+
+export default BottomNavCamera;

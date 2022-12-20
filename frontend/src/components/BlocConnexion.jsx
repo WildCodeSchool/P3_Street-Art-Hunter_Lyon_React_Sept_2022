@@ -1,7 +1,9 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function BlocConnexion() {
+  const navigate = useNavigate();
   return (
     <div className="p-5">
       <div className="p-0 flex min-h-full items-center justify-center ">
@@ -65,6 +67,7 @@ export default function BlocConnexion() {
               <button
                 type="submit"
                 className=" w-2/3 font-main-font text-2xl group relative flex justify-center rounded-full border py-2 border-indigo-500/50 font-medium text-lightblue hover:bg-indigo-500/50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                onClick={() => navigate("/camera")}
               >
                 <span className=" absolute inset-y-0 left-0 flex items-center pl-3" />
                 SE CONNECTER
@@ -79,8 +82,9 @@ export default function BlocConnexion() {
               <a
                 href="#"
                 className="font-medium text-center text-white hover:text-indigo-500"
+                onClick={() => navigate("/inscription")}
               >
-                inscrit toi
+                Inscris toi
               </a>
             </div>
           </form>

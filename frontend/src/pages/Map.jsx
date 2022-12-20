@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import L from "leaflet";
 import { MapContainer, TileLayer } from "react-leaflet";
-import BottomNavMap from "@components/BottomNavMap";
+import BottomNavMap from "../components/BottomNavMap";
 import Header from "../components/Header";
 import "leaflet/dist/leaflet.css";
 import AddMarkerShop from "../components/AddMarkerShop";

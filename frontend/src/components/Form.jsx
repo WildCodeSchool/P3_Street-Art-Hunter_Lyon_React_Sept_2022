@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Form() {
+  const navigate = useNavigate();
+
   const [showPassWord, setshowPassWord] = useState(true);
   const [showPassWord2, setshowPassWord2] = useState(true);
   return (
@@ -122,6 +125,7 @@ function Form() {
           type="submit"
           value="S'INSCRIRE"
           className="bg-gradient-to-tl from-pink to-lightblue rounded-3xl font-main-font text-[32px] py-1 px-6 "
+          onClick={() => navigate("/connexion")}
         />
       </form>
     </div>
