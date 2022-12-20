@@ -6,7 +6,7 @@ import SwitchButtonNav from "./SwitchButtonNav";
 
 export default function BottomNav() {
   return (
-    <footer className="bottom-0 fixed w-full bg-bottom">
+    <footer className="bottom-0 fixed w-full bg-bottom z-50">
       <div className="flex justify-center">
         <button
           type="button"
