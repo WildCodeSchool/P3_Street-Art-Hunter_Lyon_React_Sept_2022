@@ -1,5 +1,5 @@
 import React from "react";
-import Daryl from "@assets/Daryl.png";
+import Daryl from "../assets/Daryl.png";
 
 function PopupTitle() {
   return (
