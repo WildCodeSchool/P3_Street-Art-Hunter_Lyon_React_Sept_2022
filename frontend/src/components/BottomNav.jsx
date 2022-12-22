@@ -1,8 +1,6 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-// eslint-disable-next-line import/no-unresolved, import/extensions
-import camera from "../assets/cameraIcon";
-
+import camera from "../assets/cameraIcon.png";
 import SwitchButtonNav from "./SwitchButtonNav";
 
 export default function BottomNav() {
