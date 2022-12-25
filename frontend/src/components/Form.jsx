@@ -3,22 +3,65 @@ import { useNavigate } from "react-router-dom";
 
 function Form() {
   const navigate = useNavigate();
+  const [pseudo, setPseudo] = useState("");
+  const [firstname, setFirstName] = useState("");
+  const [lastname, setLastName] = useState("");
+  const [scorepoint] = useState("0");
+  const [isAdmin] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleForm = (e) => {
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    const body = JSON.stringify({
+      firstname,
+      lastname,
+      scorepoint,
+      pseudo,
+      isAdmin,
+      email,
+      password,
+    });
+
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body,
+    };
+    e.preventDefault();
+    // on créé un nouvel utilisateur et on reutilise
+    fetch("http://localhost:5000/inscription", requestOptions)
+      .then(() => {
+        navigate("/connexion");
+      })
+      .catch((err) => {
+        console.warn(err);
+      });
+  };
 
   const [showPassWord, setshowPassWord] = useState(true);
   const [showPassWord2, setshowPassWord2] = useState(true);
+
   return (
     <div className="flex flex-col justify-center items-center  backdrop-blur-sm rounded-[3rem] mt-2 ml-2 w-[95%]">
       <h1 className="text-white font-main-font text-4xl mb-5 mt-4">
         INSCRIPTION
       </h1>
-      <form className="flex flex-col justify-center items-center space-y-5 mb-4">
+      <form
+        onSubmit={handleForm}
+        className="flex flex-col justify-center items-center space-y-5 mb-4"
+      >
         <label className="flex flex-col justify-center text-white">
           Pseudo
           <div className="flex flex-row-reverse border rounded-[3rem] border-white h-[90%]">
             <input
-              type="text"
+              onChange={(e) => setPseudo(e.target.value)}
+              type="Pseudo"
               name="Pseudo"
-              className="bg-transparent pl-2 pr-2 rounded-[3rem] "
+              id="Pseudo"
+              className="form-control relative block w-full appearance-none bg-transparent rounded-full border border-gray-300 px-3 py-2 text-white placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
             />
           </div>
         </label>
@@ -26,9 +69,11 @@ function Form() {
           Prénom
           <div className="flex flex-row-reverse border rounded-[3rem] border-white h-[90%]">
             <input
-              type="text"
-              name="Prénom"
-              className="bg-transparent pl-2 pr-2 border-none rounded-[3rem]"
+              onChange={(e) => setFirstName(e.target.value)}
+              type="firstname"
+              name="firstname"
+              id="firstName"
+              className="form-control relative block w-full appearance-none bg-transparent rounded-full border border-gray-300 px-3 py-2 text-white placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
             />
           </div>
         </label>
@@ -36,9 +81,11 @@ function Form() {
           Nom
           <div className="flex flex-row-reverse border rounded-[3rem] border-white h-[90%]">
             <input
-              type="text"
-              name="name"
-              className="relative block w-full appearance-none bg-transparent rounded-full border border-gray-300 px-3 py-2 text-white placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+              onChange={(e) => setLastName(e.target.value)}
+              type="lastname"
+              name="lastname"
+              id="lastName"
+              className="form-control relative block w-full appearance-none bg-transparent rounded-full border border-gray-300 px-3 py-2 text-white placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
             />
           </div>
         </label>
@@ -46,9 +93,11 @@ function Form() {
           Adresse email
           <div className="flex flex-row-reverse border rounded-[3rem] border-white h-[90%]">
             <input
-              type="text"
+              onChange={(e) => setEmail(e.target.value)}
+              type="email"
               name="Adresse-email"
-              className="relative block w-full appearance-none bg-transparent rounded-full border border-gray-300 px-3 py-2 text-white placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+              id="email"
+              className="form-control relative block w-full appearance-none bg-transparent rounded-full border border-gray-300 px-3 py-2 text-white placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
             />
           </div>
         </label>
@@ -56,9 +105,11 @@ function Form() {
           Mot de passe
           <div className="flex flex-row-reverse border rounded-[3rem] border-white h-[90%]">
             <input
+              onChange={(e) => setPassword(e.target.value)}
               type={showPassWord ? "password" : "text"}
-              name="Mot-de-passe"
-              className="relative block w-full appearance-none bg-transparent rounded-full border border-gray-300 px-3 py-2 text-white placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+              name="password"
+              id="password"
+              className="form-control relative block w-full appearance-none bg-transparent rounded-full border border-gray-300 px-3 py-2 text-white placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
             />
 
             {showPassWord ? (
@@ -92,9 +143,10 @@ function Form() {
           <div className="flex flex-row-reverse border rounded-[3rem] border-white h-[90%] ">
             <input
               type={showPassWord2 ? "password" : "text"}
-              name="Confirmé-le-mot-le-passe"
+              name="confirmPassword"
               className="bg-transparent pl-2 pr-2 border-none rounded-[3rem]"
             />
+
             {showPassWord2 ? (
               <svg
                 onClick={() => setshowPassWord2(!showPassWord2)}
@@ -121,12 +173,12 @@ function Form() {
             )}
           </div>
         </label>
-        <input
+        <button
           type="submit"
-          value="S'INSCRIRE"
           className="bg-gradient-to-tl from-pink to-lightblue rounded-3xl font-main-font text-[32px] py-1 px-6 "
-          onClick={() => navigate("/connexion")}
-        />
+        >
+          S'INSCRIRE
+        </button>
       </form>
     </div>
   );
