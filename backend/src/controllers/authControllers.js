@@ -7,7 +7,6 @@ const getUserByEmailWithPasswordAndPassToNext = (req, res, next) => {
   console.warn("Mail ", email);
   console.warn("Pseudo ", pseudo);
   models.users
-    // .findByPseudoWithPassword(pseudo)
     .findByEmailWithPassword(email, pseudo)
     .then(([users]) => {
       console.warn(users);

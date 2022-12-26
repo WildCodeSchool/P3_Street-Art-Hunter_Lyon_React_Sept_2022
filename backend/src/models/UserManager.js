@@ -19,13 +19,6 @@ class UserManager extends AbstractManager {
     );
   }
 
-  findByPseudoWithPassword(pseudo) {
-    return this.connection.query(
-      `select * from  ${this.table} where pseudo = ?`,
-      [pseudo]
-    );
-  }
-
   findAll() {
     return this.connection.query(
       `select id, firstname, lastname, scorepoint, Pseudo, isAdmin, email from  ${this.table}`
