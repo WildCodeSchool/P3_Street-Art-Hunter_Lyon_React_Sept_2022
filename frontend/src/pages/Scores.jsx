@@ -4,12 +4,15 @@ import LeaderBoard from "@components/LeaderBoard";
 import BottomNav from "@components/BottomNav";
 import MyScore from "@components/MyScore";
 import Daryl from "@assets/Daryl.png";
+import Vincent from "@assets/Vincent.png";
+import Younes from "@assets/Younes.png";
+import Gaelle from "@assets/Gaelle.png";
 
 const users = [
   { pseudo: "DarylChaise", avatar: Daryl, score: "3250", badges: "7" },
-  { pseudo: "Younz", avatar: Daryl, score: "2850", badges: "5" },
-  { pseudo: "Gaellic", avatar: Daryl, score: "2690", badges: "6" },
-  { pseudo: "Vinzz69", avatar: Daryl, score: "2600", badges: "3" },
+  { pseudo: "Younz", avatar: Younes, score: "2850", badges: "5" },
+  { pseudo: "Gaellic", avatar: Gaelle, score: "2690", badges: "6" },
+  { pseudo: "Vinzz69", avatar: Vincent, score: "2600", badges: "3" },
   { pseudo: "JS", avatar: Daryl, score: "2600", badges: "2" },
   { pseudo: "PHP", avatar: Daryl, score: "200", badges: "1" },
 ];

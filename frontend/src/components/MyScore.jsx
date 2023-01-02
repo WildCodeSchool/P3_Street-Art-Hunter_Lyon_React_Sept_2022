@@ -1,5 +1,5 @@
 import React from "react";
-import Daryl from "@assets/Daryl.png";
+import Pierre from "@assets/Pierre.png";
 
 export default function MyScore() {
   return (
@@ -13,7 +13,7 @@ export default function MyScore() {
             </td>
             <td className="w-[15vw]">
               <img
-                src={Daryl}
+                src={Pierre}
                 alt="Avatar"
                 className="h-[3rem] w-[3rem] bg-black border-[1px] border-white rounded-full"
               />
