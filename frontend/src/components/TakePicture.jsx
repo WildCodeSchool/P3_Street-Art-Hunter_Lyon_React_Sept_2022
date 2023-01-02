@@ -10,7 +10,7 @@ function TakePicture() {
     <div>
       <Camera
         imageType={IMAGE_TYPES.JPG}
-        idealResolution={{ width: 250, height: 390 }}
+        idealResolution={{ width: 100, height: 300 }}
       />
       <BottomNavCamera />
     </div>
