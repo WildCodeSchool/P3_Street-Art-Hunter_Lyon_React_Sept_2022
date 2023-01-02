@@ -1,8 +1,11 @@
 import React, { useState } from "react";
+// eslint-disable-next-line import/no-unresolved
 import L from "leaflet";
+// eslint-disable-next-line import/no-unresolved
 import { MapContainer, TileLayer } from "react-leaflet";
 import BottomNavMap from "../components/BottomNavMap";
 import Header from "../components/Header";
+// eslint-disable-next-line import/no-unresolved
 import "leaflet/dist/leaflet.css";
 import AddMarkerShop from "../components/AddMarkerShop";
 import AddMarkerArt from "../components/AddMarkerArt";

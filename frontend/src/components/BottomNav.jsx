@@ -1,7 +1,6 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import camera from "../assets/cameraIcon.png";
-
 import SwitchButtonNav from "./SwitchButtonNav";
 
 export default function BottomNav() {
