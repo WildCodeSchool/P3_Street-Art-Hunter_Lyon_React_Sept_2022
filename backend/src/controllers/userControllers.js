@@ -73,10 +73,23 @@ const destroy = (req, res) => {
     });
 };
 
+const leaderboard = (req, res) => {
+  models.users
+    .getLeaderboard()
+    .then(([results]) => {
+      res.send(results);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
+
 module.exports = {
   browse,
   read,
   add,
   edit,
   destroy,
+  leaderboard,
 };

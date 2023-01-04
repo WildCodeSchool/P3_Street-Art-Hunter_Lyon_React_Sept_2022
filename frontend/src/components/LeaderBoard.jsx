@@ -1,6 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 
 export default function LeaderBoard({ users }) {
+  // eslint-disable-next-line no-unused-vars
+  const [leaders, setLeaders] = useState();
+  fetch("http://localhost:5000/leader")
+    .then((result) => result.json())
+    .then((result) => setLeaders(result));
   return (
     <div className="text-white font-main-font h-[18rem] overflow-auto border-y-[1px] border-white">
       <table className="w-screen text-xl backdrop-blur-sm">

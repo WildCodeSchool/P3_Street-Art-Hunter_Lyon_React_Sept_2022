@@ -39,11 +39,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `street_art_hunter`.`Users`
+-- Table `street_art_hunter`.`users`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `street_art_hunter`.`Users` ;
+DROP TABLE IF EXISTS `street_art_hunter`.`users` ;
 
-CREATE TABLE IF NOT EXISTS `street_art_hunter`.`Users` (
+CREATE TABLE IF NOT EXISTS `street_art_hunter`.`users` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `firstname` VARCHAR(45) NOT NULL,
   `lastname` VARCHAR(45) NOT NULL,
@@ -78,14 +78,14 @@ DROP TABLE IF EXISTS `street_art_hunter`.`User_has_fav_work` ;
 
 CREATE TABLE IF NOT EXISTS `street_art_hunter`.`User_has_fav_work` (
   `id` INT NOT NULL,
-  `Users_id` INT NOT NULL,
+  `users_id` INT NOT NULL,
   `Works_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_User_has_fav_work_Users1_idx` (`Users_id` ASC) VISIBLE,
+  INDEX `fk_User_has_fav_work_users1_idx` (`users_id` ASC) VISIBLE,
   INDEX `fk_User_has_fav_work_Works1_idx` (`Works_id` ASC) VISIBLE,
-  CONSTRAINT `fk_User_has_fav_work_Users1`
-    FOREIGN KEY (`Users_id`)
-    REFERENCES `street_art_hunter`.`Users` (`id`)
+  CONSTRAINT `fk_User_has_fav_work_users1`
+    FOREIGN KEY (`users_id`)
+    REFERENCES `street_art_hunter`.`users` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_User_has_fav_work_Works1`
@@ -107,18 +107,18 @@ CREATE TABLE IF NOT EXISTS `street_art_hunter`.`Picture` (
   `note` INT NULL,
   `Fav` TINYINT NULL,
   `Works_id` INT NOT NULL,
-  `Users_id` INT NOT NULL,
+  `users_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_Picture_Works1_idx` (`Works_id` ASC) VISIBLE,
-  INDEX `fk_Picture_Users1_idx` (`Users_id` ASC) VISIBLE,
+  INDEX `fk_Picture_users1_idx` (`users_id` ASC) VISIBLE,
   CONSTRAINT `fk_Picture_Works1`
     FOREIGN KEY (`Works_id`)
     REFERENCES `street_art_hunter`.`Works` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Picture_Users1`
-    FOREIGN KEY (`Users_id`)
-    REFERENCES `street_art_hunter`.`Users` (`id`)
+  CONSTRAINT `fk_Picture_users1`
+    FOREIGN KEY (`users_id`)
+    REFERENCES `street_art_hunter`.`users` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -131,14 +131,14 @@ DROP TABLE IF EXISTS `street_art_hunter`.`User_has_fav_pictures` ;
 
 CREATE TABLE IF NOT EXISTS `street_art_hunter`.`User_has_fav_pictures` (
   `id` INT NOT NULL,
-  `Users_id` INT NOT NULL,
+  `users_id` INT NOT NULL,
   `Picture_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_User_has_fav_pictures_Users1_idx` (`Users_id` ASC) VISIBLE,
+  INDEX `fk_User_has_fav_pictures_users1_idx` (`users_id` ASC) VISIBLE,
   INDEX `fk_User_has_fav_pictures_Picture1_idx` (`Picture_id` ASC) VISIBLE,
-  CONSTRAINT `fk_User_has_fav_pictures_Users1`
-    FOREIGN KEY (`Users_id`)
-    REFERENCES `street_art_hunter`.`Users` (`id`)
+  CONSTRAINT `fk_User_has_fav_pictures_users1`
+    FOREIGN KEY (`users_id`)
+    REFERENCES `street_art_hunter`.`users` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_User_has_fav_pictures_Picture1`
@@ -172,18 +172,18 @@ DROP TABLE IF EXISTS `street_art_hunter`.`User_has_badge` ;
 CREATE TABLE IF NOT EXISTS `street_art_hunter`.`User_has_badge` (
   `id` INT NOT NULL,
   `Badges_id` INT NOT NULL,
-  `Users_id` INT NOT NULL,
+  `users_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_User_has_badge_Badges1_idx` (`Badges_id` ASC) VISIBLE,
-  INDEX `fk_User_has_badge_Users1_idx` (`Users_id` ASC) VISIBLE,
+  INDEX `fk_User_has_badge_users1_idx` (`users_id` ASC) VISIBLE,
   CONSTRAINT `fk_User_has_badge_Badges1`
     FOREIGN KEY (`Badges_id`)
     REFERENCES `street_art_hunter`.`Badges` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_User_has_badge_Users1`
-    FOREIGN KEY (`Users_id`)
-    REFERENCES `street_art_hunter`.`Users` (`id`)
+  CONSTRAINT `fk_User_has_badge_users1`
+    FOREIGN KEY (`users_id`)
+    REFERENCES `street_art_hunter`.`users` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

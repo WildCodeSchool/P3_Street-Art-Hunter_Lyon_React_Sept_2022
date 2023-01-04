@@ -97,7 +97,7 @@ function TakePicture(props) {
           handleTakePhoto(dataUri);
         }}
         imageType={IMAGE_TYPES.PNG}
-        idealResolution={{ width: 250, height: 390 }}
+        idealResolution={{ width: 840, height: 100 }}
         idealFacingMode={FACING_MODES.ENVIRONMENT}
       />
     </div>

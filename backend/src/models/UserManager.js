@@ -54,6 +54,12 @@ class UserManager extends AbstractManager {
       ]
     );
   }
+
+  getLeaderboard() {
+    return this.connection.query(
+      `select pseudo, scorepoint from ${this.table} order by scorepoint desc limit 20`
+    );
+  }
 }
 
 module.exports = UserManager;
