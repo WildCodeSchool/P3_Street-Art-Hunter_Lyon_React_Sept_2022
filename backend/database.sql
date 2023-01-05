@@ -204,7 +204,7 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 
 
-INSERT INTO `user` VALUES (1,'Vincent','Chabosson',1600,'Gakchabla',0,'chabosson@live.fr','$argon2id$v=19$m=65536,t=5,p=1$+VCtMnhwkGfgDOodFzoG7g$QaC4BxNuJqXzmRMzem8AVgHHssxGLBqx/Vo4MwMaDI0'),
+INSERT INTO `user` VALUES (1,'Vincent','Chabosson',1800,'Gakchabla',0,'chabosson@live.fr','$argon2id$v=19$m=65536,t=5,p=1$+VCtMnhwkGfgDOodFzoG7g$QaC4BxNuJqXzmRMzem8AVgHHssxGLBqx/Vo4MwMaDI0'),
 (2,'Daryl','Chaise',3000,'Darylou',0,'258@joe.fr','$argon2id$v=19$m=65536,t=5,p=1$vhAxhurqo/BU2H1lKpe7Gg$T30whlZrvP29WtN9IMTSzzo0eynyty53t/7orN3NyZI'),
 (3,'Younes','Ouasmi',2500,'Younz',0,'youyou@you.fr','$argon2id$v=19$m=65536,t=5,p=1$tjIg61g9LJKjuQeK/ABv5A$U/CrlfFbcJUWQ+3OTzLz3zxxvoaZEN8mju82ZFxybDU'),
 (4,'Gaelle','Goyon',1800,'gaellz',0,'Gaelle@live.fr','$argon2id$v=19$m=65536,t=5,p=1$+JPlAZnXYXplWEv3p3QPvA$1g+4sW0NdJSwdBm0qfc1EsElwhqtKWQsRP6KeSA9wNg'),
@@ -222,7 +222,7 @@ insert into badge VALUES (1, "Médaille d'Or", "Tu as atteint le sommet", "https
 (4, "Centenaire", "Tu as obtenu 100Points", "https://imgur.com/a/bao0yx0", "Obtenir 10Points"),
 (5, "Explorateur", "Tu as découvert un terrain inconnu", "https://imgur.com/a/bao0yx0", "Prendre en photo une oeuvre non repertoriée");
 
-insert into user_has_badge values (1,1), (1,2), (3,3), (3,4), (3,5);
+insert into user_has_badge values (1,1), (1,2), (3,3), (3,4), (3,5), (2,1), (3,1), (2,4), (1,4), (4,4);
 
 ALTER TABLE `street_art_hunter`.`user` 
 ADD COLUMN `avatar` VARCHAR(45) NULL AFTER `hashedPassword`;

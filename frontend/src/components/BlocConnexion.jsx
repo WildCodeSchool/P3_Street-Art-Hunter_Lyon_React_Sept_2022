@@ -38,6 +38,7 @@ export default function BlocConnexion() {
         })
         .catch(console.error);
     } else {
+      // eslint-disable-next-line no-alert
       alert("Please specify email or pseudo and password");
     }
   };

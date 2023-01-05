@@ -85,6 +85,30 @@ const leaderboard = (req, res) => {
     });
 };
 
+const getMyscore = (req, res) => {
+  models.user
+    .getScore(req.params.id)
+    .then(([results]) => {
+      res.send(results);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
+
+const getRanks = (req, res) => {
+  models.user
+    .getIdByScorepoint()
+    .then(([results]) => {
+      res.send(results);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
+
 module.exports = {
   browse,
   read,
@@ -92,4 +116,6 @@ module.exports = {
   edit,
   destroy,
   leaderboard,
+  getMyscore,
+  getRanks,
 };

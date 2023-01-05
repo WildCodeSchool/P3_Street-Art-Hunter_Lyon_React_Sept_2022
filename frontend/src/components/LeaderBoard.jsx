@@ -1,20 +1,21 @@
-import React from "react";
-
-let data = [];
-fetch("http://localhost:5000/leader")
-  .then((result) => result.json())
-  .then((result) => {
-    data = result;
-  });
+import React, { useEffect, useState } from "react";
 
 export default function LeaderBoard() {
-  // eslint-disable-next-line no-unused-vars
+  const [leaders, setLeaders] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/leader")
+      .then((result) => result.json())
+      .then((result) => {
+        setLeaders(result);
+      });
+  }, []);
   return (
     <div className="text-white font-main-font h-[18rem] overflow-auto border-y-[1px] border-white">
       <table className="w-screen text-xl backdrop-blur-sm">
         <thead />
         <tbody>
-          {data.map((user, index) => (
+          {leaders.map((user, index) => (
             <tr
               key={user.pseudo}
               className="bg-lightblue bg-opacity-60 h-[3.5rem] border-t-[1px] border-opacity-60 border-white"
