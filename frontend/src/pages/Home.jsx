@@ -1,4 +1,3 @@
-import React from "react";
 import LogoHome from "@components/LogoHome";
 import ConnectLandpage from "@components/ConnectLandpage";
 

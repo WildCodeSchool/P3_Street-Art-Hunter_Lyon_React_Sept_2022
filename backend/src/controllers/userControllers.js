@@ -1,7 +1,7 @@
 const models = require("../models");
 
 const browse = (req, res) => {
-  models.users
+  models.user
     .findAll()
     .then(([results]) => {
       res.send(results);
@@ -15,7 +15,7 @@ const browse = (req, res) => {
 const read = (req, res) => {
   const { id } = req.params;
 
-  models.users
+  models.user
     .find(id)
     .then(([results]) => {
       if (results[0]) res.send(results[0]);
@@ -32,10 +32,10 @@ const add = (req, res) => {
 
   // on verifie les données
 
-  models.users
+  models.user
     .insert(user)
     .then(([result]) => {
-      res.location(`/users/${result.insertId}`).sendStatus(201);
+      res.location(`/user/${result.insertId}`).sendStatus(201);
     })
     .catch((error) => {
       console.error(error);
@@ -47,7 +47,7 @@ const edit = (req, res) => {
   const user = req.body;
   user.id = req.params.id;
 
-  models.users
+  models.user
     .update(user)
     .then(([result]) => {
       if (result.affectedRows === 0) res.sendStatus(404);
@@ -61,11 +61,47 @@ const edit = (req, res) => {
 
 const destroy = (req, res) => {
   const { id } = req.params;
-  models.users
+  models.user
     .delete(id)
     .then(([result]) => {
       if (result.affectedRows === 0) res.sendStatus(404);
       else res.sendStatus(204);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
+
+const leaderboard = (req, res) => {
+  models.user
+    .getLeaderboard()
+    .then(([results]) => {
+      res.send(results);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
+
+const getMyscore = (req, res) => {
+  models.user
+    .getScore(req.params.id)
+    .then(([results]) => {
+      res.send(results);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
+
+const getRanks = (req, res) => {
+  models.user
+    .getIdByScorepoint()
+    .then(([results]) => {
+      res.send(results);
     })
     .catch((error) => {
       console.error(error);
@@ -79,4 +115,7 @@ module.exports = {
   add,
   edit,
   destroy,
+  leaderboard,
+  getMyscore,
+  getRanks,
 };
