@@ -6,7 +6,7 @@ const getUserByEmailWithPasswordAndPassToNext = (req, res, next) => {
   console.warn("-- enter in authCon");
   console.warn("Mail ", email);
   console.warn("Pseudo ", pseudo);
-  models.users
+  models.user
     .findByEmailWithPassword(email, pseudo)
     .then(([users]) => {
       console.warn(users);
