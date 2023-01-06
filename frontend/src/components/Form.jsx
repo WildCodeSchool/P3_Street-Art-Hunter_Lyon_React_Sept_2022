@@ -56,7 +56,9 @@ function Form() {
         });
     } else {
       e.preventDefault();
-      alert("des champs sont vide pas didier !");
+      alert(
+        "Vincent ne m'aime pas mais j'ai le droit d'exister et j'ai mon utilité !!"
+      );
     }
   };
 
