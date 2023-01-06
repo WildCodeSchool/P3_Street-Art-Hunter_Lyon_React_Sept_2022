@@ -26,7 +26,7 @@ router.get("/users", userControllers.browse);
 router.get("/users/:id", userControllers.read);
 router.get("/leader", userControllers.leaderboard);
 router.get("/score/:id", userControllers.getMyscore);
-router.get("/ranks", userControllers.getRanks);
+router.get("/rank/:id", userControllers.getRanks);
 
 router.post("/users", hashPassword, verifyToken, userControllers.add);
 router.put("/users/:id", hashPassword, verifyToken, userControllers.edit);
