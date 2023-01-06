@@ -1,106 +1,48 @@
 import React, { useState } from "react";
 // eslint-disable-next-line import/no-extraneous-dependencies
-import Camera, { FACING_MODES, IMAGE_TYPES } from "react-html5-camera-photo";
-// eslint-disable-next-line import/no-extraneous-dependencies
-import "react-html5-camera-photo/build/css/index.css";
-// import BottomNavCamera from "./BottomNavCamera";
+import Webcam from "react-webcam";
+import BottomNavCamera from "./BottomNavCamera";
+import BottomNavCamActive from "./BottomNavCamActive";
 
-function dataURItoBlob(dataURI) {
-  const byteString = atob(dataURI.split(",")[1]);
+function TakePicture() {
+  const [photo, setPhoto] = useState(false);
+  const [validation, setValidation] = useState(false);
 
-  // separate out the mime component
-  const mimeString = dataURI.split(",")[0].split(":")[1].split(";")[0];
+  const videoConstraints = {
+    width: 400,
+    height: 600,
+    facingMode: "user",
+  };
+  const webcamRef = React.useRef(null);
+  const [imgSrc, setImgSrc] = React.useState(null);
 
-  const ab = new ArrayBuffer(byteString.length);
-  const ia = new Uint8Array(ab);
-  // eslint-disable-next-line no-plusplus
-  for (let i = 0; i < byteString.length; i++) {
-    ia[i] = byteString.charCodeAt(i);
-  }
-  const blob = new Blob([ab], { type: mimeString });
-  return blob;
-}
-
-function padWithZeroNumber(number, width) {
-  // eslint-disable-next-line no-param-reassign
-  number += "";
-  return number.length >= width
-    ? number
-    : new Array(width - number.length + 1).join("0") + number;
-}
-
-function getFileExtention(blobType) {
-  // by default the extention is .png
-  let extention = IMAGE_TYPES.PNG;
-
-  if (blobType === "image/jpeg") {
-    extention = IMAGE_TYPES.JPG;
-  }
-  return extention;
-}
-
-function getFileName(imageNumber, blobType) {
-  const prefix = "photo";
-  const photoNumber = padWithZeroNumber(imageNumber, 4);
-  const extention = getFileExtention(blobType);
-
-  return `${prefix}-${photoNumber}.${extention}`;
-}
-
-function downloadImageFileFomBlob(blob, imageNumber) {
-  window.URL = window.webkitURL || window.URL;
-
-  // eslint-disable-next-line prefer-const
-  let anchor = document.createElement("a");
-  anchor.download = getFileName(imageNumber, blob.type);
-  anchor.href = window.URL.createObjectURL(blob);
-  // eslint-disable-next-line prefer-const
-  let mouseEvent = document.createEvent("MouseEvents");
-  mouseEvent.initMouseEvent(
-    "click",
-    true,
-    true,
-    window,
-    1,
-    0,
-    0,
-    0,
-    0,
-    false,
-    false,
-    false,
-    false,
-    0,
-    null
-  );
-  anchor.dispatchEvent(mouseEvent);
-}
-
-function downloadImageFile(dataUri, imageNumber) {
-  const blob = dataURItoBlob(dataUri);
-  downloadImageFileFomBlob(blob, imageNumber);
-}
-
-// eslint-disable-next-line no-unused-vars
-function TakePicture(props) {
-  const [imageNumber, setImageNumber] = useState(0);
-
-  function handleTakePhoto(dataUri) {
-    downloadImageFile(dataUri, imageNumber);
-    setImageNumber(imageNumber + 1);
-  }
+  const capture = React.useCallback(() => {
+    const imageSrc = webcamRef.current.getScreenshot();
+    setImgSrc(imageSrc);
+    setPhoto(!photo);
+    setValidation(!validation);
+  }, [webcamRef, setImgSrc]);
 
   return (
-    <div>
-      <Camera
-        onTakePhoto={(dataUri) => {
-          handleTakePhoto(dataUri);
-        }}
-        imageType={IMAGE_TYPES.PNG}
-        idealResolution={{ width: 840, height: 100 }}
-        idealFacingMode={FACING_MODES.ENVIRONMENT}
-      />
-    </div>
+    <>
+      {!photo ? (
+        <Webcam
+          audio={false}
+          ref={webcamRef}
+          screenshotFormat="image/jpeg"
+          videoConstraints={videoConstraints}
+        />
+      ) : (
+        // eslint-disable-next-line jsx-a11y/alt-text
+        imgSrc && <img src={imgSrc} />
+      )}
+
+      {!validation ? (
+        <BottomNavCamera capture={capture} />
+      ) : (
+        <BottomNavCamActive setPhoto={setPhoto} setValidation={setValidation} />
+      )}
+    </>
   );
 }
 
