@@ -9,7 +9,7 @@ function ArtistTitleCard() {
         alt="Avatar"
         className="h-[2rem] w-[2rem] border-white rounded-full m-1"
       />
-      <h2 className="font-main-font m-1">Artiste</h2>
+      <h2 className="font-main-font m-1 text-black">Artiste</h2>
     </div>
   );
 }
