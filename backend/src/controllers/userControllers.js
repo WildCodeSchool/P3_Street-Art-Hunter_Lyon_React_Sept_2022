@@ -99,7 +99,7 @@ const getMyscore = (req, res) => {
 
 const getRanks = (req, res) => {
   models.user
-    .getIdByScorepoint()
+    .getIdByScorepoint(req.params.id)
     .then(([results]) => {
       res.send(results);
     })
