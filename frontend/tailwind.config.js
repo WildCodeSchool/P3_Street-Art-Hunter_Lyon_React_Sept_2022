@@ -30,7 +30,7 @@ module.exports = {
         step1: "url('/src/assets/Steps.svg')",
         step3: "url('/src/assets/Step3.png')",
         step4: "url('/src/assets/registrstep.png')",
-        fondStepper: "url('/src/assets/fond stepper.PNG')",
+        fondStepper: "url('/src/assets/test2.png')",
         localisation: "url('/src/assets/localisation.svg')",
         map: "url('/src/assets/map.svg')",
       },

@@ -1,17 +1,19 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import camera from "@assets/cameraIcon.png";
 import art from "@assets/artIcon.png";
 import shop from "@assets/shopIcon.png";
 import SwitchButtonNav from "./SwitchButtonNav";
 
 export default function BottomNavMap({ handleActiveShop, handleActiveArt }) {
+  const navigate = useNavigate();
   return (
     <footer className="bottom-0 fixed w-full bg-bottom">
       <div className="flex justify-center">
         <button
           type="button"
           className="relative z-10 top-[4.5rem] drop-shadow-photobutton"
+          onClick={() => navigate("/camera")}
         >
           <div className="bg-gradient-to-b from-[#6573ED] to-[#14D2E6] rounded-[100%]  w-20  h-20 p-[0.4rem]">
             <div className="w-full h-full rounded-[100%] bg-gradient-to-b from-bottomdark to-[#454377] flex justify-center items-center">
