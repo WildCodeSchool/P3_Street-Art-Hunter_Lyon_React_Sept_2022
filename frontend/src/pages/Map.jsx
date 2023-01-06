@@ -3,10 +3,10 @@ import React, { useState } from "react";
 import L from "leaflet";
 // eslint-disable-next-line import/no-unresolved
 import { MapContainer, TileLayer } from "react-leaflet";
-import BottomNavMap from "../components/BottomNavMap";
-import Header from "../components/Header";
+import Header from "@components/Header";
 // eslint-disable-next-line import/no-unresolved
 import "leaflet/dist/leaflet.css";
+import BottomNavMap from "@components/BottomNavMap";
 import AddMarkerShop from "../components/AddMarkerShop";
 import AddMarkerArt from "../components/AddMarkerArt";
 

@@ -16,6 +16,7 @@ import Stepper from "@pages/Stepper";
 
 import "./App.css";
 
+import Dashboard from "@pages/Dashboard";
 import { CurrentUserContextProvider } from "./contexts/userContext";
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
           <Route path="/connexion" element={<Connexion />} />
           <Route path="/inscription" element={<Registration />} />
           <Route path="/stepper" element={<Stepper />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/scores" element={<Scores />} />
           <Route path="/menu" element={<Menu />} />
           <Route path="/help" element={<Help />} />
