@@ -1,12 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-export default function LeaderBoard({ users }) {
+export default function LeaderBoard() {
+  const [leaders, setLeaders] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/leader")
+      .then((result) => result.json())
+      .then((result) => {
+        setLeaders(result);
+      });
+  }, []);
   return (
     <div className="text-white font-main-font h-[18rem] overflow-auto border-y-[1px] border-white">
       <table className="w-screen text-xl backdrop-blur-sm">
         <thead />
         <tbody>
-          {users.map((user, index) => (
+          {leaders.map((user, index) => (
             <tr
               key={user.pseudo}
               className="bg-lightblue bg-opacity-60 h-[3.5rem] border-t-[1px] border-opacity-60 border-white"
@@ -22,7 +31,7 @@ export default function LeaderBoard({ users }) {
                 />
               </td>
               <td className="w-[35vw]">{user.pseudo}</td>
-              <td className="w-[20vw]">{user.score}</td>
+              <td className="w-[20vw]">{user.scorepoint}</td>
               <td className="w-[20vw]">{user.badges}</td>
             </tr>
           ))}

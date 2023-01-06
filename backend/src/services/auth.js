@@ -38,7 +38,9 @@ const verifyPassword = (req, res) => {
         });
         delete req.users.hashedPassword;
         res.send({ token, users: req.users });
-      } else res.sendStatus(401);
+      } else {
+        res.sendStatus(401);
+      }
     })
     .catch((err) => {
       // do something with err
