@@ -9,8 +9,7 @@ function TakePicture() {
   const [validation, setValidation] = useState(false);
 
   const videoConstraints = {
-    width: 400,
-    height: 600,
+    height: 1000,
     facingMode: "user",
   };
   const webcamRef = React.useRef(null);

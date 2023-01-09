@@ -11,11 +11,7 @@ function Geolocalisation() {
     console.warn("Longitude is :", position.coords.longitude);
   });
 
-  return (
-    <div>
-      <h4>Using geolocation JavaScript API in React</h4>
-    </div>
-  );
+  return <div />;
 }
 
 export default Geolocalisation;
