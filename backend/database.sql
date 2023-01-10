@@ -216,11 +216,11 @@ INSERT INTO `user` VALUES (1,'Vincent','Chabosson',1800,'Gakchabla',0,'chabosson
 (10,'Burrito','Salsa',0,'Taco',0,'taco@live.fr','$argon2id$v=19$m=65536,t=5,p=1$D6WDLZAd3QzAqvC+PNqdjQ$JkcbA54pwnwp1RQoIRj6oZjDG2C+FbUkXDQv6DNd+no');
 
 
-insert into badge VALUES (1, "Médaille d'Or", "Tu as atteint le sommet", "https://imgur.com/a/bao0yx0", "Atteindre le rang 1"),
-(2, "Médaille d'Argent", "Tu y es presque!", "https://imgur.com/a/bao0yx0", "Atteindre le rang 2"),
-(3, "Médaille de Bronze", "Tu as atteint le podium", "https://imgur.com/a/bao0yx0", "Atteindre le rang 3"),
-(4, "Centenaire", "Tu as obtenu 100Points", "https://imgur.com/a/bao0yx0", "Obtenir 10Points"),
-(5, "Explorateur", "Tu as découvert un terrain inconnu", "https://imgur.com/a/bao0yx0", "Prendre en photo une oeuvre non repertoriée");
+insert into badge VALUES (1, "Médaille d'Or", "Tu as atteint le sommet", "https://i.imgur.com/RGyBBHB.png", "Atteindre le rang 1"),
+(2, "Médaille d'Argent", "Tu y es presque!", "https://i.imgur.com/RGyBBHB.png", "Atteindre le rang 2"),
+(3, "Médaille de Bronze", "Tu as atteint le podium", "https://i.imgur.com/RGyBBHB.png", "Atteindre le rang 3"),
+(4, "Centenaire", "Tu as obtenu 100Points", "https://i.imgur.com/RGyBBHB.png", "Obtenir 10Points"),
+(5, "Explorateur", "Tu as découvert un terrain inconnu", "https://i.imgur.com/RGyBBHB.png", "Prendre en photo une oeuvre non repertoriée");
 
 insert into user_has_badge values (1,1), (1,2), (3,3), (3,4), (3,5), (2,1), (3,1), (2,4), (1,4), (4,4);
 

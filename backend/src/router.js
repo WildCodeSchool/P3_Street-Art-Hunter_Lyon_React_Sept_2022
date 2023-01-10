@@ -23,6 +23,7 @@ const {
 const authControllers = require("./controllers/authControllers");
 const itemControllers = require("./controllers/itemControllers");
 const userControllers = require("./controllers/userControllers");
+const badgeControllers = require("./controllers/badgeControllers");
 
 // Auth
 router.post("/inscription", hashPassword, userControllers.add);
@@ -48,5 +49,13 @@ router.get("/items/:id", itemControllers.read);
 router.put("/items/:id", itemControllers.edit);
 router.post("/items", itemControllers.add);
 router.delete("/items/:id", itemControllers.destroy);
+
+// Gestion des badges
+router.get("/badges", badgeControllers.browse);
+router.get("/badges/:id", badgeControllers.read);
+router.get("/user/badges/:id", badgeControllers.getUserBadges);
+
+router.post("/badges", badgeControllers.add);
+router.put("/badges/:id", badgeControllers.edit);
 
 module.exports = router;

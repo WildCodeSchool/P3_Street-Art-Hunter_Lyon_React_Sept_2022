@@ -4,18 +4,12 @@ import { useCurrentUserContext } from "../contexts/userContext";
 
 export default function MyScore() {
   const [userScoreData, setUserScoreData] = useState([]);
-  const [userRank, setUserRank] = useState([]);
   const { user } = useCurrentUserContext();
   useEffect(() => {
-    fetch(`http://localhost:5000/score/${user.id}`)
-      .then((result) => result.json())
-      .then((results) => {
-        setUserScoreData(results[0]);
-      });
     fetch(`http://localhost:5000/rank/${user.id}`)
       .then((result) => result.json())
       .then((data) => {
-        setUserRank(data[0].ranking);
+        setUserScoreData(data[0]);
       });
   }, []);
 
@@ -26,7 +20,7 @@ export default function MyScore() {
         <tbody>
           <tr className="bg-pink  bg-opacity-60 h-[3.5rem] border-b-[1px] border-t-[1px] border-opacity-60 border-white">
             <td className="pl-2 flex h-[3.5rem] items-center justify-start pr-1 text-2xl w-[10w]">
-              {userRank}
+              {userScoreData.ranking}
             </td>
             <td className="w-[15vw]">
               <img
