@@ -1,5 +1,29 @@
 import React from "react";
 
-export default function Favoris() {
-  return <div>Favoris</div>;
+import Header from "@components/Header";
+import BottomNav from "@components/BottomNav";
+import UserCardContainer from "@components/UserCardContainer";
+
+function Favoris() {
+  return (
+    <div className="bg-main-background bg-cover w-full h-screen">
+      <Header />
+      <div className="h-[3.5rem] pt-3 font-main-font w-screen flex justify-center text-white items-center text-3xl">
+        TES COUPS DE COEUR
+      </div>
+      <div className="flex justify-around flex-wrap overflow-auto h-[60vh]">
+        <UserCardContainer />
+        <UserCardContainer />
+        <UserCardContainer />
+        <UserCardContainer />
+        <UserCardContainer />
+        <UserCardContainer />
+        <UserCardContainer />
+        <UserCardContainer />
+        <BottomNav />
+      </div>
+    </div>
+  );
 }
+
+export default Favoris;

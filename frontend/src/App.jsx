@@ -13,6 +13,7 @@ import Menu from "@pages/Menu";
 import Profil from "@pages/Profil";
 import Scores from "@pages/Scores";
 import Stepper from "@pages/Stepper";
+import Contact from "@pages/Contact";
 
 import "./App.css";
 
@@ -40,6 +41,7 @@ function App() {
           <Route path="/badges" element={<Badges />} />
           <Route path="/camera" element={<Camera />} />
           <Route path="/galerie/all" element={<Galerie allOrLive="all" />} />
+          <Route path="/Contact" element={<Contact />} />
           <Route
             path="/galerie/all/oeuvres"
             element={<Galerie allOrLive="all" />}

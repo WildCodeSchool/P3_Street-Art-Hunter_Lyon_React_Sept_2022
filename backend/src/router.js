@@ -11,6 +11,7 @@ const {
 } = require("./services/auth");
 const authControllers = require("./controllers/authControllers");
 const userControllers = require("./controllers/userControllers");
+const badgeControllers = require("./controllers/badgeControllers");
 
 // Auth
 router.post("/inscription", hashPassword, userControllers.add);
@@ -30,5 +31,12 @@ router.get("/rank/:id", userControllers.getRanks);
 router.post("/users", hashPassword, verifyToken, userControllers.add);
 router.put("/users/:id", hashPassword, verifyToken, userControllers.edit);
 router.delete("/users/:id", verifyToken, userControllers.destroy);
+// Gestion des badges
+router.get("/badges", badgeControllers.browse);
+router.get("/badges/:id", badgeControllers.read);
+router.get("/user/badges/:id", badgeControllers.getUserBadges);
+
+router.post("/badges", badgeControllers.add);
+router.put("/badges/:id", badgeControllers.edit);
 
 module.exports = router;
