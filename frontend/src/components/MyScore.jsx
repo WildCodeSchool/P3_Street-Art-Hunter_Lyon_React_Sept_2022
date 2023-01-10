@@ -2,17 +2,19 @@ import React, { useEffect, useState } from "react";
 import Pierre from "@assets/Pierre.png";
 import { useCurrentUserContext } from "../contexts/userContext";
 
+const backURL = import.meta.env.VITE_BACKEND_URL;
+
 export default function MyScore() {
   const [userScoreData, setUserScoreData] = useState([]);
   const [userRank, setUserRank] = useState([]);
   const { user } = useCurrentUserContext();
   useEffect(() => {
-    fetch(`http://localhost:5000/score/${user.id}`)
+    fetch(`${backURL}/score/${user.id}`)
       .then((result) => result.json())
       .then((results) => {
         setUserScoreData(results[0]);
       });
-    fetch(`http://localhost:5000/rank/${user.id}`)
+    fetch(`${backURL}/rank/${user.id}`)
       .then((result) => result.json())
       .then((data) => {
         setUserRank(data[0].ranking);
