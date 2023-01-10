@@ -10,7 +10,6 @@ const {
   verifyToken,
 } = require("./services/auth");
 const authControllers = require("./controllers/authControllers");
-const itemControllers = require("./controllers/itemControllers");
 const userControllers = require("./controllers/userControllers");
 
 // Auth
@@ -31,11 +30,5 @@ router.get("/rank/:id", userControllers.getRanks);
 router.post("/users", hashPassword, verifyToken, userControllers.add);
 router.put("/users/:id", hashPassword, verifyToken, userControllers.edit);
 router.delete("/users/:id", verifyToken, userControllers.destroy);
-
-router.get("/items", itemControllers.browse);
-router.get("/items/:id", itemControllers.read);
-router.put("/items/:id", itemControllers.edit);
-router.post("/items", itemControllers.add);
-router.delete("/items/:id", itemControllers.destroy);
 
 module.exports = router;

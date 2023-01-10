@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import InscriptionDone from "./popupvalidationinscription";
 
+const backURL = import.meta.env.VITE_BACKEND_URL;
+
 function Form() {
   const navigate = useNavigate();
   const [pseudo, setPseudo] = useState("");
@@ -12,7 +14,10 @@ function Form() {
   const [isAdmin] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [verifPassword, setVerifPassword] = useState("");
   const [doneinscr, setDoneInscr] = useState(false);
+
+  const [redForm, setRedForm] = useState([]);
 
   // soumettre le formulaire
   const handleForm = (e) => {
@@ -21,7 +26,8 @@ function Form() {
       firstname !== "" &&
       lastname !== "" &&
       email !== "" &&
-      password !== ""
+      password !== "" &&
+      password === verifPassword
     ) {
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
@@ -43,7 +49,7 @@ function Form() {
       };
       e.preventDefault();
       // on créé un nouvel utilisateur et on reutilise
-      fetch("http://localhost:5000/inscription", requestOptions)
+      fetch(`${backURL}/inscription`, requestOptions)
         .then(() => {
           setDoneInscr(true);
 
@@ -56,9 +62,14 @@ function Form() {
         });
     } else {
       e.preventDefault();
-      alert(
-        "Vincent ne m'aime pas mais j'ai le droit d'exister et j'ai mon utilité !!"
-      );
+      const emptyFields = [];
+      if (pseudo === "") emptyFields.push("pseudo");
+      if (firstname === "") emptyFields.push("firstname");
+      if (lastname === "") emptyFields.push("lastname");
+      if (email === "") emptyFields.push("email");
+      if (password === "") emptyFields.push("password");
+      if (verifPassword === "") emptyFields.push("verifPassword");
+      setRedForm(emptyFields);
     }
   };
 
@@ -71,70 +82,144 @@ function Form() {
         ""
       ) : (
         <>
-          <h1 className="text-white font-main-font text-4xl mb-5 mt-4">
+          <h1 className="text-white font-main-font text-4xl mb-2 mt-2">
             INSCRIPTION
           </h1>
           <form
             onSubmit={handleForm}
-            className="flex flex-col justify-center items-center space-y-5 mb-4"
+            className="flex flex-col justify-center items-center mb-4"
           >
             <label className="flex flex-col justify-center text-white">
               Pseudo
-              <div className="flex flex-row-reverse border rounded-[3rem] border-white h-[90%]">
+              <div
+                className={`flex flex-row-reverse border rounded-[3rem] border-${
+                  redForm.includes("pseudo") ? "red-700" : "white"
+                } h-[90%]`}
+              >
                 <input
                   onChange={(e) => setPseudo(e.target.value)}
                   type="Pseudo"
                   name="Pseudo"
                   id="Pseudo"
-                  className="form-control relative block w-full appearance-none bg-transparent rounded-full border border-gray-300 px-3 py-2 text-white placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                  className={`form-control relative block w-full appearance-none bg-transparent rounded-full border border-${
+                    redForm.includes("pseudo") ? "red-700" : "white"
+                  } px-3 py-2 text-white placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm`}
                 />
               </div>
+              {redForm.includes("pseudo") ? (
+                <p className="text-sm text-red-700">
+                  Veuillez remplir ce champ
+                </p>
+              ) : (
+                ""
+              )}
             </label>
-            <label className="flex flex-col justify-center text-white">
+            <label
+              className={`flex flex-col justify-center text-white ${
+                redForm.includes("pseudo") ? "mt-[0rem]" : "mt-5"
+              }`}
+            >
               Prénom
-              <div className="flex flex-row-reverse border rounded-[3rem] border-white h-[90%]">
+              <div
+                className={`flex flex-row-reverse border rounded-[3rem] border-${
+                  redForm.includes("firstname") ? "red-700" : "white"
+                } h-[90%]`}
+              >
                 <input
                   onChange={(e) => setFirstName(e.target.value)}
                   type="firstname"
                   name="firstname"
                   id="firstName"
-                  className="form-control relative block w-full appearance-none bg-transparent rounded-full border border-gray-300 px-3 py-2 text-white placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                  className={`form-control relative block w-full appearance-none bg-transparent rounded-full border border-${
+                    redForm.includes("firstname") ? "red-700" : "white"
+                  } px-3 py-2 text-white placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm`}
                 />
               </div>
+              {redForm.includes("firstname") ? (
+                <p className="text-sm text-red-700">
+                  Veuillez remplir ce champ
+                </p>
+              ) : (
+                ""
+              )}
             </label>
-            <label className="flex flex-col justify-center text-white">
+            <label
+              className={`flex flex-col justify-center text-white ${
+                redForm.includes("firstname") ? "mt-[0rem]" : "mt-5"
+              }`}
+            >
               Nom
-              <div className="flex flex-row-reverse border rounded-[3rem] border-white h-[90%]">
+              <div
+                className={`flex flex-row-reverse border rounded-[3rem] border-${
+                  redForm.includes("lastname") ? "red-700" : "white"
+                } h-[90%]`}
+              >
                 <input
                   onChange={(e) => setLastName(e.target.value)}
                   type="lastname"
                   name="lastname"
                   id="lastName"
-                  className="form-control relative block w-full appearance-none bg-transparent rounded-full border border-gray-300 px-3 py-2 text-white placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                  className={`form-control relative block w-full appearance-none bg-transparent rounded-full border border-${
+                    redForm.includes("lastname") ? "red-700" : "white"
+                  } px-3 py-2 text-white placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm`}
                 />
               </div>
+              {redForm.includes("lastname") ? (
+                <p className="text-sm text-red-700">
+                  Veuillez remplir ce champ
+                </p>
+              ) : (
+                ""
+              )}
             </label>
-            <label className="flex flex-col justify-center text-white">
+            <label
+              className={`flex flex-col justify-center text-white ${
+                redForm.includes("lastname") ? "mt-[0rem]" : "mt-5"
+              }`}
+            >
               Adresse email
-              <div className="flex flex-row-reverse border rounded-[3rem] border-white h-[90%]">
+              <div
+                className={`flex flex-row-reverse border rounded-[3rem] border-${
+                  redForm.includes("email") ? "red-700" : "white"
+                } h-[90%]`}
+              >
                 <input
                   onChange={(e) => setEmail(e.target.value)}
                   type="email"
                   name="Adresse-email"
                   id="email"
-                  className="form-control relative block w-full appearance-none bg-transparent rounded-full border border-gray-300 px-3 py-2 text-white placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                  className={`form-control relative block w-full appearance-none bg-transparent rounded-full border border-${
+                    redForm.includes("email") ? "red-700" : "white"
+                  } px-3 py-2 text-white placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm`}
                 />
               </div>
+              {redForm.includes("email") ? (
+                <p className="text-sm text-red-700">
+                  Veuillez remplir ce champ
+                </p>
+              ) : (
+                ""
+              )}
             </label>
-            <label className="flex flex-col justify-center text-white">
+            <label
+              className={`flex flex-col justify-center text-white ${
+                redForm.includes("email") ? "mt-[0rem]" : "mt-5"
+              }`}
+            >
               Mot de passe
-              <div className="flex flex-row-reverse border rounded-[3rem] border-white h-[90%]">
+              <div
+                className={`flex flex-row-reverse border rounded-[3rem] border-${
+                  redForm.includes("password") ? "red-700" : "white"
+                } h-[90%]`}
+              >
                 <input
                   onChange={(e) => setPassword(e.target.value)}
                   type={showPassWord ? "password" : "text"}
                   name="password"
                   id="password"
-                  className="form-control relative block w-full appearance-none bg-transparent rounded-full border border-gray-300 px-3 py-2 text-white placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                  className={`form-control relative block w-full appearance-none bg-transparent rounded-full border border-${
+                    redForm.includes("password") ? "red-700" : "white"
+                  } px-3 py-2 text-white placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm`}
                 />
 
                 {showPassWord ? (
@@ -162,14 +247,33 @@ function Form() {
                   </svg>
                 )}
               </div>
+              {redForm.includes("password") ? (
+                <p className="text-sm text-red-700">
+                  Veuillez remplir ce champ
+                </p>
+              ) : (
+                ""
+              )}
             </label>
-            <label className="flex flex-col justify-center text-white ">
+            <label
+              className={`flex flex-col justify-center text-white ${
+                redForm.includes("password") ? "mt-[0rem]" : "mt-5"
+              }`}
+            >
               Confirmer le mot le passe
-              <div className="flex flex-row-reverse border rounded-[3rem] border-white h-[90%] ">
+              <div
+                className={`flex flex-row-reverse border rounded-[3rem] border-${
+                  redForm.includes("verifPassword") ? "red-700" : "white"
+                } h-[90%]`}
+              >
                 <input
-                  type={showPassWord2 ? "password" : "text"}
-                  name="confirmPassword"
-                  className="bg-transparent pl-2 pr-2 border-none rounded-[3rem]"
+                  onChange={(e) => setVerifPassword(e.target.value)}
+                  type={showPassWord ? "password" : "text"}
+                  name="password"
+                  id="password"
+                  className={`form-control relative block w-full appearance-none bg-transparent rounded-full border border-${
+                    redForm.includes("verifPassword") ? "red-700" : "white"
+                  } px-3 py-2 text-white placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm`}
                 />
 
                 {showPassWord2 ? (
@@ -197,10 +301,20 @@ function Form() {
                   </svg>
                 )}
               </div>
+              {redForm.includes("pseudo") ? (
+                <p className="text-sm text-red-700">
+                  Veuillez remplir ce champ
+                </p>
+              ) : (
+                ""
+              )}
             </label>
+
             <button
               type="submit"
-              className="bg-gradient-to-tl from-pink to-lightblue rounded-3xl font-main-font text-[32px] py-1 px-6 "
+              className={`bg-gradient-to-tl from-pink to-lightblue rounded-3xl font-main-font text-[32px] py-1 px-6 ${
+                redForm.includes("firstname") ? "mt-[0.2rem]" : "mt-6"
+              }`}
             >
               S'INSCRIRE
             </button>

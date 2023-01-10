@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCurrentUserContext } from "../contexts/userContext";
 
+const backURL = import.meta.env.VITE_BACKEND_URL;
+
 export default function BlocConnexion() {
   const navigate = useNavigate();
   const { setUser, setToken } = useCurrentUserContext();
@@ -29,7 +31,7 @@ export default function BlocConnexion() {
 
     if ((email || pseudo) && password) {
       // on appelle le back
-      fetch("http://localhost:5000/connexion", requestOptions)
+      fetch(`${backURL}/connexion`, requestOptions)
         .then((response) => response.json())
         .then((result) => {
           setUser(result.users);
