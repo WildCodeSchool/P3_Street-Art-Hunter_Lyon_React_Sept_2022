@@ -17,7 +17,11 @@ export default function YourCollection({ setSelectedBadge }) {
   return (
     <div className="flex flex-wrap justify-center h-56 overflow-auto text-base border-4 border-white/50 rounded-3xl">
       {userCollection.map((badge) => (
-        <Badge setSelectedBadge={setSelectedBadge} badgeInfos={badge} />
+        <Badge
+          key={badge.badge_id}
+          setSelectedBadge={setSelectedBadge}
+          badgeInfos={badge}
+        />
       ))}
     </div>
   );

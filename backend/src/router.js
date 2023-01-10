@@ -44,7 +44,17 @@ router.get("/badges", badgeControllers.browse);
 router.get("/badges/:id", badgeControllers.read);
 router.get("/user/badges/:id", badgeControllers.getUserBadges);
 
-router.post("/badges", badgeControllers.add);
-router.put("/badges/:id", badgeControllers.edit);
+router.post(
+  "/badges",
+  verifyToken,
+  authControllers.isUserAdmin,
+  badgeControllers.add
+);
+router.put(
+  "/badges/:id",
+  verifyToken,
+  authControllers.isUserAdmin,
+  badgeControllers.edit
+);
 
 module.exports = router;

@@ -124,10 +124,7 @@ export default function BlocConnexion() {
 
             <div className="flex items-center justify-between">
               <div className="text-sm">
-                <a
-                  href="#"
-                  className="font-medium text-center text-white text-white"
-                >
+                <a href="#" className="font-medium text-center text-white">
                   Tu as oublié ton mot de passe ?
                 </a>
               </div>

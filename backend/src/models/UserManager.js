@@ -89,6 +89,13 @@ class UserManager extends AbstractManager {
       [id]
     );
   }
+
+  isUserAdmin(id) {
+    return this.connection.query(
+      `select is_admin from  ${this.table} where id = ?`,
+      [id]
+    );
+  }
 }
 
 module.exports = UserManager;

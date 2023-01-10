@@ -4,18 +4,6 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
--- -----------------------------------------------------
--- Schema mydb
--- -----------------------------------------------------
--- -----------------------------------------------------
--- Schema street_art_hunter
--- -----------------------------------------------------
-
--- -----------------------------------------------------
--- Schema street_art_hunter
--- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `street_art_hunter` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
-USE `street_art_hunter` ;
 
 -- -----------------------------------------------------
 -- Table `street_art_hunter`.`artist`
@@ -27,8 +15,7 @@ CREATE TABLE IF NOT EXISTS `street_art_hunter`.`artist` (
   `artist_name` VARCHAR(45) NULL DEFAULT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+DEFAULT CHARACTER SET = utf8mb4;
 
 
 -- -----------------------------------------------------
@@ -45,8 +32,7 @@ CREATE TABLE IF NOT EXISTS `street_art_hunter`.`badge` (
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 AUTO_INCREMENT = 6
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+DEFAULT CHARACTER SET = utf8mb4;
 
 
 -- -----------------------------------------------------
@@ -60,14 +46,13 @@ CREATE TABLE IF NOT EXISTS `street_art_hunter`.`user` (
   `lastname` VARCHAR(45) NOT NULL,
   `scorepoint` INT NULL DEFAULT '0',
   `pseudo` VARCHAR(45) NOT NULL,
-  `isAdmin` TINYINT NULL DEFAULT '0',
+  `is_admin` TINYINT NULL DEFAULT '0',
   `email` VARCHAR(100) NOT NULL,
   `hashedPassword` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 AUTO_INCREMENT = 11
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+DEFAULT CHARACTER SET = utf8mb4;
 
 
 
@@ -88,8 +73,7 @@ CREATE TABLE IF NOT EXISTS `street_art_hunter`.`work` (
     FOREIGN KEY (`artist_id`)
     REFERENCES `street_art_hunter`.`artist` (`id`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+DEFAULT CHARACTER SET = utf8mb4;
 
 
 -- -----------------------------------------------------
@@ -114,8 +98,7 @@ CREATE TABLE IF NOT EXISTS `street_art_hunter`.`picture` (
     FOREIGN KEY (`work_id`)
     REFERENCES `street_art_hunter`.`work` (`id`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+DEFAULT CHARACTER SET = utf8mb4;
 
 
 -- -----------------------------------------------------
@@ -131,8 +114,7 @@ CREATE TABLE IF NOT EXISTS `street_art_hunter`.`shop` (
   `description` VARCHAR(45) NULL DEFAULT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+DEFAULT CHARACTER SET = utf8mb4;
 
 
 -- -----------------------------------------------------
@@ -152,8 +134,7 @@ CREATE TABLE IF NOT EXISTS `street_art_hunter`.`user_has_badge` (
     FOREIGN KEY (`user_id`)
     REFERENCES `street_art_hunter`.`user` (`id`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+DEFAULT CHARACTER SET = utf8mb4;
 
 
 -- -----------------------------------------------------
@@ -173,8 +154,7 @@ CREATE TABLE IF NOT EXISTS `street_art_hunter`.`user_has_fav_picture` (
     FOREIGN KEY (`user_id`)
     REFERENCES `street_art_hunter`.`user` (`id`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+DEFAULT CHARACTER SET = utf8mb4;
 
 
 -- -----------------------------------------------------
@@ -194,8 +174,7 @@ CREATE TABLE IF NOT EXISTS `street_art_hunter`.`user_has_fav_work` (
     FOREIGN KEY (`work_id`)
     REFERENCES `street_art_hunter`.`work` (`id`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+DEFAULT CHARACTER SET = utf8mb4;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

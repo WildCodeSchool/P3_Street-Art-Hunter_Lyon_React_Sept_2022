@@ -6,7 +6,7 @@ export default function BadgeDesc({ selectedBadge }) {
     setBadge(selectedBadge);
   }, [selectedBadge]);
   return (
-    <div className="flex flex-wrap justify-center h-56 text-base border-4 border-white/50 rounded-3xl w-full">
+    <div className="flex flex-wrap justify-center h-56 text-base border-4 mb-4 border-white/50 rounded-3xl w-full">
       <div className="flex justify-around w-full items-center">
         <div className="bg-slate-400/60 h-[6.2rem] w-[6.2rem] rounded-2xl border-2 border-black/60 text-8xl text-center">
           {badge ? (
