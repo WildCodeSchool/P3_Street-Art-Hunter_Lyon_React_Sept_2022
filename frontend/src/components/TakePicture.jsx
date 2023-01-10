@@ -11,6 +11,7 @@ function TakePicture() {
 
   const videoConstraints = {
     height: 1000,
+    width: 450,
     facingMode: "user",
   };
   const webcamRef = React.useRef(null);
