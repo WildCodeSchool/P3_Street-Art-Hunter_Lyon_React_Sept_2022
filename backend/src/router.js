@@ -1,6 +1,17 @@
 const express = require("express");
 
+const multer = require("multer");
+
 const router = express.Router();
+
+// On définit la destination de stockage de nos fichiers
+
+const upload = multer({ dest: "uploads/" });
+
+// route POST pour recevoir un fichier dont le nom est "picture"
+router.post("/picture", upload.single("picture"), (req, res) => {
+  res.send("File uploaded");
+});
 
 // service d'authentification
 
