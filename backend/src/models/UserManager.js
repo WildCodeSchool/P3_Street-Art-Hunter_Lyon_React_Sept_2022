@@ -77,13 +77,22 @@ class UserManager extends AbstractManager {
 
   getIdByScorepoint(id) {
     return this.connection.query(
-      `SELECT id, FIND_IN_SET( scorepoint, (    
-        SELECT GROUP_CONCAT( scorepoint
-        ORDER BY scorepoint DESC ) 
-        FROM user )
-        ) AS ranking
-        FROM user
-        WHERE id = ?`,
+      `with user_rank as (SELECT pseudo, id, scorepoint, count(uhb.badge_id) as badges,  ROW_NUMBER() OVER( ORDER BY scorepoint desc, count(uhb.badge_id) desc, pseudo asc ) AS ranking
+      FROM ${this.table}
+      left join user_has_badge as uhb ON user.id = uhb.user_id
+      group by id
+      )
+      SELECT ranking, pseudo, id, scorepoint, badges
+      FROM user_rank
+      where id= ?
+      ORDER BY ranking;`,
+      [id]
+    );
+  }
+
+  isUserAdmin(id) {
+    return this.connection.query(
+      `select is_admin from  ${this.table} where id = ?`,
       [id]
     );
   }
