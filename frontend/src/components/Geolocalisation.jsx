@@ -6,7 +6,7 @@ function Geolocalisation() {
   } else {
     console.warn("Not Available");
   }
-  navigator.geolocation.getCurrentPosition(function (position) {
+  navigator.geolocation.getCurrentPosition((position) => {
     console.warn("Latitude is :", position.coords.latitude);
     console.warn("Longitude is :", position.coords.longitude);
   });
