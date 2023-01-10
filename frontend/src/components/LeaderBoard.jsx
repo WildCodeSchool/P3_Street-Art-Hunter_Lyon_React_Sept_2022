@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 
+const backURL = import.meta.env.VITE_BACKEND_URL;
+
 export default function LeaderBoard() {
   const [leaders, setLeaders] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/leader")
+    fetch(`${backURL}/leader`)
       .then((result) => result.json())
       .then((result) => {
         setLeaders(result);

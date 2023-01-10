@@ -63,8 +63,8 @@ DROP TABLE IF EXISTS `street_art_hunter`.`work` ;
 
 CREATE TABLE IF NOT EXISTS `street_art_hunter`.`work` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `Longitude` DECIMAL(10,9) NULL DEFAULT NULL,
-  `Latitude` DECIMAL(10,9) NULL DEFAULT NULL,
+  `longitude` DECIMAL(10,9) NULL DEFAULT NULL,
+  `latitude` DECIMAL(10,9) NULL DEFAULT NULL,
   `value_point` INT NULL DEFAULT NULL,
   `artist_id` INT NOT NULL,
   PRIMARY KEY (`id`),
@@ -109,8 +109,8 @@ DROP TABLE IF EXISTS `street_art_hunter`.`shop` ;
 CREATE TABLE IF NOT EXISTS `street_art_hunter`.`shop` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `type` VARCHAR(45) NULL DEFAULT NULL,
-  `Longitude` DECIMAL(10,9) NULL DEFAULT NULL,
-  `Latitude` DECIMAL(10,9) NULL DEFAULT NULL,
+  `longitude` DECIMAL(10,9) NULL DEFAULT NULL,
+  `latitude` DECIMAL(10,9) NULL DEFAULT NULL,
   `description` VARCHAR(45) NULL DEFAULT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
