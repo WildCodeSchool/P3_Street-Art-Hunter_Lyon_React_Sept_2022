@@ -13,6 +13,7 @@ import Menu from "@pages/Menu";
 import Profil from "@pages/Profil";
 import Scores from "@pages/Scores";
 import Stepper from "@pages/Stepper";
+import ArtistCardContainer from "@components/ArtistCardContainer";
 
 import "./App.css";
 
@@ -30,7 +31,10 @@ function App() {
           <Route path="/scores" element={<Scores />} />
           <Route path="/menu" element={<Menu />} />
           <Route path="/help" element={<Help />} />
-          <Route path="/galerie" element={<Galerie allOrLive="all" />} />
+          <Route
+            path="/galerie"
+            element={<ArtistCardContainer allOrLive="all" />}
+          />
           <Route path="/map" element={<Map />} />
           <Route path="/profil" element={<Profil />} />
           <Route path="/favoris" element={<Favoris />} />

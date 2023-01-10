@@ -26,6 +26,7 @@
     "leaflet": "^1.9.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-dom-camera": "^0.3.5",
     "react-html5-camera-photo": "^1.5.11",
     "react-leaflet": "^4.2.0",
     "react-router-dom": "^6.5.0"

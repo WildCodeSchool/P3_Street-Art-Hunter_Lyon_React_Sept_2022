@@ -3,14 +3,18 @@ import Allive from "@components/AllLive";
 import BottomNav from "@components/BottomNav";
 import Filters from "@components/Filters";
 import Header from "@components/Header";
+import ArtistCardContainer from "@components/ArtistCardContainer";
 
-export default function Galerie({ allOrLive }) {
+function Galerie({ allOrLive }) {
   return (
-    <div className="bg-main-background text-white font-main-font bg-cover w-full h-screen">
+    <div>
       <Header />
       <Allive />
       <Filters allOrLive={allOrLive} />
+      <ArtistCardContainer />
       <BottomNav />
     </div>
   );
 }
+
+export default Galerie;

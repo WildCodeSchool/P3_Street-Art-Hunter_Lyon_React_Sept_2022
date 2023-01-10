@@ -1,9 +1,11 @@
 import React from "react";
 
-function ImageCardArtist() {
+function ImageCardArtist(props) {
+  const { pictures } = props;
+
   return (
     <div className="flex justify-center">
-      <div className="bg-graph1 w-[100%] h-[17vh] bg-cover" />
+      <img src={pictures} alt="street art" />
     </div>
   );
 }

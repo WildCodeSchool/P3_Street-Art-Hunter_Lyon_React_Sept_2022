@@ -42,6 +42,13 @@ module.exports = {
         photobutton: ["1px 1px 4px #FFFFFF"],
         bottomtop: ["1px 1px 3px #FFFFFF"],
       },
+      cards: {
+        ArtistCards: {
+          cardsRounded: [
+            "rounded-3xl, bg-pink-400 shadow-[20px 20px 60px #d472b0 -20px -20px 60px #ff9aee;]",
+          ],
+        },
+      },
     },
   },
   // eslint-disable-next-line import/no-extraneous-dependencies, global-require
