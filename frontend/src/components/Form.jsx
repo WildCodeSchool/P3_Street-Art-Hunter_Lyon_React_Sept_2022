@@ -1,7 +1,7 @@
 /* eslint-disable no-const-assign */
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import InscriptionDone from "./popupvalidationinscription";
+import InscriptionDone from "./Popupvalidationinscription";
 
 function Form() {
   const navigate = useNavigate();
@@ -75,7 +75,7 @@ function Form() {
   const [showPassWord2, setshowPassWord2] = useState(true);
 
   return (
-    <div className="flex flex-col justify-center items-center  backdrop-blur-sm rounded-[3rem] mt-2 ml-2 w-[95%]">
+    <div className="flex flex-col  justify-center items-center  backdrop-blur-sm rounded-[3rem] mt-2 ml-2 w-[95%]">
       {doneinscr ? (
         ""
       ) : (
