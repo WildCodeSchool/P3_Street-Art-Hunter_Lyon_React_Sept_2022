@@ -9,7 +9,7 @@ function Step1({ setStep, step }) {
   };
 
   return (
-    <div className="absolute bottom-0 bg-fondStepper bg-cover bg-no-repeat w-screen h-5/6  flex flex-col items-center justify-around ">
+    <div className="slide-in-bottom absolute bottom-0 bg-fondStepper bg-cover bg-no-repeat w-screen h-5/6  flex flex-col items-center justify-around ">
       <div className="flex flex-col inset-x-0 bottom-0">
         <div className="absolute top-8  bg-lyon h-[25vh] w-full bg-contain bg-center bg-no-repeat mt-[8rem]" />
         <p className="font-main-font  text-center text-2xl mt-[22rem] px-10 min-h-fit">

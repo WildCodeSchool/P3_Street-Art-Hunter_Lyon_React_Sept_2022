@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Webcam from "react-webcam";
 import BottomNavCamera from "./BottomNavCamera";
 import BottomNavCamActive from "./BottomNavCamActive";
+import Geolocalisation from "./Geolocalisation";
 
 function TakePicture() {
   const [photo, setPhoto] = useState(false);
@@ -25,6 +26,7 @@ function TakePicture() {
 
   return (
     <>
+      <Geolocalisation />
       {!photo ? (
         <Webcam
           audio={false}

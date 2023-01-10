@@ -21,6 +21,11 @@
     "husky": "^7.0.0"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@mui/icons-material": "^5.11.0",
+    "@mui/material": "^5.11.3",
+    "@mui/styled-engine-sc": "^5.11.0",
     "argon2": "^0.30.2",
     "jslib-html5-camera-photo": "^3.3.4",
     "jsonwebtoken": "^9.0.0",
@@ -31,6 +36,7 @@
     "react-html5-camera-photo": "^1.5.11",
     "react-leaflet": "^4.2.0",
     "react-router-dom": "^6.5.0",
-    "react-webcam": "^7.0.1"
+    "react-webcam": "^7.0.1",
+    "styled-components": "^5.3.6"
   }
 }

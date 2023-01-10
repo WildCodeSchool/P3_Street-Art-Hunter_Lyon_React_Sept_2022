@@ -3,17 +3,20 @@ import React, { useState } from "react";
 import L from "leaflet";
 // eslint-disable-next-line import/no-unresolved
 import { MapContainer, TileLayer } from "react-leaflet";
-import Header from "@components/Header";
 // eslint-disable-next-line import/no-unresolved
 import "leaflet/dist/leaflet.css";
 import BottomNavMap from "@components/BottomNavMap";
+import HeaderWithBurger from "@components/HeaderWithBurger";
 import AddMarkerShop from "../components/AddMarkerShop";
 import AddMarkerArt from "../components/AddMarkerArt";
+import { useCurrentUserContext } from "../contexts/userContext";
+import Menu from "./Menu";
 
 function Map() {
   const [activeShop, setActiveShop] = useState(false);
   const [activeArt, setActiveArt] = useState(false);
   const [layerGroup] = useState(L.layerGroup());
+  const { open } = useCurrentUserContext();
 
   const handleActiveShop = () => {
     layerGroup.clearLayers();
@@ -26,37 +29,48 @@ function Map() {
   };
 
   return (
-    <div className="bg-main-background text-white font-main-font bg-cover w-full h-screen">
-      <Header />
-      <MapContainer
-        center={[45.7578137, 4.8320114]}
-        zoom={12}
-        scrollWheelZoom
-        zoomControl={false}
-        className="custom-popup"
-      >
-        <TileLayer
-          attribution='&copy; <a href="https://stadiamaps.com/">Stadia Maps</a> contributors'
-          url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png"
-        />
-        {activeShop && (
-          <AddMarkerShop
-            handleActiveShop={handleActiveShop}
-            layerGroup={layerGroup}
-          />
-        )}
-        {activeArt && (
-          <AddMarkerArt
-            handleActiveArt={handleActiveArt}
-            layerGroup={layerGroup}
-          />
-        )}
-      </MapContainer>
+    <div>
+      {!open ? (
+        <div className="bg-main-background text-white font-main-font bg-cover w-full h-screen">
+          <HeaderWithBurger />
 
-      <BottomNavMap
-        handleActiveShop={handleActiveShop}
-        handleActiveArt={handleActiveArt}
-      />
+          <div className="mt-[6rem]">
+            <MapContainer
+              center={[45.7578137, 4.8320114]}
+              zoom={12}
+              scrollWheelZoom
+              zoomControl={false}
+              className="custom-popup"
+            >
+              <TileLayer
+                attribution='&copy; <a href="https://stadiamaps.com/">Stadia Maps</a> contributors'
+                url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png"
+              />
+              {activeShop && (
+                <AddMarkerShop
+                  handleActiveShop={handleActiveShop}
+                  layerGroup={layerGroup}
+                />
+              )}
+              {activeArt && (
+                <AddMarkerArt
+                  handleActiveArt={handleActiveArt}
+                  layerGroup={layerGroup}
+                />
+              )}
+            </MapContainer>
+
+            <BottomNavMap
+              handleActiveShop={handleActiveShop}
+              handleActiveArt={handleActiveArt}
+            />
+          </div>
+        </div>
+      ) : (
+        <div className="bg-main-background backdrop-blur-md text-white font-main-font bg-cover w-full h-screen">
+          <Menu />
+        </div>
+      )}
     </div>
   );
 }
