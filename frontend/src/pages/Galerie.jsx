@@ -2,19 +2,31 @@ import React from "react";
 import Allive from "@components/AllLive";
 import BottomNav from "@components/BottomNav";
 import Filters from "@components/Filters";
-import Header from "@components/Header";
+import HeaderWithBurger from "@components/HeaderWithBurger";
 import ArtistCardContainer from "@components/ArtistCardContainer";
+import { useCurrentUserContext } from "../contexts/userContext";
+import Menu from "./Menu";
 
-function Galerie({ allOrLive }) {
+export default function Galerie({ allOrLive }) {
+  const { open } = useCurrentUserContext();
   return (
     <div>
-      <Header />
-      <Allive />
-      <Filters allOrLive={allOrLive} />
-      <ArtistCardContainer />
-      <BottomNav />
+      {!open ? (
+        <div className="bg-main-background text-white font-main-font bg-cover w-full h-screen">
+          <HeaderWithBurger />
+          <Allive />
+          <Filters allOrLive={allOrLive} />
+          <div className="flex flex-wrap justify-around">
+            <ArtistCardContainer />
+          </div>
+
+          <BottomNav />
+        </div>
+      ) : (
+        <div className="bg-main-background backdrop-blur-md text-white font-main-font bg-cover w-full h-screen">
+          <Menu />
+        </div>
+      )}
     </div>
   );
 }
-
-export default Galerie;

@@ -6,7 +6,7 @@ import SwitchButtonNav from "./SwitchButtonNav";
 
 export default function Allive() {
   return (
-    <div className="w-9/10 h-[30px] bg- drop-shadow-bottomtop flex items-end justify-around">
+    <div className="w-9/10 h-[30px] bg- drop-shadow-bottomtop flex items-end justify-around mt-[8rem]">
       <NavLink to="/galerie/all">
         <SwitchButtonNav
           content="ALL"

@@ -2,7 +2,7 @@ const AbstractManager = require("./AbstractManager");
 
 class UserManager extends AbstractManager {
   constructor() {
-    super({ table: "users" });
+    super({ table: "user" });
   }
 
   find(id) {
@@ -52,6 +52,41 @@ class UserManager extends AbstractManager {
         users.email,
         users.hashedPassword,
       ]
+    );
+  }
+
+  getLeaderboard() {
+    return this.connection.query(
+      `select pseudo, scorepoint, count(uhb.badge_id) as badges from ${this.table} as u
+      left join user_has_badge as uhb ON u.id = uhb.user_id
+      group by id
+      order by scorepoint desc, badges desc
+      limit 20;`
+    );
+  }
+
+  getScore(id) {
+    return this.connection.query(
+      `select pseudo, scorepoint, count(uhb.badge_id) as badges from ${this.table} as u
+      left join user_has_badge as uhb ON u.id = uhb.user_id
+      where id=?
+      group by id;`,
+      [id]
+    );
+  }
+
+  getIdByScorepoint(id) {
+    return this.connection.query(
+      `with user_rank as (SELECT pseudo, id, scorepoint, count(uhb.badge_id) as badges,  ROW_NUMBER() OVER( ORDER BY scorepoint desc, count(uhb.badge_id) desc, pseudo asc ) AS ranking
+      FROM ${this.table}
+      left join user_has_badge as uhb ON user.id = uhb.user_id
+      group by id
+      )
+      SELECT ranking, pseudo, id, scorepoint, badges
+      FROM user_rank
+      where id= ?
+      ORDER BY ranking;`,
+      [id]
     );
   }
 }

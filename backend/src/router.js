@@ -2,18 +2,17 @@ const express = require("express");
 
 const router = express.Router();
 
-// service d'authentification
-
 const {
   hashPassword,
   verifyPassword,
   verifyToken,
 } = require("./services/auth");
 const authControllers = require("./controllers/authControllers");
-const itemControllers = require("./controllers/itemControllers");
 const userControllers = require("./controllers/userControllers");
 const PictureControllers = require("./controllers/PictureControllers");
 const ArtistControllers = require("./controllers/ArtistControllers");
+const badgeControllers = require("./controllers/badgeControllers");
+
 // Auth
 router.post("/inscription", hashPassword, userControllers.add);
 router.post(
@@ -25,9 +24,17 @@ router.post(
 // Gestion des users
 router.get("/users", userControllers.browse);
 router.get("/users/:id", userControllers.read);
+router.get("/leader", userControllers.leaderboard);
+router.get("/score/:id", userControllers.getMyscore);
+router.get("/rank/:id", userControllers.getRanks);
+
 router.post("/users", hashPassword, verifyToken, userControllers.add);
 router.put("/users/:id", hashPassword, verifyToken, userControllers.edit);
 router.delete("/users/:id", verifyToken, userControllers.destroy);
+// Gestion des badges
+router.get("/badges", badgeControllers.browse);
+router.get("/badges/:id", badgeControllers.read);
+router.get("/user/badges/:id", badgeControllers.getUserBadges);
 
 // Gestion des images
 router.get("/Picture", verifyToken, PictureControllers.browse);
@@ -39,12 +46,6 @@ router.delete(
   verifyToken,
   PictureControllers.destroy
 );
-
-router.get("/items", itemControllers.browse);
-router.get("/items/:id", itemControllers.read);
-router.put("/items/:id", itemControllers.edit);
-router.post("/items", itemControllers.add);
-router.delete("/items/:id", itemControllers.destroy);
 
 // Gestion des artists
 router.get("/Artists", verifyToken, ArtistControllers.browse);

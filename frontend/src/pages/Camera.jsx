@@ -1,5 +1,5 @@
 import React from "react";
-import Header from "../components/Header";
+import Header from "@components/Header";
 import TakePicture from "../components/TakePicture";
 
 export default function Camera() {

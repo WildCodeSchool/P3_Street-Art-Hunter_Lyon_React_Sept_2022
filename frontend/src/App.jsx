@@ -14,9 +14,11 @@ import Profil from "@pages/Profil";
 import Scores from "@pages/Scores";
 import Stepper from "@pages/Stepper";
 import ArtistCardContainer from "@components/ArtistCardContainer";
+import Contact from "@pages/Contact";
 
 import "./App.css";
 
+import Dashboard from "@pages/Dashboard";
 import { CurrentUserContextProvider } from "./contexts/userContext";
 
 function App() {
@@ -28,6 +30,7 @@ function App() {
           <Route path="/connexion" element={<Connexion />} />
           <Route path="/inscription" element={<Registration />} />
           <Route path="/stepper" element={<Stepper />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/scores" element={<Scores />} />
           <Route path="/menu" element={<Menu />} />
           <Route path="/help" element={<Help />} />
@@ -42,6 +45,7 @@ function App() {
           <Route path="/badges" element={<Badges />} />
           <Route path="/camera" element={<Camera />} />
           <Route path="/galerie/all" element={<Galerie allOrLive="all" />} />
+          <Route path="/Contact" element={<Contact />} />
           <Route
             path="/galerie/all/oeuvres"
             element={<Galerie allOrLive="all" />}
