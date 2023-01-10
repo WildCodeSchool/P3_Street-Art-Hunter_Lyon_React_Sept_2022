@@ -7,10 +7,6 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS
 SET @OLD_SQL_MODE=@@SQL_MODE
 , SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
--- -----------------------------------------------------
--- Schema mydb
--- -----------------------------------------------------
-
 
 -- -----------------------------------------------------
 -- Table `street_art_hunter`.`artist`
@@ -27,8 +23,7 @@ IF NOT EXISTS `street_art_hunter`.`artist`
 (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER
-SET = utf8mb4
-
+SET = utf8mb4;
 
 
 -- -----------------------------------------------------
@@ -53,8 +48,7 @@ IF NOT EXISTS `street_art_hunter`.`badge`
 ENGINE = InnoDB
 AUTO_INCREMENT = 6
 DEFAULT CHARACTER
-SET = utf8mb4
-
+SET = utf8mb4;
 
 
 -- -----------------------------------------------------
@@ -73,7 +67,7 @@ IF NOT EXISTS `street_art_hunter`.`user`
   `scorepoint` INT NULL DEFAULT '0',
   `pseudo` VARCHAR
 (45) NOT NULL,
-  `isAdmin` TINYINT NULL DEFAULT '0',
+  `is_admin` TINYINT NULL DEFAULT '0',
   `email` VARCHAR
 (100) NOT NULL,
   `hashedPassword` VARCHAR
@@ -83,8 +77,7 @@ IF NOT EXISTS `street_art_hunter`.`user`
 ENGINE = InnoDB
 AUTO_INCREMENT = 11
 DEFAULT CHARACTER
-SET = utf8mb4
-
+SET = utf8mb4;
 
 
 
@@ -97,9 +90,9 @@ CREATE TABLE
 IF NOT EXISTS `street_art_hunter`.`work`
 (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `Longitude` DECIMAL
+  `longitude` DECIMAL
 (10,9) NULL DEFAULT NULL,
-  `Latitude` DECIMAL
+  `latitude` DECIMAL
 (10,9) NULL DEFAULT NULL,
   `value_point` INT NULL DEFAULT NULL,
   `artist_id` INT NOT NULL,
@@ -114,8 +107,7 @@ IF NOT EXISTS `street_art_hunter`.`work`
 (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER
-SET = utf8mb4
-
+SET = utf8mb4;
 
 
 -- -----------------------------------------------------
@@ -151,8 +143,7 @@ IF NOT EXISTS `street_art_hunter`.`picture`
 (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER
-SET = utf8mb4
-
+SET = utf8mb4;
 
 
 -- -----------------------------------------------------
@@ -166,9 +157,9 @@ IF NOT EXISTS `street_art_hunter`.`shop`
   `id` INT NOT NULL AUTO_INCREMENT,
   `type` VARCHAR
 (45) NULL DEFAULT NULL,
-  `Longitude` DECIMAL
+  `longitude` DECIMAL
 (10,9) NULL DEFAULT NULL,
-  `Latitude` DECIMAL
+  `latitude` DECIMAL
 (10,9) NULL DEFAULT NULL,
   `description` VARCHAR
 (45) NULL DEFAULT NULL,
@@ -176,8 +167,7 @@ IF NOT EXISTS `street_art_hunter`.`shop`
 (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER
-SET = utf8mb4
-
+SET = utf8mb4;
 
 
 -- -----------------------------------------------------
@@ -206,8 +196,7 @@ IF NOT EXISTS `street_art_hunter`.`user_has_badge`
 (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER
-SET = utf8mb4
-
+SET = utf8mb4;
 
 
 -- -----------------------------------------------------
@@ -237,7 +226,7 @@ IF NOT EXISTS `street_art_hunter`.`user_has_fav_picture`
 ENGINE = InnoDB
 DEFAULT CHARACTER
 SET = utf8mb4
-
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -267,7 +256,7 @@ IF NOT EXISTS `street_art_hunter`.`user_has_fav_work`
 ENGINE = InnoDB
 DEFAULT CHARACTER
 SET = utf8mb4
-
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 SET SQL_MODE

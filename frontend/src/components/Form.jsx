@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import InscriptionDone from "./Popupvalidationinscription";
 
+const backURL = import.meta.env.VITE_BACKEND_URL;
+
 function Form() {
   const navigate = useNavigate();
   const [pseudo, setPseudo] = useState("");
@@ -47,7 +49,7 @@ function Form() {
       };
       e.preventDefault();
       // on créé un nouvel utilisateur et on reutilise
-      fetch("http://localhost:5000/inscription", requestOptions)
+      fetch(`${backURL}/inscription`, requestOptions)
         .then(() => {
           setDoneInscr(true);
 
