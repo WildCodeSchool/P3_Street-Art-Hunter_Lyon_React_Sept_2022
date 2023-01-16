@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import BadgeContainer from "@components/BadgeContainer";
 import BadgesCollectionModal from "@components/BadgesCollectionModal";
 import Header from "@components/Header";
