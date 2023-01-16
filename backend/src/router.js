@@ -47,15 +47,15 @@ router.post(
 );
 
 // Gestion des users
-router.get("/users", userControllers.browse);
-router.get("/users/:id", userControllers.read);
+router.get("/user", userControllers.browse);
+router.get("/user/:id", userControllers.read);
 router.get("/leader", userControllers.leaderboard);
 router.get("/score/:id", userControllers.getMyscore);
 router.get("/rank/:id", userControllers.getRanks);
 
-router.post("/users", hashPassword, verifyToken, userControllers.add);
-router.put("/users/:id", hashPassword, verifyToken, userControllers.edit);
-router.delete("/users/:id", verifyToken, userControllers.destroy);
+router.post("/user", hashPassword, verifyToken, userControllers.add);
+router.put("/user/:id", hashPassword, verifyToken, userControllers.edit);
+router.delete("/user/:id", verifyToken, userControllers.destroy);
 // Gestion des badges
 router.get("/badges", badgeControllers.browse);
 router.get("/badges/:id", badgeControllers.read);

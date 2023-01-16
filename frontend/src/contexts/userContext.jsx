@@ -21,9 +21,8 @@ export function CurrentUserContextProvider({ children }) {
 
   const [user, setUser] = useLocalStorage("user", {});
   const [token, setToken] = useLocalStorage("token", "");
-  const [takePicture, setTakePicture] = useLocalStorage("takePicture", []);
-  const [artists, setArtists] = useLocalStorage("artists", []);
-  const [pictures, setPictures] = useLocalStorage("pictures", []);
+  const [artist, setArtist] = useLocalStorage("artist", []);
+  const [picture, setPicture] = useLocalStorage("picture", []);
 
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values
@@ -33,12 +32,10 @@ export function CurrentUserContextProvider({ children }) {
         setUser,
         token,
         setToken,
-        takePicture,
-        setTakePicture,
-        artists,
-        setArtists,
-        pictures,
-        setPictures,
+        artist,
+        setArtist,
+        picture,
+        setPicture,
         open,
         handleClickOpen,
         handleClose,

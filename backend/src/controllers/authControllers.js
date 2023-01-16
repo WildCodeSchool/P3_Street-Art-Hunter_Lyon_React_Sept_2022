@@ -7,7 +7,7 @@ const getUserByEmailWithPasswordAndPassToNext = (req, res, next) => {
     .findByEmailOrPseudoWithPassword(email)
     .then(([users]) => {
       if (users[0]) {
-        [req.users] = users;
+        [req.user] = users;
         next();
       } else res.status(401).send({ error: "Email ou pseudo incorrect" });
     })

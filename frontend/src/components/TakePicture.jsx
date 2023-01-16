@@ -4,13 +4,13 @@ import Webcam from "react-webcam";
 import BottomNavCamera from "./BottomNavCamera";
 import BottomNavCamActive from "./BottomNavCamActive";
 import Geolocalisation from "./Geolocalisation";
+// import { useCurrentUserContext } from "../contexts/userContext";
 
-const backURL = import.meta.env.VITE_BACKEND_URL;
+// const backURL = import.meta.env.VITE_BACKEND_URL;
 
 function TakePicture() {
   const [photo, setPhoto] = useState(false);
   const [validation, setValidation] = useState(false);
-  const [pic, setPic] = useState("");
 
   const videoConstraints = {
     height: 1000,
@@ -25,19 +25,8 @@ function TakePicture() {
     setImgSrc(imageSrc);
     setPhoto(!photo);
     setValidation(!validation);
-    setPic(imageSrc);
+    // setPic(imageSrc);
   }, [webcamRef, setImgSrc]);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const requestOptions = {
-      method: "POST",
-      file: pic,
-    };
-
-    fetch(`${backURL}/photo`, requestOptions);
-  };
 
   return (
     <>
@@ -60,7 +49,7 @@ function TakePicture() {
         <BottomNavCamActive
           setPhoto={setPhoto}
           setValidation={setValidation}
-          handleSubmit={handleSubmit}
+          // handleSubmit={handleSubmit}
         />
       )}
     </>
