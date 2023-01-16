@@ -1,6 +1,6 @@
 import React from "react";
-import HeaderWithBurger from "@components/HeaderWithBurger";
-import UserCardContainer from "@components/UserCardContainer";
+import HeaderWithBurger from "../components/HeaderWithBurger";
+import UserCardContainer from "../components/UserCardContainer";
 import { useCurrentUserContext } from "../contexts/userContext";
 import Menu from "./Menu";
 
