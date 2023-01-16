@@ -11,6 +11,7 @@ function Board() {
       <ArtDashContainer />
       <ArtDashContainer />
       <ArtDashContainer />
+      <ArtDashContainer />
     </div>
   );
 }

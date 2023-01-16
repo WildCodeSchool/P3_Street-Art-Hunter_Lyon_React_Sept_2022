@@ -1,27 +1,33 @@
 import React from "react";
-
-import Header from "@components/Header";
-import BottomNav from "@components/BottomNav";
+import HeaderWithBurger from "@components/HeaderWithBurger";
 import UserCardContainer from "@components/UserCardContainer";
+import { useCurrentUserContext } from "../contexts/userContext";
+import Menu from "./Menu";
 
 function Favoris() {
+  const { open } = useCurrentUserContext();
   return (
-    <div className="bg-main-background bg-cover w-full h-screen">
-      <Header />
-      <div className="h-[3.5rem] pt-3 font-main-font w-screen flex justify-center text-white items-center text-3xl">
-        TES COUPS DE COEUR
-      </div>
-      <div className="flex justify-around flex-wrap overflow-auto h-[60vh]">
-        <UserCardContainer />
-        <UserCardContainer />
-        <UserCardContainer />
-        <UserCardContainer />
-        <UserCardContainer />
-        <UserCardContainer />
-        <UserCardContainer />
-        <UserCardContainer />
-        <BottomNav />
-      </div>
+    <div>
+      {!open ? (
+        <div className="bg-main-background bg-cover w-full h-screen">
+          <HeaderWithBurger />
+          <div className="h-[3.5rem] pt-3 font-main-font w-screen flex justify-center text-white items-center text-3xl mt-20 mb-4">
+            TES COUPS DE COEUR
+          </div>
+          <div className="flex justify-around flex-wrap overflow-auto h-[70vh]">
+            <UserCardContainer />
+            <UserCardContainer />
+            <UserCardContainer />
+            <UserCardContainer />
+            <UserCardContainer />
+            <UserCardContainer />
+            <UserCardContainer />
+            <UserCardContainer />
+          </div>
+        </div>
+      ) : (
+        <Menu />
+      )}
     </div>
   );
 }
