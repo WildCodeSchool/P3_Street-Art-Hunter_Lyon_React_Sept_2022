@@ -42,6 +42,7 @@ function App() {
           <Route path="/camera" element={<Camera />} />
           <Route path="/galerie/all" element={<Galerie allOrLive="all" />} />
           <Route path="/Contact" element={<Contact />} />
+          <Route path="/MaGalerie" element={<MaGalerie />} />
           <Route
             path="/galerie/all/oeuvres"
             element={<Galerie allOrLive="all" />}

@@ -4,6 +4,10 @@ import user from "@assets/user.svg";
 import badge from "@assets/badge.svg";
 import message from "@assets/message.svg";
 import score from "@assets/score.svg";
+import camera from "@assets/camdash.svg";
+import artwork from "@assets/dashartwork.svg";
+import artist from "@assets/dashartist.svg";
+import shop from "@assets/dashshop.svg";
 
 function LateralMenu() {
   return (
@@ -20,6 +24,7 @@ function LateralMenu() {
           <img src={user} className="w-6 h-6" alt="" />
           <p className="font-main-font p-6 text-2xl text-white">USER</p>
         </div>
+
         <div className="flex justify-start items-center hover:backdrop-blur-sm hover:bg-white/10 pl-8">
           <img src={score} className="w-6 h-6" alt="" />
           <p className="font-main-font p-6 text-2xl text-white">SCORES</p>
@@ -31,6 +36,22 @@ function LateralMenu() {
         <div className="flex justify-start items-center hover:backdrop-blur-sm hover:bg-white/10 pl-8">
           <img src={message} className="w-6 h-6" alt="" />
           <p className="font-main-font p-6 text-2xl text-white">MESSAGES</p>
+        </div>
+        <div className="flex justify-start items-center hover:backdrop-blur-sm hover:bg-white/10 pl-8">
+          <img src={camera} className="w-6 h-6" alt="" />
+          <p className="font-main-font p-6 text-2xl text-white">PICTURE</p>
+        </div>
+        <div className="flex justify-start items-center hover:backdrop-blur-sm hover:bg-white/10 pl-8">
+          <img src={artist} className="w-6 h-6" alt="" />
+          <p className="font-main-font p-6 text-2xl text-white">ARTIST</p>
+        </div>
+        <div className="flex justify-start items-center hover:backdrop-blur-sm hover:bg-white/10 pl-8">
+          <img src={shop} className="w-6 h-6" alt="" />
+          <p className="font-main-font p-6 text-2xl text-white">SHOP</p>
+        </div>
+        <div className="flex justify-start items-center hover:backdrop-blur-sm hover:bg-white/10 pl-8">
+          <img src={artwork} className="w-6 h-6" alt="" />
+          <p className="font-main-font p-6 text-2xl text-white">ARTWORK</p>
         </div>
       </div>
     </div>
