@@ -1,7 +1,8 @@
 const models = require("../models");
 
 const browse = (req, res) => {
-  models.Artists.findAll()
+  models.artist
+    .findAll()
     .then(([results]) => {
       res.send(results);
     })
@@ -14,7 +15,8 @@ const browse = (req, res) => {
 const read = (req, res) => {
   const { id } = req.params;
 
-  models.Artists.findArtist(id)
+  models.artist
+    .findArtist(id)
     .then(([results]) => {
       if (results[0]) res.send(results[0]);
       else res.sendStatus(404);
@@ -30,7 +32,8 @@ const add = (req, res) => {
 
   // on verifie les données
 
-  models.Artists.insert(artist)
+  models.artist
+    .insert(artist)
     .then(([result]) => {
       res.location(`/Artists/${result.insertId}`).sendStatus(201);
     })
@@ -44,7 +47,7 @@ const edit = (req, res) => {
   const artist = req.body;
   artist.id = req.params.id;
 
-  models.users
+  models.user
     .update(artist)
     .then(([result]) => {
       if (result.affectedRows === 0) res.sendStatus(404);
@@ -58,7 +61,8 @@ const edit = (req, res) => {
 
 const destroy = (req, res) => {
   const { id } = req.params;
-  models.Artists.delete(id)
+  models.artist
+    .delete(id)
     .then(([result]) => {
       if (result.affectedRows === 0) res.sendStatus(404);
       else res.sendStatus(204);

@@ -7,33 +7,33 @@ class UserManager extends AbstractManager {
 
   find(id) {
     return this.connection.query(
-      `select id, firstname, lastname, scorepoint, Pseudo, isAdmin, email from  ${this.table} where id = ?`,
+      `select id, firstname, lastname, scorepoint, Pseudo, is_admin, email from  ${this.table} where id = ?`,
       [id]
     );
   }
 
-  findByEmailWithPassword(email, pseudo) {
+  findByEmailOrPseudoWithPassword(email, pseudo) {
     return this.connection.query(
-      `select * from  ${this.table} where email = ? or pseudo = ?`,
+      `select * from ${this.table} where email = ? or pseudo = ?`,
       [email, pseudo]
     );
   }
 
   findAll() {
     return this.connection.query(
-      `select id, firstname, lastname, scorepoint, Pseudo, isAdmin, email from  ${this.table}`
+      `select id, firstname, lastname, scorepoint, Pseudo, is_admin, email from  ${this.table}`
     );
   }
 
   insert(users) {
     return this.connection.query(
-      `insert into ${this.table} (pseudo, firstname, lastname, scorepoint, isAdmin, email, hashedPassword) values (?, ?, ?, ?, ?, ?, ?)`,
+      `insert into ${this.table} (pseudo, firstname, lastname, scorepoint, is_admin, email, hashedPassword) values (?, ?, ?, ?, ?, ?, ?)`,
       [
         users.pseudo,
         users.firstname,
         users.lastname,
         users.scorepoint,
-        users.isAdmin,
+        users.is_admin,
         users.email,
         users.hashedPassword,
       ]
@@ -42,13 +42,13 @@ class UserManager extends AbstractManager {
 
   update(users) {
     return this.connection.query(
-      `update ${this.table} set firstname = ?, lastname = ?, scorepoint = ?, Pseudo = ?, isAdmin = ?, email = ?, hashedPassword = ? where id = ?`,
+      `update ${this.table} set firstname = ?, lastname = ?, scorepoint = ?, Pseudo = ?, is_admin = ?, email = ?, hashedPassword = ? where id = ?`,
       [
         users.firstname,
         users.lastname,
         users.scorepoint,
         users.Pseudo,
-        users.isAdmin,
+        users.is_admin,
         users.email,
         users.hashedPassword,
       ]

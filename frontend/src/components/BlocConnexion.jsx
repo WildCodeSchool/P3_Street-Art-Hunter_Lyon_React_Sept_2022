@@ -8,7 +8,6 @@ const backURL = import.meta.env.VITE_BACKEND_URL;
 export default function BlocConnexion() {
   const navigate = useNavigate();
   const { setUser, setToken } = useCurrentUserContext();
-  const [pseudo, setPseudo] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -19,7 +18,6 @@ export default function BlocConnexion() {
 
     const body = JSON.stringify({
       email,
-      pseudo,
       password,
     });
 
@@ -29,12 +27,12 @@ export default function BlocConnexion() {
       body,
     };
 
-    if ((email || pseudo) && password) {
+    if (email && password) {
       // on appelle le back
       fetch(`${backURL}/connexion`, requestOptions)
         .then((response) => response.json())
         .then((result) => {
-          setUser(result.users);
+          setUser(result.user);
           setToken(result.token);
           navigate("/camera");
         })
@@ -71,9 +69,7 @@ export default function BlocConnexion() {
                   Email address
                 </label>
                 <input
-                  onChange={(e) =>
-                    setEmail(e.target.value) || setPseudo(e.target.value)
-                  }
+                  onChange={(e) => setEmail(e.target.value)}
                   id="email-address"
                   name="email"
                   className="relative block w-full appearance-none bg-transparent rounded-full border border-gray-300 px-3 py-2 text-white placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"

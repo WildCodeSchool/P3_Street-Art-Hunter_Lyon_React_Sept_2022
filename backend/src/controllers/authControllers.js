@@ -1,15 +1,15 @@
 const models = require("../models");
 
 const getUserByEmailWithPasswordAndPassToNext = (req, res, next) => {
-  const { email, pseudo } = req.body;
+  const { email } = req.body;
 
   models.user
-    .findByEmailWithPassword(email, pseudo)
+    .findByEmailOrPseudoWithPassword(email)
     .then(([users]) => {
       if (users[0]) {
         [req.users] = users;
         next();
-      } else res.sendStatus(401);
+      } else res.status(401).send({ error: "Email ou pseudo incorrect" });
     })
     .catch((error) => {
       console.error(error);
