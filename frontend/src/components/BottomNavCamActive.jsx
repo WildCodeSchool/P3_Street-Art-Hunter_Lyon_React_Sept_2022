@@ -9,7 +9,7 @@ import check from "@assets/check.svg";
 import cross from "@assets/cross.svg";
 import SwitchButtonNav from "./SwitchButtonNav";
 
-function BottomNavCamActive({ setPhoto, setValidation }) {
+function BottomNavCamActive({ setPhoto, setValidation, handleSubmit }) {
   const handleCross = () => {
     setPhoto(false);
     setValidation(false);
@@ -60,7 +60,11 @@ function BottomNavCamActive({ setPhoto, setValidation }) {
             </div>
           </div>
         </button>
-        <button type="button" className="  absolute right-8 top-28">
+        <button
+          type="button"
+          onClick={handleSubmit}
+          className="  absolute right-8 top-28"
+        >
           <NavLink to="/Galerie">
             <div className="bg-gradient-to-b from-pink to-lightblue rounded-[100%]  w-[3.6rem]  h-[3.6rem] p-[0.2rem]">
               <div className="w-full h-full rounded-[100%] bg-gradient-to-b from-bottomdark to-[#454377] flex justify-center items-center">

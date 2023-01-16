@@ -1,6 +1,29 @@
 const express = require("express");
+const fs = require("fs");
 
 const router = express.Router();
+
+// Upload des photos
+
+const multer = require("multer");
+
+const upload = multer({ dest: "./public/uploads" });
+
+const fsUpload = (req, res) => {
+  const { originalname, filename } = req.file;
+
+  fs.rename(
+    `./public/uploads/${filename}`,
+    `./public/uploads/${originalname}`,
+    (err) => {
+      if (err) throw err;
+    }
+  );
+
+  res.send("File uploaded");
+};
+
+router.post("/photo", upload.single("photo"), fsUpload);
 
 // service d'authentification
 
