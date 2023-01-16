@@ -235,12 +235,10 @@ function EnhancedTableToolbar(props) {
           </IconButton>
         </Tooltip>
       ) : (
-        <Tooltip title="Filter list">
-          <IconButton>
-            <AddIcon />
-            <p className="pl-4 text-[12px]">Ajouter</p>
-          </IconButton>
-        </Tooltip>
+        <IconButton>
+          <AddIcon />
+          <p className="pl-1 text-[14px]">Ajouter</p>
+        </IconButton>
       )}
     </Toolbar>
   );
