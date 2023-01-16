@@ -30,9 +30,7 @@ export default function Galerie({ allOrLive }) {
           <BottomNav />
         </div>
       ) : (
-        <div className="bg-main-background backdrop-blur-md text-white font-main-font bg-cover w-full h-screen">
-          <Menu />
-        </div>
+        <Menu />
       )}
     </div>
   );

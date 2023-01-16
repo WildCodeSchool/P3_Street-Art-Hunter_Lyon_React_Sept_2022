@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import React, { useState } from "react";
 // eslint-disable-next-line import/no-extraneous-dependencies
 import Webcam from "react-webcam";

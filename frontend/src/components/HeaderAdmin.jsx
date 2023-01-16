@@ -1,15 +1,21 @@
 import React from "react";
 import Daryl from "@assets/Daryl.png";
 import clock2 from "@assets/clock2.svg";
+import home from "@assets/home.svg";
 
-function HeaderAdmin() {
+function HeaderAdmin({ nav }) {
   return (
     <div className="h-[13vh] flex items-center justify-between p-10">
-      <div className="flex justify-start">
+      <div className="flex flex-col items-start">
+        <div className="flex flex-row w-full">
+          <img src={home} alt="" className="w-[7%] pt-[1.7rem] mr-2" />
+          <span className="pt-8 font-main-font text-xl">{nav}</span>
+        </div>
         <h2 className="font-main-font p-6 text-5xl text-black">
           Hello, Admin <span>&#128075;</span>
         </h2>
       </div>
+
       <div className=" flex justify-end items-center w-[70%]">
         <img
           src={clock2}

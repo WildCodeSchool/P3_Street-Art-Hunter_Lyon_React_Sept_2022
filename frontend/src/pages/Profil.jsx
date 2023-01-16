@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from "react";
 import HeaderWithBurger from "@components/HeaderWithBurger";
-import BottomNav from "@components/BottomNav";
 import modif from "@assets/modif.svg";
 import { useCurrentUserContext } from "../contexts/userContext";
 import Menu from "./Menu";
@@ -71,12 +70,9 @@ export default function Profil() {
               </div>
             </form>
           </div>
-          <BottomNav />
         </div>
       ) : (
-        <div className="bg-main-background backdrop-blur-md text-white font-main-font bg-cover w-full h-screen">
-          <Menu />
-        </div>
+        <Menu />
       )}
     </div>
   );

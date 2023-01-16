@@ -14,10 +14,11 @@ import Profil from "@pages/Profil";
 import Scores from "@pages/Scores";
 import Stepper from "@pages/Stepper";
 import Contact from "@pages/Contact";
+import User from "@pages/Admin/User";
 
 import "./App.css";
 
-import Dashboard from "@pages/Dashboard";
+import Dashboard from "@pages/Admin/Dashboard";
 import { CurrentUserContextProvider } from "./contexts/userContext";
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
           <Route path="/camera" element={<Camera />} />
           <Route path="/galerie/all" element={<Galerie allOrLive="all" />} />
           <Route path="/Contact" element={<Contact />} />
+          <Route path="/User" element={<User />} />
           <Route
             path="/galerie/all/oeuvres"
             element={<Galerie allOrLive="all" />}

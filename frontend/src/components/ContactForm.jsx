@@ -9,7 +9,7 @@ function ContactForm() {
   const sendForm = () => {};
 
   return (
-    <div className="flex flex-col justify-center items-center  backdrop-blur-sm rounded-[3rem] mt-2 ml-2 w-[95%]">
+    <div className="mt-[7rem] flex flex-col justify-center items-center  backdrop-blur-sm rounded-[3rem] mt-2 ml-2 w-[95%]">
       <h1 className="text-white font-main-font text-4xl mb-5 mt-4">
         NOUS CONTACTER
       </h1>
