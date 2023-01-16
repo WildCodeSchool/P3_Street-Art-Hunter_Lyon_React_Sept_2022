@@ -56,6 +56,7 @@ const verifyToken = (req, res, next) => {
       throw new Error("Autorization needed for this route");
 
     const [type, token] = autorizationHeader.split(" ");
+
     if (type !== "Bearer") throw new Error("Only Bearer token allowed");
     if (!token) throw new Error("Token needed");
 

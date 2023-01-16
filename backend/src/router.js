@@ -1,6 +1,31 @@
 const express = require("express");
+const fs = require("fs");
 
 const router = express.Router();
+
+// Upload des photos
+
+const multer = require("multer");
+
+const upload = multer({ dest: "./public/uploads" });
+
+const fsUpload = (req, res) => {
+  const { originalname, filename } = req.file;
+
+  fs.rename(
+    `./public/uploads/${filename}`,
+    `./public/uploads/${originalname}`,
+    (err) => {
+      if (err) throw err;
+    }
+  );
+
+  res.send("File uploaded");
+};
+
+router.post("/photo", upload.single("photo"), fsUpload);
+
+// service d'authentification
 
 const {
   hashPassword,
@@ -53,4 +78,17 @@ router.get("/Artists/:id", verifyToken, ArtistControllers.read);
 router.post("/Artists", verifyToken, ArtistControllers.add);
 router.put("/Artists/:id", verifyToken, ArtistControllers.edit);
 router.delete("/galerie/Artists/:id", verifyToken, ArtistControllers.destroy);
+router.post(
+  "/badges",
+  verifyToken,
+  authControllers.isUserAdmin,
+  badgeControllers.add
+);
+router.put(
+  "/badges/:id",
+  verifyToken,
+  authControllers.isUserAdmin,
+  badgeControllers.edit
+);
+
 module.exports = router;

@@ -5,9 +5,12 @@ import BottomNavCamera from "./BottomNavCamera";
 import BottomNavCamActive from "./BottomNavCamActive";
 import Geolocalisation from "./Geolocalisation";
 
+const backURL = import.meta.env.VITE_BACKEND_URL;
+
 function TakePicture() {
   const [photo, setPhoto] = useState(false);
   const [validation, setValidation] = useState(false);
+  const [pic, setPic] = useState("");
 
   const videoConstraints = {
     height: 1000,
@@ -22,7 +25,19 @@ function TakePicture() {
     setImgSrc(imageSrc);
     setPhoto(!photo);
     setValidation(!validation);
+    setPic(imageSrc);
   }, [webcamRef, setImgSrc]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const requestOptions = {
+      method: "POST",
+      file: pic,
+    };
+
+    fetch(`${backURL}/photo`, requestOptions);
+  };
 
   return (
     <>
@@ -42,7 +57,11 @@ function TakePicture() {
       {!validation ? (
         <BottomNavCamera capture={capture} />
       ) : (
-        <BottomNavCamActive setPhoto={setPhoto} setValidation={setValidation} />
+        <BottomNavCamActive
+          setPhoto={setPhoto}
+          setValidation={setValidation}
+          handleSubmit={handleSubmit}
+        />
       )}
     </>
   );
