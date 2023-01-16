@@ -14,11 +14,11 @@ import Profil from "@pages/Profil";
 import Scores from "@pages/Scores";
 import Stepper from "@pages/Stepper";
 import Contact from "@pages/Contact";
-import User from "@pages/Admin/User";
+import AdminUser from "@pages/Admin/AdminUser";
+import Dashboard from "@pages/Admin/Dashboard";
 
 import "./App.css";
 
-import Dashboard from "@pages/Admin/Dashboard";
 import { CurrentUserContextProvider } from "./contexts/userContext";
 
 function App() {
@@ -43,7 +43,7 @@ function App() {
           <Route path="/camera" element={<Camera />} />
           <Route path="/galerie/all" element={<Galerie allOrLive="all" />} />
           <Route path="/Contact" element={<Contact />} />
-          <Route path="/User" element={<User />} />
+
           <Route
             path="/galerie/all/oeuvres"
             element={<Galerie allOrLive="all" />}
@@ -69,6 +69,16 @@ function App() {
             element={<Galerie allOrLive="live" />}
           />
           <Route path="/galerie/live" element={<Galerie allOrLive="live" />} />
+
+          <Route path="/Admin-User" element={<AdminUser />} />
+          <Route path="/Dashboard" element={<Dashboard />} />
+          <Route path="/Admin-Scores" element={<Dashboard />} />
+          <Route path="/Admin-Badges" element={<Dashboard />} />
+          <Route path="/Admin-Messages" element={<Dashboard />} />
+          <Route path="/Admin-Pictures" element={<Dashboard />} />
+          <Route path="/Admin-Artist" element={<Dashboard />} />
+          <Route path="/Admin-Shop" element={<Dashboard />} />
+          <Route path="/Admin-Artwork" element={<Dashboard />} />
         </Routes>
       </CurrentUserContextProvider>
     </BrowserRouter>

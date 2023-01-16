@@ -3,7 +3,7 @@ import LateralMenu from "../../components/LateralMenu";
 import HeaderAdmin from "../../components/HeaderAdmin";
 import UserBoard from "../../components/UserBoard";
 
-function User() {
+function AdminUser() {
   const nav = "/ Utilisateurs";
   return (
     <div className="flex h-screen w-full">
@@ -16,4 +16,4 @@ function User() {
   );
 }
 
-export default User;
+export default AdminUser;
