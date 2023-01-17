@@ -1,29 +1,36 @@
 const express = require("express");
+const sharp = require("sharp");
 const fs = require("fs");
 
 const router = express.Router();
 
 // Upload des photos
-
 const multer = require("multer");
 
-const upload = multer({ dest: "./public/uploads" });
+const storage = multer.diskStorage({
+  destination(req, file, cb) {
+    cb(null, "./public/uploads");
+  },
+  filename(req, file, cb) {
+    cb(null, new Date().toISOString().replace(/:/g, "-") + file.originalname);
+  },
+});
 
-const fsUpload = (req, res) => {
-  const { originalname, filename } = req.file;
-
-  fs.rename(
-    `./public/uploads/${filename}`,
-    `./public/uploads/${originalname}`,
-    (err) => {
-      if (err) throw err;
-    }
-  );
-
-  res.send("File uploaded");
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
 };
 
-router.post("/photo", upload.single("photo"), fsUpload);
+const upload = multer({
+  storage,
+  limits: {
+    fileSize: 1024 * 1024 * 5,
+  },
+  fileFilter,
+});
 
 // service d'authentification
 
@@ -46,6 +53,22 @@ router.post(
   verifyPassword
 );
 
+router.post("/upload", upload.single("image"), async (req, res) => {
+  try {
+    // utilisez sharp pour redimensionner l'image
+    const image = await sharp(req.file.buffer)
+      .resize(500, 500)
+      .png()
+      .toBuffer();
+
+    // enregistrez l'image redimensionnée
+    fs.writeFileSync("./public/uploads/image.png", image);
+    res.send("Image téléchargée et traitée avec succès");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Erreur lors du traitement de l image");
+  }
+});
 // Gestion des users
 router.get("/user", userControllers.browse);
 router.get("/user/:id", userControllers.read);
