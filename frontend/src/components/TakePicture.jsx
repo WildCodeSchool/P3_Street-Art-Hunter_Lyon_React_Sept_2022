@@ -11,7 +11,7 @@ const backURL = import.meta.env.VITE_BACKEND_URL;
 function TakePicture() {
   const [photo, setPhoto] = useState(false);
   const [validation, setValidation] = useState(false);
-  const { setContextPhoto, contextPhoto } = useCurrentPhotoContext;
+  const { setContextPhoto, contextPhoto } = useCurrentPhotoContext();
   const videoConstraints = {
     width: 400,
     height: 600,

@@ -38,6 +38,7 @@ const {
 const authControllers = require("./controllers/authControllers");
 const userControllers = require("./controllers/userControllers");
 const badgeControllers = require("./controllers/badgeControllers");
+const artistControllers = require("./controllers/artistControllers");
 
 // Auth
 router.post("/inscription", hashPassword, userControllers.add);
@@ -75,5 +76,8 @@ router.put(
   authControllers.isUserAdmin,
   badgeControllers.edit
 );
+
+// Gestion des artistes
+router.get("/artists", artistControllers.browse);
 
 module.exports = router;

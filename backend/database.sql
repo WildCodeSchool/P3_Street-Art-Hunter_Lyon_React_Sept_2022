@@ -207,3 +207,9 @@ insert into user_has_badge values (1,1), (1,2), (3,3), (3,4), (3,5), (2,1), (3,1
 
 ALTER TABLE `street_art_hunter`.`user` 
 ADD COLUMN `avatar` VARCHAR(45) NULL AFTER `hashedPassword`;
+
+INSERT INTO `street_art_hunter`.`artist`
+(
+`artist_name`)
+VALUES
+("Artiste Inconnu"),("Vincent"),("Younes"),("Gaëlle"),("Daryl");
