@@ -20,6 +20,7 @@ import AdminArtWork from "@pages/Admin/AdminArtWork";
 import ArtWorkPictures from "@pages/Admin/AdminArtWorkPictures";
 import AdminShop from "@pages/Admin/PageAdShop";
 import AdminArtist from "@pages/Admin/AdminArtist";
+import AdminMessage from "@pages/Admin/AdminMessage";
 
 import "./App.css";
 
@@ -78,7 +79,7 @@ function App() {
           <Route path="/Dashboard" element={<Dashboard />} />
           <Route path="/Admin-Scores" element={<Dashboard />} />
           <Route path="/Admin-Badges" element={<Dashboard />} />
-          <Route path="/Admin-Messages" element={<Dashboard />} />
+          <Route path="/Admin-Messages" element={<AdminMessage />} />
           <Route path="/Admin-Artist" element={<AdminArtist />} />
           <Route path="/Admin-Shop" element={<AdminShop />} />
           <Route path="/Admin-Artwork" element={<AdminArtWork />} />

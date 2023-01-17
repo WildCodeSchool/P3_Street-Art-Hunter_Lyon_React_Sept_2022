@@ -33,8 +33,8 @@ function createData(pseudo, firstname, name, email, score, badge, droit) {
 }
 
 const rows = [
-  createData("Shop shop", 20.51611, 5.321351, "blablab"),
-  createData("Shop shop", 20.51611, 5.321351, "blablabla"),
+  createData("ladresse", 20.51611, 5.321351, "blablab"),
+  createData("the shop of shop", 20.51611, 5.321351, "blablabla"),
   createData("Shop shop", 20.51611, 5.321351, "blablabla"),
   createData("Shop shop", 20.51611, 5.321351, "blablabla"),
 ];
