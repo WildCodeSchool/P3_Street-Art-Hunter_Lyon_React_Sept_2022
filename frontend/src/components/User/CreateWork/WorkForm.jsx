@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 // eslint-disable-next-line import/no-unresolved
-import InscriptionDone from "../../popupvalidationinscription";
+import InscriptionDone from "@components/User/InscriptionDone";
 
 const backURL = import.meta.env.VITE_BACKEND_URL;
 

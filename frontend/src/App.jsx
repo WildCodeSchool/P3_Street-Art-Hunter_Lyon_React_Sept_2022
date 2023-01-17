@@ -1,23 +1,25 @@
+/* eslint-disable import/no-unresolved */
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Registration from "@pages/ Registration";
-import Badges from "@pages/Badges";
-import Camera from "@pages/Camera";
-import Connexion from "@pages/Connexion";
-import Favoris from "@pages/Favoris";
-import Galerie from "@pages/Galerie";
-import Help from "@pages/Help";
-import Home from "@pages/Home";
-import MaGalerie from "@pages/MaGalerie";
-import Map from "@pages/Map";
-import Menu from "@pages/Menu";
-import Profil from "@pages/Profil";
-import Scores from "@pages/Scores";
-import Stepper from "@pages/Stepper";
-import ArtistCardContainer from "@components/ArtistCardContainer";
-import Contact from "@pages/Contact";
+
+import Badges from "@pages/User/Badges";
+import Camera from "@pages/User/Camera";
+import Connexion from "@pages/Global/Connexion";
+import Favoris from "@pages/User/Favoris";
+import GalleryLive from "@pages/User/GalleryLive";
+import GalleryAll from "@pages/User/GalleryAll";
+import Help from "@pages/User/Help";
+import Home from "@pages/User/Home";
+import MyGallery from "@pages/User/MyGallery";
+import Map from "@pages/User/Map";
+import Menu from "@pages/User/Menu";
+import Profil from "@pages/User/Profil";
+import Scores from "@pages/User/Scores";
+import Stepper from "@pages/User/Stepper";
+import Contact from "@pages/User/Contact";
 import AdminUser from "@pages/Admin/AdminUser";
 import Dashboard from "@pages/Admin/Dashboard";
-import CreateWork from "@pages/CreateWork";
+import ModifUser from "@pages/Admin/ModifUser";
+import Registration from "@pages/Global/ Registration";
 
 import "./App.css";
 
@@ -39,45 +41,37 @@ function App() {
             <Route path="/menu" element={<Menu />} />
             <Route path="/help" element={<Help />} />
             <Route
-              path="/galerie"
-              element={<ArtistCardContainer allOrLive="all" />}
+              path="/galerie/live"
+              element={<GalleryLive allOrLive="live" />}
             />
             <Route path="/map" element={<Map />} />
             <Route path="/profil" element={<Profil />} />
             <Route path="/favoris" element={<Favoris />} />
-            <Route path="/magalerie" element={<MaGalerie />} />
+            <Route path="/magalerie" element={<MyGallery />} />
             <Route path="/badges" element={<Badges />} />
             <Route path="/camera" element={<Camera />} />
-            <Route path="/galerie/all" element={<Galerie allOrLive="all" />} />
+            <Route
+              path="/galerie/all"
+              element={<GalleryAll allOrLive="all" />}
+            />
             <Route path="/Contact" element={<Contact />} />
 
             <Route
               path="/galerie/all/oeuvres"
-              element={<Galerie allOrLive="all" />}
+              element={<GalleryAll allOrLive="all" />}
             />
             <Route
               path="/galerie/all/shop"
-              element={<Galerie allOrLive="all" />}
+              element={<GalleryAll allOrLive="all" />}
             />
             <Route
               path="/galerie/all/artistes"
-              element={<Galerie allOrLive="all" />}
+              element={<GalleryAll allOrLive="all" />}
             />
-            <Route
-              path="/galerie/live/artistes"
-              element={<Galerie allOrLive="live" />}
-            />
-            <Route
-              path="/galerie/live/oeuvres"
-              element={<Galerie allOrLive="live" />}
-            />
-            <Route
-              path="/galerie/live/shop"
-              element={<Galerie allOrLive="live" />}
-            />
+
             <Route
               path="/galerie/live"
-              element={<Galerie allOrLive="live" />}
+              element={<GalleryLive allOrLive="live" />}
             />
 
             <Route path="/Admin-User" element={<AdminUser />} />
@@ -89,53 +83,7 @@ function App() {
             <Route path="/Admin-Artist" element={<Dashboard />} />
             <Route path="/Admin-Shop" element={<Dashboard />} />
             <Route path="/Admin-Artwork" element={<Dashboard />} />
-          </Routes>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/connexion" element={<Connexion />} />
-            <Route path="/inscription" element={<Registration />} />
-            <Route path="/stepper" element={<Stepper />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/scores" element={<Scores />} />
-            <Route path="/menu" element={<Menu />} />
-            <Route path="/help" element={<Help />} />
-            <Route path="/galerie" element={<Galerie allOrLive="all" />} />
-            <Route path="/map" element={<Map />} />
-            <Route path="/profil" element={<Profil />} />
-            <Route path="/favoris" element={<Favoris />} />
-            <Route path="/magalerie" element={<MaGalerie />} />
-            <Route path="/badges" element={<Badges />} />
-            <Route path="/camera" element={<Camera />} />
-            <Route path="/galerie/all" element={<Galerie allOrLive="all" />} />
-            <Route
-              path="/galerie/all/oeuvres"
-              element={<Galerie allOrLive="all" />}
-            />
-            <Route
-              path="/galerie/all/shop"
-              element={<Galerie allOrLive="all" />}
-            />
-            <Route
-              path="/galerie/all/artistes"
-              element={<Galerie allOrLive="all" />}
-            />
-            <Route
-              path="/galerie/live/artistes"
-              element={<Galerie allOrLive="live" />}
-            />
-            <Route
-              path="/galerie/live/oeuvres"
-              element={<Galerie allOrLive="live" />}
-            />
-            <Route
-              path="/galerie/live/shop"
-              element={<Galerie allOrLive="live" />}
-            />
-            <Route
-              path="/galerie/live"
-              element={<Galerie allOrLive="live" />}
-            />
-            <Route path="/creatework" element={<CreateWork />} />
+            <Route path="/Admin-Modif-User" element={<ModifUser />} />
           </Routes>
         </CurrentPhotoContextProvider>
       </CurrentUserContextProvider>
