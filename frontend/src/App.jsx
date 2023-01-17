@@ -41,6 +41,12 @@ function App() {
             <Route path="/scores" element={<Scores />} />
             <Route path="/menu" element={<Menu />} />
             <Route path="/help" element={<Help />} />
+            <Route path="/creatework" element={<CreateWork />} />
+
+            <Route
+              path="/galerie/live"
+              element={<GalleryLive allOrLive="live" />}
+            />
             <Route path="/map" element={<Map />} />
             <Route path="/profil" element={<Profil />} />
             <Route path="/favoris" element={<Favoris />} />

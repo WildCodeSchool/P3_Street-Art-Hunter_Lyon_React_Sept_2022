@@ -1,6 +1,6 @@
-import HeaderWithBurger from "@components/User/Global/HeaderWithBurger";
 import React, { useMemo, useState } from "react";
 import { MapContainer, Marker, TileLayer } from "react-leaflet";
+import HeaderWithBurger from "../../components/User/Global/HeaderWithBurger";
 import WorkForm from "../../components/User/CreateWork/WorkForm";
 
 export default function CreateWork() {
@@ -22,6 +22,7 @@ export default function CreateWork() {
   return (
     <div className="bg-main-background bg-cover w-auto h-screen">
       <HeaderWithBurger />
+
       <div className="flex flex-col justify-center items-center backdrop-blur-sm rounded-[3rem] mt-2 ml-2 w-[95%] border-[1px] border-white/10 py-3">
         <div className="creatework w-full flex flex-wrap justify-center">
           <h1 className="text-white text-center font-main-font text-4xl mb-2 mt-2">

@@ -1,14 +1,15 @@
 import React, { useState } from "react";
+import BadgesCollectionModal from "../../components/User/Badges/BadgesCollectionModal";
 import BadgeContainer from "../../components/User/Badges/BadgeContainer";
 import HeaderWithBurger from "../../components/User/Global/HeaderWithBurger";
 import { useCurrentUserContext } from "../../contexts/userContext";
 import Menu from "./Menu";
-import BadgesCollectionModal from "../../components/User/Badges/BadgesCollectionModal";
 
 export default function Badges() {
   const { open } = useCurrentUserContext();
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedBadge, setSetlectedBadge] = useState("");
+
   return (
     <div>
       {!open ? (

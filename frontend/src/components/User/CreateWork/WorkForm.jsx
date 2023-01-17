@@ -1,4 +1,3 @@
-/* eslint-disable no-const-assign */
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
