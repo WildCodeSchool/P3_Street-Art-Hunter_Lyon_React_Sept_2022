@@ -17,10 +17,12 @@ import ArtistCardContainer from "@components/ArtistCardContainer";
 import Contact from "@pages/Contact";
 import AdminUser from "@pages/Admin/AdminUser";
 import Dashboard from "@pages/Admin/Dashboard";
+import CreateWork from "@pages/CreateWork";
 
 import "./App.css";
 
 import { CurrentUserContextProvider } from "./contexts/userContext";
+import { CurrentPhotoContextProvider } from "./contexts/photoContext";
 
 function App() {
   return (
@@ -84,6 +86,55 @@ function App() {
           <Route path="/Admin-Shop" element={<Dashboard />} />
           <Route path="/Admin-Artwork" element={<Dashboard />} />
         </Routes>
+        <CurrentPhotoContextProvider>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/connexion" element={<Connexion />} />
+            <Route path="/inscription" element={<Registration />} />
+            <Route path="/stepper" element={<Stepper />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/scores" element={<Scores />} />
+            <Route path="/menu" element={<Menu />} />
+            <Route path="/help" element={<Help />} />
+            <Route path="/galerie" element={<Galerie allOrLive="all" />} />
+            <Route path="/map" element={<Map />} />
+            <Route path="/profil" element={<Profil />} />
+            <Route path="/favoris" element={<Favoris />} />
+            <Route path="/magalerie" element={<MaGalerie />} />
+            <Route path="/badges" element={<Badges />} />
+            <Route path="/camera" element={<Camera />} />
+            <Route path="/galerie/all" element={<Galerie allOrLive="all" />} />
+            <Route
+              path="/galerie/all/oeuvres"
+              element={<Galerie allOrLive="all" />}
+            />
+            <Route
+              path="/galerie/all/shop"
+              element={<Galerie allOrLive="all" />}
+            />
+            <Route
+              path="/galerie/all/artistes"
+              element={<Galerie allOrLive="all" />}
+            />
+            <Route
+              path="/galerie/live/artistes"
+              element={<Galerie allOrLive="live" />}
+            />
+            <Route
+              path="/galerie/live/oeuvres"
+              element={<Galerie allOrLive="live" />}
+            />
+            <Route
+              path="/galerie/live/shop"
+              element={<Galerie allOrLive="live" />}
+            />
+            <Route
+              path="/galerie/live"
+              element={<Galerie allOrLive="live" />}
+            />
+            <Route path="/creatework" element={<CreateWork />} />
+          </Routes>
+        </CurrentPhotoContextProvider>
       </CurrentUserContextProvider>
     </BrowserRouter>
   );

@@ -95,6 +95,7 @@ IF NOT EXISTS `street_art_hunter`.`work`
   `latitude` DECIMAL
 (10,9) NULL DEFAULT NULL,
   `value_point` INT NULL DEFAULT NULL,
+  `is_validated` TINYINT NULL DEFAULT NULL,
   `artist_id` INT NOT NULL,
   PRIMARY KEY
 (`id`),
@@ -119,10 +120,10 @@ CREATE TABLE
 IF NOT EXISTS `street_art_hunter`.`picture`
 (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `picture_url` VARCHAR
-(150) NOT NULL,
-  `note` INT NULL DEFAULT NULL,
-  `Fav` TINYINT NULL DEFAULT NULL,
+  `picture_url` VARCHAR(150) NOT NULL,
+  `creation_date` DATETIME NULL DEFAULT NULL,
+  `fav` TINYINT NULL DEFAULT NULL,
+  `is_validated` TINYINT NULL DEFAULT NULL,
   `work_id` INT NOT NULL,
   `user_id` INT NOT NULL,
   PRIMARY KEY
