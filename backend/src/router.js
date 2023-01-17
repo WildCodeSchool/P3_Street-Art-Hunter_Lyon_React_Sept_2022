@@ -7,20 +7,23 @@ const router = express.Router();
 
 const multer = require("multer");
 
-const upload = multer({ dest: "./public/uploads" });
+const upload = multer({ dest: "./public/uploads/" });
 
 const fsUpload = (req, res) => {
-  const { originalname, filename } = req.file;
-
-  fs.rename(
-    `./public/uploads/${filename}`,
-    `./public/uploads/${originalname}`,
-    (err) => {
-      if (err) throw err;
-    }
+  const { image, filename } = req.body;
+  // eslint-disable-next-line new-cap
+  const buffer = new Buffer.from(
+    image.replace(/^data:image\/\w+;base64,/, ""),
+    "base64"
   );
 
-  res.send("File uploaded");
+  fs.writeFile(`./public/uploads/${filename}.jpeg`, buffer, "binary", (err) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.status(200).send("File uploaded!");
+    }
+  });
 };
 
 router.post("/photo", upload.single("photo"), fsUpload);

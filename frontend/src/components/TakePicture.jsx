@@ -3,14 +3,15 @@ import React, { useState } from "react";
 import Webcam from "react-webcam";
 import BottomNavCamera from "./BottomNavCamera";
 import BottomNavCamActive from "./BottomNavCamActive";
+import { useCurrentUserContext } from "../contexts/userContext";
+import { useCurrentPhotoContext } from "../contexts/photoContext";
 
 const backURL = import.meta.env.VITE_BACKEND_URL;
 
 function TakePicture() {
   const [photo, setPhoto] = useState(false);
   const [validation, setValidation] = useState(false);
-  const [pic, setPic] = useState("");
-
+  const { setContextPhoto, contextPhoto } = useCurrentPhotoContext;
   const videoConstraints = {
     width: 400,
     height: 600,
@@ -24,18 +25,22 @@ function TakePicture() {
     setImgSrc(imageSrc);
     setPhoto(!photo);
     setValidation(!validation);
-    setPic(imageSrc);
+    setContextPhoto(imageSrc);
   }, [webcamRef, setImgSrc]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const { user } = useCurrentUserContext();
 
-    const requestOptions = {
+  const handleSendPhoto = () => {
+    // const formData = new FormData();
+    // formData.append("photo", pic);
+
+    fetch(`${backURL}/photo`, {
       method: "POST",
-      file: pic,
-    };
-
-    fetch(`${backURL}/photo`, requestOptions);
+      body: JSON.stringify({ image: contextPhoto, filename: user.pseudo }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((response) => response.json());
   };
 
   return (
@@ -58,7 +63,7 @@ function TakePicture() {
         <BottomNavCamActive
           setPhoto={setPhoto}
           setValidation={setValidation}
-          handleSubmit={handleSubmit}
+          handleSubmit={handleSendPhoto}
         />
       )}
     </>

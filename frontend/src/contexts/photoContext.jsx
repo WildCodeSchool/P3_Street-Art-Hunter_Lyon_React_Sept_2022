@@ -5,11 +5,11 @@ const CurrentPhotoContext = createContext();
 export function CurrentPhotoContextProvider({ children }) {
   // on utilise un hook personnalisé
 
-  const [photo, setPhoto] = useState("");
+  const [contextPhoto, setContextPhoto] = useState("");
 
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values
-    <CurrentPhotoContext.Provider value={{ photo, setPhoto }}>
+    <CurrentPhotoContext.Provider value={{ contextPhoto, setContextPhoto }}>
       {children}
     </CurrentPhotoContext.Provider>
   );
