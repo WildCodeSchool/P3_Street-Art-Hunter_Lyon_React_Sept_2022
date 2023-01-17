@@ -1,19 +1,21 @@
 import React from "react";
+
 import LateralMenu from "../../components/Admin/Global/LateralMenu";
 import HeaderAdmin from "../../components/Admin/Global/HeaderAdmin";
-import UserBoard from "../../components/Admin/User/UserBoard";
+import UserModif from "../../components/Admin/ModifUser/UserModif";
 
-function AdminUser() {
-  const nav = "/ Utilisateurs";
+function ModifUser() {
+  const nav = "/ Utilisateurs / Modification utilisateur";
+
   return (
     <div className="flex h-screen w-full">
       <LateralMenu />
       <div className="flex flex-col w-full">
         <HeaderAdmin nav={nav} />
-        <UserBoard />
+        <UserModif />
       </div>
     </div>
   );
 }
 
-export default AdminUser;
+export default ModifUser;
