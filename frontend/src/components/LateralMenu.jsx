@@ -7,7 +7,7 @@ import user from "../assets/user.svg";
 import badge from "../assets/badge.svg";
 import message from "../assets/message.svg";
 import score from "../assets/score.svg";
-import camera from "../assets/camdash.svg";
+
 import artwork from "../assets/dashartwork.svg";
 import artist from "../assets/dashartist.svg";
 import shop from "../assets/dashshop.svg";
@@ -57,18 +57,11 @@ function LateralMenu() {
           <p className="font-main-font p-6 text-2xl text-white">MESSAGES</p>
         </div>
         <div
-          onClick={() => navigate("/Admin-Pictures")}
-          className="flex justify-start items-center hover:backdrop-blur-sm hover:bg-white/10 pl-8"
-        >
-          <img src={camera} className="w-6 h-6" alt="" />
-          <p className="font-main-font p-6 text-2xl text-white">PICTURE</p>
-        </div>
-        <div
           onClick={() => navigate("/Admin-Artist")}
           className="flex justify-start items-center hover:backdrop-blur-sm hover:bg-white/10 pl-8"
         >
           <img src={artist} className="w-6 h-6" alt="" />
-          <p className="font-main-font p-6 text-2xl text-white">ARTIST</p>
+          <p className="font-main-font p-6 text-2xl text-white">ARTISTE</p>
         </div>
         <div
           onClick={() => navigate("/Admin-Shop")}

@@ -16,6 +16,9 @@ import Stepper from "@pages/Stepper";
 import Contact from "@pages/Contact";
 import AdminUser from "@pages/Admin/AdminUser";
 import Dashboard from "@pages/Admin/Dashboard";
+import AdminArtWork from "@pages/Admin/AdminArtWork";
+import ArtWorkPictures from "@pages/Admin/AdminArtWorkPictures";
+import AdminShop from "@pages/Admin/PageAdShop";
 
 import "./App.css";
 
@@ -75,10 +78,10 @@ function App() {
           <Route path="/Admin-Scores" element={<Dashboard />} />
           <Route path="/Admin-Badges" element={<Dashboard />} />
           <Route path="/Admin-Messages" element={<Dashboard />} />
-          <Route path="/Admin-Pictures" element={<Dashboard />} />
           <Route path="/Admin-Artist" element={<Dashboard />} />
-          <Route path="/Admin-Shop" element={<Dashboard />} />
-          <Route path="/Admin-Artwork" element={<Dashboard />} />
+          <Route path="/Admin-Shop" element={<AdminShop />} />
+          <Route path="/Admin-Artwork" element={<AdminArtWork />} />
+          <Route path="/Admin-ArtworkPict" element={<ArtWorkPictures />} />
         </Routes>
       </CurrentUserContextProvider>
     </BrowserRouter>
