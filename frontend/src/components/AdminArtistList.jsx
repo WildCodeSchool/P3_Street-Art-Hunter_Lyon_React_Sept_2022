@@ -33,10 +33,9 @@ function createData(pseudo, firstname, name, email, score, badge, droit) {
 }
 
 const rows = [
-  createData("Shop shop", 20.51611, 5.321351, "blablab"),
-  createData("Shop shop", 20.51611, 5.321351, "blablabla"),
-  createData("Shop shop", 20.51611, 5.321351, "blablabla"),
-  createData("Shop shop", 20.51611, 5.321351, "blablabla"),
+  createData("Picasso"),
+  createData("Picasso"),
+  createData("Picasso"),
 ];
 
 function descendingComparator(a, b, orderBy) {
@@ -71,28 +70,10 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-    id: "Name/Type",
+    id: "artist_name",
     numeric: false,
     disablePadding: true,
-    label: "Name/Type",
-  },
-  {
-    id: "Longitude",
-    numeric: true,
-    disablePadding: false,
-    label: "Longitude",
-  },
-  {
-    id: "Latitude",
-    numeric: true,
-    disablePadding: false,
-    label: "Latitude",
-  },
-  {
-    id: "Description",
-    numeric: false,
-    disablePadding: false,
-    label: "Description",
+    label: "Artist_name",
   },
 ];
 
@@ -191,7 +172,7 @@ function EnhancedTableToolbar(props) {
           id="tableTitle"
           component="div"
         >
-          <p className="font-main-font text-[2rem]">Magasin</p>
+          <p className="font-main-font text-[2rem]">Artiste</p>
         </Typography>
       )}
 
@@ -215,7 +196,7 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-export default function AdminShopList() {
+export default function AdminArtistList() {
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("email");
   const [selected, setSelected] = React.useState([]);

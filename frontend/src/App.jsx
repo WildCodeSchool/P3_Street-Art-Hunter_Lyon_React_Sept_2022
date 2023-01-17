@@ -19,6 +19,7 @@ import Dashboard from "@pages/Admin/Dashboard";
 import AdminArtWork from "@pages/Admin/AdminArtWork";
 import ArtWorkPictures from "@pages/Admin/AdminArtWorkPictures";
 import AdminShop from "@pages/Admin/PageAdShop";
+import AdminArtist from "@pages/Admin/AdminArtist";
 
 import "./App.css";
 
@@ -78,7 +79,7 @@ function App() {
           <Route path="/Admin-Scores" element={<Dashboard />} />
           <Route path="/Admin-Badges" element={<Dashboard />} />
           <Route path="/Admin-Messages" element={<Dashboard />} />
-          <Route path="/Admin-Artist" element={<Dashboard />} />
+          <Route path="/Admin-Artist" element={<AdminArtist />} />
           <Route path="/Admin-Shop" element={<AdminShop />} />
           <Route path="/Admin-Artwork" element={<AdminArtWork />} />
           <Route path="/Admin-ArtworkPict" element={<ArtWorkPictures />} />

@@ -7,7 +7,6 @@ import user from "../assets/user.svg";
 import badge from "../assets/badge.svg";
 import message from "../assets/message.svg";
 import score from "../assets/score.svg";
-
 import artwork from "../assets/dashartwork.svg";
 import artist from "../assets/dashartist.svg";
 import shop from "../assets/dashshop.svg";
