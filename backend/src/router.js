@@ -46,7 +46,7 @@ router.post(
   verifyPassword
 );
 
-router.post("/upload", upload.single("image"), fsUpload);
+router.post("/photo", upload.single("image"), fsUpload);
 // Gestion des users
 router.get("/user", userControllers.browse);
 router.get("/user/:id", userControllers.read);
