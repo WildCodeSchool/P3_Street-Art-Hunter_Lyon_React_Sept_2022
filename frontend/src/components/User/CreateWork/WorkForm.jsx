@@ -84,6 +84,7 @@ function WorkForm({ markerLatitude, markerLongitude }) {
             >
               {artistList.map((artistFromList) => (
                 <option
+                  key={artistFromList.id}
                   className="  bg-transparent rounded-full border border-white px-3 py-2 text-white placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm "
                   value={artistFromList.id}
                 >

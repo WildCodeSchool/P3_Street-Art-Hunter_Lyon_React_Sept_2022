@@ -1,7 +1,7 @@
-import BadgeContainer from "@components/BadgeContainer";
-import BadgesCollectionModal from "@components/BadgesCollectionModal";
-import Header from "@components/Header";
 import React, { useState } from "react";
+import HeaderWithBurger from "../components/User/Global/HeaderWithBurger";
+import BadgeContainer from "../components/User/Badges/BadgeContainer";
+import BadgesCollectionModal from "../components/User/Badges/BadgesCollectionModal";
 
 export default function Badges() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -10,7 +10,7 @@ export default function Badges() {
   return (
     <div className="bg-main-background text-white font-main-font bg-cover w-full h-screen flex flex-col items-center">
       <div className="w-screen">
-        <Header />
+        <HeaderWithBurger />
       </div>
       <BadgeContainer
         setModalOpen={setModalOpen}
