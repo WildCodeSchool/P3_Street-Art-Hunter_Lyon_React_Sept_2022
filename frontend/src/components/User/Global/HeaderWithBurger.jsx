@@ -11,7 +11,7 @@ function HeaderWithBurger() {
       <div className="flex justify-end">
         <div
           onClick={handleClickOpen}
-          className="bg-menu-burger w-[12%] h-[4vh] bg-contain bg-no-repeat mt-7 mr-5"
+          className="bg-menu-burger w-[12%] h-[4vh] bg-contain bg-no-repeat mt-7 mr-5 cursor-pointer"
         />
       </div>
 

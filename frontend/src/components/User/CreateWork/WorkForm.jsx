@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+
+import { useCurrentUserContext } from "../../../contexts/userContext";
 
 const backURL = import.meta.env.VITE_BACKEND_URL;
 
 function WorkForm({ markerLatitude, markerLongitude }) {
-  const navigate = useNavigate();
+  const { token } = useCurrentUserContext();
   const [name, setName] = useState("Nom Inconnu");
   const [artistList, setArtistList] = useState([]);
-  const [artist, setArtist] = useState(1);
+  const [artistId, setArtistId] = useState(1);
   const validated = 0;
 
   useEffect(() => {
@@ -20,15 +22,17 @@ function WorkForm({ markerLatitude, markerLongitude }) {
 
   // soumettre le formulaire
   const handleForm = (e) => {
+    e.preventDefault();
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
-
+    myHeaders.append("authorization", `Bearer ${token}`);
     const body = JSON.stringify({
       name,
-      artist,
-      markerLatitude,
-      markerLongitude,
+      artistId,
+      latitude: markerLatitude,
+      longitude: markerLongitude,
       validated,
+      value: 100,
     });
 
     const requestOptions = {
@@ -38,15 +42,9 @@ function WorkForm({ markerLatitude, markerLongitude }) {
     };
     e.preventDefault();
     // on créé un nouvel utilisateur et on reutilise
-    fetch(`${backURL}/inscription`, requestOptions)
-      .then(() => {
-        setTimeout(() => {
-          navigate("/connexion");
-        }, 3000);
-      })
-      .catch((err) => {
-        console.warn(err);
-      });
+    fetch(`${backURL}/works`, requestOptions).catch((err) => {
+      console.warn(err);
+    });
   };
 
   return (
@@ -55,7 +53,7 @@ function WorkForm({ markerLatitude, markerLongitude }) {
         onSubmit={handleForm}
         className="flex flex-col justify-center items-center mb-4"
       >
-        <label className="flex flex-col justify-center text-white">
+        <label className="flex flex-col justify-center text-white mt-2">
           Nom
           <div className="flex flex-row-reverse border rounded-[3rem] border-white h-[90%] w-64">
             <input
@@ -75,7 +73,7 @@ function WorkForm({ markerLatitude, markerLongitude }) {
           Artiste
           <div className="flex flex-row-reverse border rounded-[3rem] border-white h-[90%] w-68 ">
             <select
-              onChange={(e) => setArtist(e.target.value)}
+              onChange={(e) => setArtistId(e.target.value)}
               type="artist"
               name="artist"
               id="artist"
@@ -84,7 +82,7 @@ function WorkForm({ markerLatitude, markerLongitude }) {
               {artistList.map((artistFromList) => (
                 <option
                   key={artistFromList.id}
-                  className="  bg-transparent rounded-full border border-white px-3 py-2 text-white placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm "
+                  className="bg-transparent rounded-full border border-white px-3 py-2 text-white placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm "
                   value={artistFromList.id}
                 >
                   {artistFromList.artist_name}
@@ -93,13 +91,22 @@ function WorkForm({ markerLatitude, markerLongitude }) {
             </select>
           </div>
         </label>
-
-        <button
-          type="submit"
-          className="bg-gradient-to-tl from-pink to-lightblue rounded-3xl font-main-font text-[32px] py-1 px-6  mt-5"
-        >
-          SOUMETTRE
-        </button>
+        <div className="flex justify-between w-full">
+          <NavLink to="/validation">
+            <button
+              type="button"
+              className="bg-gradient-to-tl from-pink to-lightblue rounded-3xl font-main-font text-[32px] py-1 px-6  mt-5 w-[50%] min-w-fit"
+            >
+              RETOUR
+            </button>
+          </NavLink>
+          <button
+            type="submit"
+            className="bg-gradient-to-tl from-pink to-lightblue rounded-3xl font-main-font text-[32px] py-1 px-6 w-[50%]  mt-5"
+          >
+            CREER
+          </button>
+        </div>
       </form>
     </div>
   );

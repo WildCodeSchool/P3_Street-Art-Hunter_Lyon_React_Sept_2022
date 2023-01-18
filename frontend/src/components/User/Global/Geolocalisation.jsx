@@ -6,9 +6,12 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import { useCurrentPhotoContext } from "../../../contexts/photoContext";
 
 function Geolocalisation() {
   const [open, setOpen] = React.useState(true);
+
+  const { contextPhotoCoord } = useCurrentPhotoContext();
 
   const handleClose = () => {
     setOpen(false);
@@ -20,6 +23,7 @@ function Geolocalisation() {
       ? navigator.geolocation.getCurrentPosition(
           (position) => {
             const { latitude, longitude } = position.coords;
+            contextPhotoCoord.current = [latitude, longitude];
             console.warn(latitude, longitude);
           },
           (err) => {

@@ -90,10 +90,11 @@ CREATE TABLE
 IF NOT EXISTS `street_art_hunter`.`work`
 (
   `id` INT NOT NULL AUTO_INCREMENT,
+  `work_name` VARCHAR(150) NOT NULL,
   `longitude` DECIMAL
-(10,9) NULL DEFAULT NULL,
+(20,18) NULL DEFAULT NULL,
   `latitude` DECIMAL
-(10,9) NULL DEFAULT NULL,
+(20,18) NULL DEFAULT NULL,
   `value_point` INT NULL DEFAULT NULL,
   `is_validated` TINYINT NULL DEFAULT NULL,
   `artist_id` INT NOT NULL,
@@ -122,7 +123,6 @@ IF NOT EXISTS `street_art_hunter`.`picture`
   `id` INT NOT NULL AUTO_INCREMENT,
   `picture_url` VARCHAR(150) NOT NULL,
   `creation_date` DATETIME NULL DEFAULT NULL,
-  `fav` TINYINT NULL DEFAULT NULL,
   `is_validated` TINYINT NULL DEFAULT NULL,
   `work_id` INT NOT NULL,
   `user_id` INT NOT NULL,

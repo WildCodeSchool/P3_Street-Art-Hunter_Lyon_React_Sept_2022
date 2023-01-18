@@ -21,6 +21,7 @@ import Dashboard from "@pages/Admin/Dashboard";
 import ModifUser from "@pages/Admin/ModifUser";
 import Registration from "@pages/Global/ Registration";
 import CreateWork from "@pages/User/CreateWork";
+import PictureValidation from "@pages/User/PictureValidation";
 
 import "./App.css";
 
@@ -77,6 +78,7 @@ function App() {
               element={<GalleryLive allOrLive="live" />}
             />
             <Route path="/creatework" element={<CreateWork />} />
+            <Route path="/validation" element={<PictureValidation />} />
 
             <Route path="/Admin-User" element={<AdminUser />} />
             <Route path="/Dashboard" element={<Dashboard />} />

@@ -282,6 +282,14 @@
 
 }
 
+.pictureValidation .leaflet-container {
+  width: 95%;
+  height: 35vh;
+  z-index: 0;
+  border-radius: 0.75rem/* 12px */;
+
+}
+
 .blink-2 {
   -webkit-animation: blink-2 0.3s 3 both;
   animation: blink-2 0.3s 3 both;

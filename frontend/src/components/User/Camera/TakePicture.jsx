@@ -3,15 +3,13 @@ import React, { useState } from "react";
 import Webcam from "react-webcam";
 import BottomNavCamera from "./BottomNavCamera";
 import BottomNavCamActive from "./BottomNavCamActive";
-import { useCurrentUserContext } from "../../../contexts/userContext";
 import { useCurrentPhotoContext } from "../../../contexts/photoContext";
-
-const backURL = import.meta.env.VITE_BACKEND_URL;
+import Geolocalisation from "../Global/Geolocalisation";
 
 function TakePicture() {
   const [photo, setPhoto] = useState(false);
   const [validation, setValidation] = useState(false);
-  const { setContextPhoto, contextPhoto } = useCurrentPhotoContext();
+  const { contextPhoto } = useCurrentPhotoContext();
   const videoConstraints = {
     width: 400,
     height: 600,
@@ -25,26 +23,12 @@ function TakePicture() {
     setImgSrc(imageSrc);
     setPhoto(!photo);
     setValidation(!validation);
-    setContextPhoto(imageSrc);
+    contextPhoto.current = imageSrc;
   }, [webcamRef, setImgSrc]);
-
-  const { user } = useCurrentUserContext();
-
-  const handleSendPhoto = () => {
-    // const formData = new FormData();
-    // formData.append("photo", pic);
-
-    fetch(`${backURL}/photo`, {
-      method: "POST",
-      body: JSON.stringify({ image: contextPhoto, filename: user.pseudo }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then((response) => response.json());
-  };
 
   return (
     <>
+      <Geolocalisation />
       {!photo ? (
         <Webcam
           audio={false}
@@ -60,11 +44,7 @@ function TakePicture() {
       {!validation ? (
         <BottomNavCamera capture={capture} />
       ) : (
-        <BottomNavCamActive
-          setPhoto={setPhoto}
-          setValidation={setValidation}
-          handleSubmit={handleSendPhoto}
-        />
+        <BottomNavCamActive setPhoto={setPhoto} setValidation={setValidation} />
       )}
     </>
   );

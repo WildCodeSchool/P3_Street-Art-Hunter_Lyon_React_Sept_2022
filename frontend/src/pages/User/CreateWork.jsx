@@ -2,9 +2,12 @@ import React, { useMemo, useState } from "react";
 import { MapContainer, Marker, TileLayer } from "react-leaflet";
 import HeaderWithBurger from "../../components/User/Global/HeaderWithBurger";
 import WorkForm from "../../components/User/CreateWork/WorkForm";
+import { useCurrentPhotoContext } from "../../contexts/photoContext";
 
 export default function CreateWork() {
-  const [markerCoords, setMarkerCoords] = useState([45.7578137, 4.8320114]);
+  const { contextPhotoCoord } = useCurrentPhotoContext();
+
+  const [markerCoords, setMarkerCoords] = useState(contextPhotoCoord.current);
   const [markerLatitude, setMarkerLatitude] = useState(markerCoords.lat);
   const [markerLongitude, setMarkerLongitude] = useState(markerCoords.lng);
 
@@ -20,14 +23,14 @@ export default function CreateWork() {
   );
 
   return (
-    <div className="bg-main-background bg-cover w-auto h-screen">
+    <div className="bg-main-background bg-cover w-auto h-screen ">
       <HeaderWithBurger />
 
-      <div className="flex flex-col justify-center items-center backdrop-blur-sm rounded-[3rem] mt-2 ml-2 w-[95%] border-[1px] border-white/10 py-3">
+      <div className="flex flex-col justify-center items-center backdrop-blur-sm rounded-[3rem] ml-2 w-[95%] border-[1px] border-white/10 mt-[6rem]">
         <div className="creatework w-full flex flex-wrap justify-center">
-          <h1 className="text-white text-center font-main-font text-4xl mb-2 mt-2">
+          <h2 className="text-white text-center font-main-font text-4xl mb-2 mt-2">
             Nouvelle Oeuvre
-          </h1>
+          </h2>
           <div className="w-[90%] border rounded-xl border-white">
             <MapContainer
               center={markerCoords}
