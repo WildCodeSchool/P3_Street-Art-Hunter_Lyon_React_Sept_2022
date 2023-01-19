@@ -5,7 +5,7 @@ import home from "../../../assets/home.svg";
 
 function HeaderAdmin({ nav }) {
   return (
-    <div className="h-[13vh] flex items-center justify-between p-10">
+    <div className="h-[15vh] z-50 flex items-center justify-between p-10 top-0 fixed w-[85%] bg-white shadow-lg">
       <div className="flex flex-col items-start">
         <div className="flex flex-row w-full">
           <img src={home} alt="" className="w-[7%] pt-[1.7rem] mr-2" />

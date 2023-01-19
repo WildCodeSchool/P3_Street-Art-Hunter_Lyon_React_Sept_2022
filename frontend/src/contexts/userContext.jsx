@@ -10,6 +10,8 @@ export function CurrentUserContextProvider({ children }) {
   // on utilise un hook personnalisé
 
   const [open, setOpen] = React.useState(false);
+  const [id, setId] = React.useState();
+  const [pseudoID, setPseudoID] = React.useState();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -33,6 +35,10 @@ export function CurrentUserContextProvider({ children }) {
         open,
         handleClickOpen,
         handleClose,
+        id,
+        setId,
+        pseudoID,
+        setPseudoID,
       }}
     >
       {children}

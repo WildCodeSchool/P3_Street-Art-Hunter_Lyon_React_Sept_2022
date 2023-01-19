@@ -20,6 +20,7 @@ import AdminUser from "@pages/Admin/AdminUser";
 import Dashboard from "@pages/Admin/Dashboard";
 import ModifUser from "@pages/Admin/ModifUser";
 import Registration from "@pages/Global/ Registration";
+import CreateUser from "@pages/Admin/CreateUser";
 
 import "./App.css";
 
@@ -79,6 +80,7 @@ function App() {
           <Route path="/Admin-Shop" element={<Dashboard />} />
           <Route path="/Admin-Artwork" element={<Dashboard />} />
           <Route path="/Admin-Modif-User" element={<ModifUser />} />
+          <Route path="/Admin-Create-User" element={<CreateUser />} />
         </Routes>
       </CurrentUserContextProvider>
     </BrowserRouter>

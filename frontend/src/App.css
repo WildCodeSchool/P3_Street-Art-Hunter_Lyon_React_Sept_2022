@@ -418,3 +418,7 @@
     opacity: 1;
   }
 }
+
+.css-10dfkli-MuiTableCell-root {
+  padding-left: 4rem !important;
+}

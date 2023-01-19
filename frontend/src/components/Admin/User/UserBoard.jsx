@@ -1,4 +1,6 @@
-import * as React from "react";
+/* eslint-disable react/no-unstable-nested-components */
+/* eslint-disable camelcase */
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { alpha } from "@mui/material/styles";
 import Box from "@mui/material/Box";
@@ -13,7 +15,7 @@ import TableSortLabel from "@mui/material/TableSortLabel";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import Checkbox from "@mui/material/Checkbox";
+
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -21,41 +23,9 @@ import AddIcon from "@mui/icons-material/Add";
 import { visuallyHidden } from "@mui/utils";
 import Avatar from "@mui/material/Avatar";
 import { useNavigate } from "react-router-dom";
+
 import Vincent from "../../../assets/Vincent.png";
-
-function createData(pseudo, firstname, name, email, score, badge, droit) {
-  return {
-    pseudo,
-    firstname,
-    name,
-    email,
-    score,
-    badge,
-    droit,
-  };
-}
-
-const rows = [
-  createData(
-    "Guacamole",
-    "Dix",
-    "Dier",
-    "guacamole@mail.com",
-    2000,
-    3,
-    "Admin"
-  ),
-  createData("Burrito", "Bout", "Riztôt", "burrito@mail.com", 1200, 1, "User"),
-  createData(
-    "Empanadas",
-    "Requin",
-    "Quai",
-    "empanadas@mail.com",
-    200,
-    0,
-    "User"
-  ),
-];
+import { useCurrentUserContext } from "../../../contexts/userContext";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -89,7 +59,7 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-    id: "pseudo",
+    id: "Pseudo",
     numeric: false,
     disablePadding: true,
     label: "Utilisateur",
@@ -101,7 +71,7 @@ const headCells = [
     label: "Prénom",
   },
   {
-    id: "name",
+    id: "lastname",
     numeric: true,
     disablePadding: false,
     label: "Nom",
@@ -113,19 +83,13 @@ const headCells = [
     label: "Mail",
   },
   {
-    id: "score",
+    id: "scorepoint",
     numeric: true,
     disablePadding: false,
     label: "Score",
   },
   {
-    id: "badge",
-    numeric: true,
-    disablePadding: false,
-    label: "Badge",
-  },
-  {
-    id: "droit",
+    id: "is_admin",
     numeric: true,
     disablePadding: false,
     label: "Droit",
@@ -133,14 +97,7 @@ const headCells = [
 ];
 
 function EnhancedTableHead(props) {
-  const {
-    onSelectAllClick,
-    order,
-    orderBy,
-    numSelected,
-    rowCount,
-    onRequestSort,
-  } = props;
+  const { order, orderBy, onRequestSort } = props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -148,17 +105,6 @@ function EnhancedTableHead(props) {
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox">
-          <Checkbox
-            color="primary"
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{
-              "aria-label": "select all users",
-            }}
-          />
-        </TableCell>
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
@@ -186,113 +132,48 @@ function EnhancedTableHead(props) {
 }
 
 EnhancedTableHead.propTypes = {
-  numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
   order: PropTypes.oneOf(["asc", "desc"]).isRequired,
   orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired,
 };
 
-function EnhancedTableToolbar(props) {
-  const { numSelected } = props;
-
-  return (
-    <Toolbar
-      sx={{
-        pl: { sm: 2 },
-        pr: { xs: 1, sm: 1 },
-        ...(numSelected > 0 && {
-          bgcolor: (theme) =>
-            alpha(
-              theme.palette.primary.main,
-              theme.palette.action.activatedOpacity
-            ),
-        }),
-      }}
-    >
-      {numSelected > 0 ? (
-        <Typography
-          sx={{ flex: "1 1 100%" }}
-          color="inherit"
-          variant="subtitle1"
-          component="div"
-        >
-          {numSelected} sélectionné
-        </Typography>
-      ) : (
-        <Typography
-          sx={{ flex: "1 1 100%" }}
-          variant="h6"
-          id="tableTitle"
-          component="div"
-        >
-          <p className="font-main-font text-[2rem]">Utilisateurs</p>
-        </Typography>
-      )}
-
-      {numSelected > 0 ? (
-        <Tooltip title="Delete">
-          <IconButton>
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>
-      ) : (
-        <IconButton>
-          <AddIcon />
-          <p className="pl-1 text-[14px]">Ajouter</p>
-        </IconButton>
-      )}
-    </Toolbar>
-  );
-}
-
-EnhancedTableToolbar.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-};
+const backURL = import.meta.env.VITE_BACKEND_URL;
 
 export default function UserBoard() {
+  const { token, setId } = useCurrentUserContext();
+  const navigate = useNavigate();
+
+  const [rows, setRows] = useState([]);
+
+  const myHeaders = new Headers({
+    Authorization: `Bearer ${token}`,
+  });
+  myHeaders.append("Content-Type", "application/json");
+
+  const GETrequestOptions = {
+    method: "GET",
+    headers: myHeaders,
+  };
+
+  useEffect(() => {
+    fetch(`${backURL}/users`, GETrequestOptions)
+      .then((result) => result.json())
+      .then((result) => {
+        setRows(result);
+      });
+  }, []);
+
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("email");
-  const [selected, setSelected] = React.useState([]);
+  const [selected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(11);
-  const navigate = useNavigate();
+  const [rowsPerPage, setRowsPerPage] = React.useState(7);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
-  };
-
-  const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelected = rows.map((n) => n.pseudo);
-      setSelected(newSelected);
-      return;
-    }
-    setSelected([]);
-  };
-
-  const handleClick = (event, pseudo) => {
-    const selectedIndex = selected.indexOf(pseudo);
-    let newSelected = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, pseudo);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
-
-    setSelected(newSelected);
   };
 
   const handleChangePage = (event, newPage) => {
@@ -304,14 +185,76 @@ export default function UserBoard() {
     setPage(0);
   };
 
-  const isSelected = (pseudo) => selected.indexOf(pseudo) !== -1;
+  const isSelected = (Pseudo) => selected.indexOf(Pseudo) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
+  function EnhancedTableToolbar(props) {
+    const { numSelected } = props;
+
+    return (
+      <Toolbar
+        sx={{
+          pl: { sm: 2 },
+          pr: { xs: 1, sm: 1 },
+          ...(numSelected > 0 && {
+            bgcolor: (theme) =>
+              alpha(
+                theme.palette.primary.main,
+                theme.palette.action.activatedOpacity
+              ),
+          }),
+        }}
+      >
+        {numSelected > 0 ? (
+          <Typography
+            sx={{ flex: "1 1 100%" }}
+            color="inherit"
+            variant="subtitle1"
+            component="div"
+          >
+            {numSelected} sélectionné
+          </Typography>
+        ) : (
+          <Typography
+            sx={{ flex: "1 1 100%" }}
+            variant="h6"
+            id="tableTitle"
+            component="div"
+          >
+            <p className="font-main-font text-[2rem]">Utilisateurs</p>
+          </Typography>
+        )}
+
+        {numSelected > 0 ? (
+          <Tooltip title="Supprimer">
+            <IconButton>
+              <DeleteIcon />
+            </IconButton>
+          </Tooltip>
+        ) : (
+          <IconButton
+            onClick={() => {
+              navigate("/Admin-Create-User");
+            }}
+          >
+            <AddIcon />
+            <p className="pl-1 text-[14px]">Ajouter</p>
+          </IconButton>
+        )}
+      </Toolbar>
+    );
+  }
+
+  EnhancedTableToolbar.propTypes = {
+    numSelected: PropTypes.number.isRequired,
+  };
+
   return (
-    <Box sx={{ width: "100%" }}>
+    <div className="w-full pt-40">
+      <div className="w-full flex justify-center items-center" />
       <Paper sx={{ width: "100%", mb: 2 }}>
         <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer>
@@ -324,7 +267,6 @@ export default function UserBoard() {
               numSelected={selected.length}
               order={order}
               orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
               rowCount={rows.length}
             />
@@ -334,49 +276,90 @@ export default function UserBoard() {
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.pseudo);
+                  const isItemSelected = isSelected(row.Pseudo);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => {
-                        handleClick(event, row.pseudo);
-                        navigate("/Admin-Modif-User");
-                      }}
-                      role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.pseudo}
+                      key={row.Pseudo}
                       selected={isItemSelected}
                       className="cursor-pointer"
                     >
-                      <TableCell padding="checkbox">
-                        <Checkbox
-                          color="primary"
-                          checked={isItemSelected}
-                          inputProps={{
-                            "aria-labelledby": labelId,
-                          }}
-                        />
-                      </TableCell>
                       <TableCell
                         component="th"
                         id={labelId}
                         scope="row"
                         padding="2"
+                        onClick={() => {
+                          navigate("/Admin-Modif-User");
+                          setId(row.id);
+                        }}
                       >
                         <div className="flex items-center">
                           <Avatar alt="avatar" src={Vincent} className="mr-4" />
-                          {row.pseudo}
+                          {row.Pseudo}
                         </div>
                       </TableCell>
-                      <TableCell align="right">{row.firstname}</TableCell>
-                      <TableCell align="right">{row.name}</TableCell>
-                      <TableCell align="right">{row.email}</TableCell>
-                      <TableCell align="right">{row.score}</TableCell>
-                      <TableCell align="right">{row.badge}</TableCell>
-                      <TableCell align="right">{row.droit}</TableCell>
+                      <TableCell
+                        align="right"
+                        onClick={() => {
+                          navigate("/Admin-Modif-User");
+                          setId(row.id);
+                        }}
+                      >
+                        {row.firstname}{" "}
+                      </TableCell>
+                      <TableCell
+                        align="right"
+                        onClick={() => {
+                          navigate("/Admin-Modif-User");
+                          setId(row.id);
+                        }}
+                      >
+                        {row.lastname}
+                      </TableCell>
+                      <TableCell
+                        align="right"
+                        onClick={() => {
+                          navigate("/Admin-Modif-User");
+                          setId(row.id);
+                        }}
+                      >
+                        {row.email}
+                      </TableCell>
+                      <TableCell
+                        align="right"
+                        onClick={() => {
+                          navigate("/Admin-Modif-User");
+                          setId(row.id);
+                        }}
+                      >
+                        {row.scorepoint}
+                      </TableCell>
+                      {row.is_admin === 1 ? (
+                        <TableCell
+                          align="right"
+                          onClick={() => {
+                            navigate("/Admin-Modif-User");
+                            setId(row.id);
+                          }}
+                        >
+                          Administrateur
+                        </TableCell>
+                      ) : (
+                        <TableCell
+                          align="right"
+                          onClick={() => {
+                            navigate("/Admin-Modif-User");
+                            setId(row.id);
+                          }}
+                        >
+                          Utilisateur
+                        </TableCell>
+                      )}
                     </TableRow>
                   );
                 })}
@@ -402,6 +385,6 @@ export default function UserBoard() {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-    </Box>
+    </div>
   );
 }
