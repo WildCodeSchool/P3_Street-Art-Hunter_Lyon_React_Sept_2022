@@ -1,7 +1,7 @@
 import React from "react";
-import LateralMenu from "../../components/LateralMenu";
-import HeaderAdmin from "../../components/HeaderAdmin";
-import AdminShopList from "../../components/AdminShopList";
+import LateralMenu from "../../components/Admin/Global/LateralMenu";
+import HeaderAdmin from "../../components/Admin/Global/HeaderAdmin";
+import AdminShopList from "../../components/Admin/Shop/AdminShopList";
 
 function AdminShop() {
   const nav = "/Admin-Shop";

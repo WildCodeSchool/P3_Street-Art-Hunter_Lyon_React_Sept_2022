@@ -1,7 +1,7 @@
 import React from "react";
-import LateralMenu from "../../components/LateralMenu";
-import HeaderAdmin from "../../components/HeaderAdmin";
-import Board from "../../components/Board";
+import LateralMenu from "../../components/Admin/Global/LateralMenu";
+import HeaderAdmin from "../../components/Admin/Global/HeaderAdmin";
+import Board from "../../components/Admin/Dashboard/Board";
 
 function AdminArtWork() {
   const nav = "/AdminArtWork";

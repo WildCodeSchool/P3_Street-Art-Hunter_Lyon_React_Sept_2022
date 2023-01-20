@@ -10,6 +10,7 @@ const {
 const authControllers = require("./controllers/authControllers");
 const userControllers = require("./controllers/userControllers");
 const badgeControllers = require("./controllers/badgeControllers");
+const messageControllers = require("./controllers/messageControllers");
 
 // Auth
 router.post("/inscription", hashPassword, userControllers.add);
@@ -36,5 +37,12 @@ router.get("/user/badges/:id", badgeControllers.getUserBadges);
 
 router.post("/badges", badgeControllers.add);
 router.put("/badges/:id", badgeControllers.edit);
+
+// Gestion des messages
+
+router.get("/messages", messageControllers.browse);
+router.get("/messages/:id", messageControllers.read);
+router.post("/messages", messageControllers.add);
+router.delete("/messages/:id", messageControllers.destroy);
 
 module.exports = router;

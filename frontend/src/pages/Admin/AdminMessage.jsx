@@ -1,7 +1,8 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import React from "react";
-import LateralMenu from "../../components/LateralMenu";
-import HeaderAdmin from "../../components/HeaderAdmin";
-import AdminMessages from "../../components/AdminMessages";
+import LateralMenu from "../../components/Admin/Global/LateralMenu";
+import HeaderAdmin from "../../components/Admin/Global/HeaderAdmin";
+import MessageList from "../../components/Admin/Message/AdminMessageList";
 
 function AdminMessage() {
   const nav = "/Admin-Artwork";
@@ -10,7 +11,7 @@ function AdminMessage() {
       <LateralMenu />
       <div className="flex flex-col w-full">
         <HeaderAdmin nav={nav} />
-        <AdminMessages />
+        <MessageList />
       </div>
     </div>
   );
