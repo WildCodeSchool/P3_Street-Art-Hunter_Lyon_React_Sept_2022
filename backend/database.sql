@@ -90,11 +90,13 @@ CREATE TABLE
 IF NOT EXISTS `street_art_hunter`.`work`
 (
   `id` INT NOT NULL AUTO_INCREMENT,
+  `work_name` VARCHAR(150) NOT NULL,
   `longitude` DECIMAL
-(10,9) NULL DEFAULT NULL,
+(20,18) NULL DEFAULT NULL,
   `latitude` DECIMAL
-(10,9) NULL DEFAULT NULL,
+(20,18) NULL DEFAULT NULL,
   `value_point` INT NULL DEFAULT NULL,
+  `is_validated` TINYINT NULL DEFAULT NULL,
   `artist_id` INT NOT NULL,
   PRIMARY KEY
 (`id`),
@@ -119,10 +121,9 @@ CREATE TABLE
 IF NOT EXISTS `street_art_hunter`.`picture`
 (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `picture_url` VARCHAR
-(150) NOT NULL,
-  `note` INT NULL DEFAULT NULL,
-  `Fav` TINYINT NULL DEFAULT NULL,
+  `picture_url` VARCHAR(150) NOT NULL,
+  `creation_date` DATETIME NULL DEFAULT NULL,
+  `is_validated` TINYINT NULL DEFAULT NULL,
   `work_id` INT NOT NULL,
   `user_id` INT NOT NULL,
   PRIMARY KEY
@@ -303,6 +304,11 @@ values
   (1, 4),
   (4, 4);
 
-ALTER TABLE `street_art_hunter`.`user`
-ADD COLUMN `avatar` VARCHAR
-(45) NULL AFTER `hashedPassword`;
+ALTER TABLE `street_art_hunter`.`user` 
+ADD COLUMN `avatar` VARCHAR(45) NULL AFTER `hashedPassword`;
+
+INSERT INTO `street_art_hunter`.`artist`
+(
+`artist_name`)
+VALUES
+("Artiste Inconnu"),("Vincent"),("Younes"),("Gaëlle"),("Daryl");

@@ -28,12 +28,12 @@ const read = (req, res) => {
 };
 
 const add = (req, res) => {
-  const user = req.body;
+  const badge = req.body;
 
   models.badge
-    .insert(user)
+    .insert(badge)
     .then(([result]) => {
-      res.location(`/user/${result.insertId}`).sendStatus(201);
+      res.location(`/badge/${result.insertId}`).sendStatus(201);
     })
     .catch((error) => {
       console.error(error);
