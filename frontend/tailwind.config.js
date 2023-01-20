@@ -14,6 +14,7 @@ module.exports = {
         "logo-home": "url('/src/assets/LogoHome.png')",
         "main-background": "url('/src/assets/MainBack.png')",
         "menu-burger": "url('/src/assets/burger.svg')",
+        "menu-cross": "url('/src/assets/crossBurger.svg')",
         bottomNavGrad: "url('/src/assets/Gradient.png')",
         tel: "url('/src/assets/tel-mieux.png')",
         lyon: "url('/src/assets/Lyon.svg')",

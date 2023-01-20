@@ -7,7 +7,7 @@ class UserManager extends AbstractManager {
 
   find(id) {
     return this.connection.query(
-      `select id, firstname, lastname, scorepoint, Pseudo, isAdmin, email from  ${this.table} where id = ?`,
+      `select id, firstname, lastname, scorepoint, pseudo, is_admin, email from  ${this.table} where id = ?`,
       [id]
     );
   }
@@ -21,19 +21,19 @@ class UserManager extends AbstractManager {
 
   findAll() {
     return this.connection.query(
-      `select id, firstname, lastname, scorepoint, Pseudo, isAdmin, email from  ${this.table}`
+      `select id, firstname, lastname, scorepoint, pseudo, is_admin, email from  ${this.table}`
     );
   }
 
   insert(users) {
     return this.connection.query(
-      `insert into ${this.table} (pseudo, firstname, lastname, scorepoint, isAdmin, email, hashedPassword) values (?, ?, ?, ?, ?, ?, ?)`,
+      `insert into ${this.table} (pseudo, firstname, lastname, scorepoint, is_admin, email, hashedPassword) values (?, ?, ?, ?, ?, ?, ?)`,
       [
         users.pseudo,
         users.firstname,
         users.lastname,
         users.scorepoint,
-        users.isAdmin,
+        users.is_admin,
         users.email,
         users.hashedPassword,
       ]
@@ -42,17 +42,24 @@ class UserManager extends AbstractManager {
 
   update(users) {
     return this.connection.query(
-      `update ${this.table} set firstname = ?, lastname = ?, scorepoint = ?, Pseudo = ?, isAdmin = ?, email = ?, hashedPassword = ? where id = ?`,
+      `update ${this.table} set firstname = ?, lastname = ?, scorepoint = ?, pseudo = ?, is_admin = ?, email = ?, hashedPassword = ? where id = ?`,
       [
         users.firstname,
         users.lastname,
         users.scorepoint,
-        users.Pseudo,
-        users.isAdmin,
+        users.pseudo,
+        users.is_admin,
         users.email,
         users.hashedPassword,
       ]
     );
+  }
+
+  modif(users) {
+    return this.connection.query(`update ${this.table} set ? where id = ?`, [
+      users,
+      users.id,
+    ]);
   }
 
   getLeaderboard() {
