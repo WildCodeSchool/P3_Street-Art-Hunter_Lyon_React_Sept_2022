@@ -1,12 +1,7 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable react/jsx-no-comment-textnodes */
 import React from "react";
 import { NavLink } from "react-router-dom";
-// eslint-disable-next-line import/no-unresolved
-import check from "@assets/check.svg";
-// eslint-disable-next-line import/no-unresolved
-import cross from "@assets/cross.svg";
+import check from "../../../assets/check.svg";
+import cross from "../../../assets/cross.svg";
 import SwitchButtonNav from "../Global/SwitchButtonNav";
 
 function BottomNavCamActive({ setPhoto, setValidation }) {
@@ -34,7 +29,7 @@ function BottomNavCamActive({ setPhoto, setValidation }) {
             bgColor="bg-bottomdark"
           />
         </NavLink>
-        <NavLink to="/galerie">
+        <NavLink to="/galerie/live">
           <SwitchButtonNav
             content="GALERIE"
             styleModif="mb-4 w-[100px] text-3xl"
@@ -53,6 +48,7 @@ function BottomNavCamActive({ setPhoto, setValidation }) {
         <button type="button" className=" absolute left-8 top-28">
           <div className="bg-gradient-to-b from-pink to-lightblue rounded-[100%]  w-[3.6rem]  h-[3.6rem] p-[0.2rem]">
             <div
+              aria-hidden="true"
               className="w-full h-full rounded-[100%] bg-gradient-to-b from-bottomdark to-[#454377] flex justify-center items-center"
               onClick={handleCross}
             >

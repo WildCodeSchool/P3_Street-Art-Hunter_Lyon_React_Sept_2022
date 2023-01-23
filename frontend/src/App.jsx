@@ -1,28 +1,27 @@
-/* eslint-disable import/no-unresolved */
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import Badges from "@pages/User/Badges";
-import Camera from "@pages/User/Camera";
-import Connexion from "@pages/Global/Connexion";
-import Favoris from "@pages/User/Favoris";
-import GalleryLive from "@pages/User/GalleryLive";
-import GalleryAll from "@pages/User/GalleryAll";
-import Help from "@pages/User/Help";
-import Home from "@pages/User/Home";
-import MyGallery from "@pages/User/MyGallery";
-import Map from "@pages/User/Map";
-import Menu from "@pages/User/Menu";
-import Profil from "@pages/User/Profil";
-import Scores from "@pages/User/Scores";
-import Stepper from "@pages/User/Stepper";
-import Contact from "@pages/User/Contact";
-import AdminUser from "@pages/Admin/AdminUser";
-import Dashboard from "@pages/Admin/Dashboard";
-import ModifUser from "@pages/Admin/ModifUser";
-import Registration from "@pages/Global/ Registration";
-import CreateUser from "@pages/Admin/CreateUser";
-import CreateWork from "@pages/User/CreateWork";
-import PictureValidation from "@pages/User/PictureValidation";
+import Camera from "./pages/User/Camera";
+import Connexion from "./pages/Global/Connexion";
+import Favoris from "./pages/User/Favoris";
+import GalleryLive from "./pages/User/GalleryLive";
+import GalleryAll from "./pages/User/GalleryAll";
+import Help from "./pages/User/Help";
+import Home from "./pages/User/Home";
+import MyGallery from "./pages/User/MyGallery";
+import Map from "./pages/User/Map";
+import Menu from "./pages/User/Menu";
+import Profil from "./pages/User/Profil";
+import Scores from "./pages/User/Scores";
+import Stepper from "./pages/User/Stepper";
+import Contact from "./pages/User/Contact";
+import AdminUser from "./pages/Admin/AdminUser";
+import Dashboard from "./pages/Admin/Dashboard";
+import ModifUser from "./pages/Admin/ModifUser";
+import Registration from "./pages/Global/ Registration";
+import CreateUser from "./pages/Admin/CreateUser";
+import CreateWork from "./pages/User/CreateWork";
+import PictureValidation from "./pages/User/PictureValidation";
+import Badges from "./pages/User/Badges";
 
 import "./App.css";
 

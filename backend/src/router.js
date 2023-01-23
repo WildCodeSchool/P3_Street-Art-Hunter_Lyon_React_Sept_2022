@@ -11,6 +11,7 @@ const upload = multer({ dest: "./public/uploads/" });
 
 const fsUpload = (req, res) => {
   const { image, filename } = req.body;
+
   // eslint-disable-next-line new-cap
   const buffer = new Buffer.from(
     image.replace(/^data:image\/\w+;base64,/, ""),
@@ -58,7 +59,6 @@ router.get("/score/:id", userControllers.getMyscore);
 router.get("/rank/:id", userControllers.getRanks);
 
 router.post("/users", hashPassword, verifyToken, userControllers.add);
-// router.put("/users/:id", hashPassword, verifyToken, userControllers.edit);
 router.put("/users/:id", verifyToken, userControllers.modif);
 router.delete("/users/:id", verifyToken, userControllers.destroy);
 

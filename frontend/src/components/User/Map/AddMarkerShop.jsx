@@ -1,8 +1,6 @@
 import { useEffect } from "react";
 import ReactDOMServer from "react-dom/server";
-// eslint-disable-next-line import/no-unresolved
 import L from "leaflet";
-// eslint-disable-next-line import/no-unresolved
 import { useMap } from "react-leaflet";
 import shopMarker from "../../../assets/ShopMarker.svg";
 import PopupContainerShop from "./PopupContainerShop";

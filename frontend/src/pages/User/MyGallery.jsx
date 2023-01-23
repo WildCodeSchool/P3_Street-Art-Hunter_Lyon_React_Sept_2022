@@ -1,7 +1,6 @@
 import React from "react";
 import Header from "../../components/Global/Header";
 import BottomNav from "../../components/User/Global/BottomNav";
-import UserCardContainer from "../../components/Global/Cards/UserCardContainer";
 
 function MyGallery() {
   return (
@@ -11,14 +10,6 @@ function MyGallery() {
         TES PRISES
       </div>
       <div className="flex justify-around flex-wrap overflow-auto h-[60vh]">
-        <UserCardContainer />
-        <UserCardContainer />
-        <UserCardContainer />
-        <UserCardContainer />
-        <UserCardContainer />
-        <UserCardContainer />
-        <UserCardContainer />
-        <UserCardContainer />
         <BottomNav />
       </div>
     </div>

@@ -1,6 +1,5 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 const argon2 = require("argon2");
-// eslint-disable-next-line import/no-extraneous-dependencies
+
 const jwt = require("jsonwebtoken");
 
 const { JWT_SECRET, JWT_TIMING } = process.env;

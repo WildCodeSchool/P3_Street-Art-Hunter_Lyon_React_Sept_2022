@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// eslint-disable-next-line import/no-extraneous-dependencies
 import Webcam from "react-webcam";
 import BottomNavCamera from "./BottomNavCamera";
 import BottomNavCamActive from "./BottomNavCamActive";
@@ -11,8 +10,8 @@ function TakePicture() {
   const [validation, setValidation] = useState(false);
   const { contextPhoto } = useCurrentPhotoContext();
   const videoConstraints = {
-    width: 400,
-    height: 600,
+    width: 450,
+    height: 700,
     facingMode: "user",
   };
   const webcamRef = React.useRef(null);
@@ -37,8 +36,7 @@ function TakePicture() {
           videoConstraints={videoConstraints}
         />
       ) : (
-        // eslint-disable-next-line jsx-a11y/alt-text
-        imgSrc && <img src={imgSrc} />
+        imgSrc && <img src={imgSrc} alt="" />
       )}
 
       {!validation ? (

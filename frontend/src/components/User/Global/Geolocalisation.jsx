@@ -1,64 +1,28 @@
-/* eslint-disable no-unused-expressions */
 import * as React from "react";
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
+
 import { useCurrentPhotoContext } from "../../../contexts/photoContext";
 
 function Geolocalisation() {
-  const [open, setOpen] = React.useState(true);
+  const [open] = React.useState(true);
 
   const { contextPhotoCoord } = useCurrentPhotoContext();
 
-  const handleClose = () => {
-    setOpen(false);
+  const handleGeo = () => {
+    if (!open) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          contextPhotoCoord.current = [latitude, longitude];
+          console.warn(latitude, longitude);
+        },
+        (err) => {
+          console.error(err);
+        }
+      );
+    }
   };
 
-  // eslint-disable-next-line no-lone-blocks
-  {
-    !open
-      ? navigator.geolocation.getCurrentPosition(
-          (position) => {
-            const { latitude, longitude } = position.coords;
-            contextPhotoCoord.current = [latitude, longitude];
-            console.warn(latitude, longitude);
-          },
-          (err) => {
-            console.error(err);
-          }
-        )
-      : null;
-  }
-
-  return (
-    <div>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          Autoriser la géolocalisation ?
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Pour utiliser l'application, nous avons besoin de connaître votre
-            géolocalisation. Autorisez-vous l'application à connaître votre
-            positon ?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} autoFocus>
-            D'accord
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </div>
-  );
+  return handleGeo();
 }
 
 export default Geolocalisation;

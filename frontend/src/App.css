@@ -436,3 +436,18 @@
 .css-10dfkli-MuiTableCell-root {
   padding-left: 4rem !important;
 }
+
+.leaflet-control-geocoder-ban-form input {
+  line-height: 50px !important;
+}
+
+.searchBar {
+  border-radius: 0.5rem !important;
+  border: 2px solid #324b51 !important;
+  min-height: 50px !important;
+  min-width: 30% !important;
+  font-size: 1.3em;
+  color: black;
+  z-index: 10000000000000000000 !important;
+  display: none;
+}

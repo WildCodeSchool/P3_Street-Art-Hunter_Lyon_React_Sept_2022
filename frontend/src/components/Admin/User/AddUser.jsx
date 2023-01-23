@@ -46,14 +46,16 @@ const backURL = import.meta.env.VITE_BACKEND_URL;
 function AddUser() {
   const { token } = useCurrentUserContext();
 
-  const [pseudo, setPseudo] = useState("");
-  const [firstname, setFirstName] = useState("");
-  const [lastname, setLastName] = useState("");
-  const [scorepoint, setScorepoint] = useState("0");
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [verifPassword, setVerifPassword] = useState("");
+  const [userInfo, setUserInfo] = useState({
+    pseudo: "",
+    firstname: "",
+    lastname: "",
+    scorepoint: "0",
+    isAdmin: false,
+    email: "",
+    password: "",
+    verifPassword: "",
+  });
 
   const [openConfirm, setOpenConfirm] = React.useState(false);
   const [openWrong, setOpenWrong] = React.useState(false);
@@ -80,20 +82,20 @@ function AddUser() {
   const handleForm = (e) => {
     e.preventDefault();
 
-    if (password === verifPassword) {
+    if (userInfo.password === userInfo.verifPassword) {
       const myHeaders = new Headers({
         Authorization: `Bearer ${token}`,
       });
       myHeaders.append("Content-Type", "application/json");
 
       const body = JSON.stringify({
-        is_admin: isAdmin,
-        firstname,
-        lastname,
-        scorepoint,
-        pseudo,
-        email,
-        password,
+        is_admin: userInfo.isAdmin,
+        firstname: userInfo.firstname,
+        lastname: userInfo.lastname,
+        scorepoint: userInfo.scorepoint,
+        pseudo: userInfo.pseudo,
+        email: userInfo.email,
+        password: userInfo.password,
       });
 
       const requestOptions = {
@@ -143,7 +145,9 @@ function AddUser() {
                 Pseudo
               </label>
               <input
-                onChange={(e) => setPseudo(e.target.value)}
+                onChange={(e) =>
+                  setUserInfo({ ...userInfo, pseudo: e.target.value })
+                }
                 name="Pseudo"
                 id="Pseudo"
                 className="text-black rounded-md w-[80%]"
@@ -163,7 +167,9 @@ function AddUser() {
                   </label>
 
                   <input
-                    onChange={(e) => setFirstName(e.target.value)}
+                    onChange={(e) =>
+                      setUserInfo({ ...userInfo, firstname: e.target.value })
+                    }
                     name="firstname"
                     id="firstName"
                     className="text-black rounded-md w-[80%]"
@@ -177,7 +183,9 @@ function AddUser() {
                     Nom
                   </label>
                   <input
-                    onChange={(e) => setLastName(e.target.value)}
+                    onChange={(e) =>
+                      setUserInfo({ ...userInfo, lastname: e.target.value })
+                    }
                     name="lastname"
                     id="lastName"
                     className="text-black rounded-md w-[80%]"
@@ -192,7 +200,9 @@ function AddUser() {
                   </label>
 
                   <input
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) =>
+                      setUserInfo({ ...userInfo, email: e.target.value })
+                    }
                     name="Adresse-email"
                     id="email"
                     className="text-black rounded-md w-[80%]"
@@ -209,7 +219,9 @@ function AddUser() {
                   </label>
 
                   <input
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={(e) =>
+                      setUserInfo({ ...userInfo, password: e.target.value })
+                    }
                     name="password"
                     id="password"
                     className="text-black rounded-md w-[80%]"
@@ -227,7 +239,12 @@ function AddUser() {
                   </label>
 
                   <input
-                    onChange={(e) => setVerifPassword(e.target.value)}
+                    onChange={(e) =>
+                      setUserInfo({
+                        ...userInfo,
+                        verifPassword: e.target.value,
+                      })
+                    }
                     name="verifpassword"
                     id="verifpassword"
                     className="text-black rounded-md w-[80%]"
@@ -245,7 +262,9 @@ function AddUser() {
                   </label>
 
                   <input
-                    onChange={(e) => setScorepoint(e.target.value)}
+                    onChange={(e) =>
+                      setUserInfo({ ...userInfo, scorepoint: e.target.value })
+                    }
                     id="score"
                     className="text-black rounded-md w-[80%]"
                     type="number"
@@ -273,7 +292,9 @@ function AddUser() {
               </label>
 
               <select
-                onChange={(e) => setIsAdmin(e.target.value)}
+                onChange={(e) =>
+                  setUserInfo({ ...userInfo, isAdmin: e.target.value })
+                }
                 className="rounded-md"
                 name="droit"
                 id="droit"
