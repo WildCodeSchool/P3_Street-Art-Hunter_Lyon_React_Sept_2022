@@ -173,7 +173,7 @@ function UserModif() {
                   className="text-black rounded-md w-[80%]"
                   type="text"
                   readOnly
-                  defaultValue={user.Pseudo}
+                  defaultValue={user.pseudo}
                 />
               ) : (
                 <input
@@ -182,7 +182,7 @@ function UserModif() {
                   id="Pseudo"
                   className="text-blue-500 rounded-md w-[80%]"
                   type="text"
-                  defaultValue={user.Pseudo}
+                  defaultValue={user.pseudo}
                 />
               )}
             </div>

@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import dashboard from "../../../assets/dashboard.svg";
@@ -21,21 +19,24 @@ function LateralMenu() {
       </div>
       <div>
         <div
+          aria-hidden="true"
           onClick={() => navigate("/Dashboard")}
-          className="flex justify-start items-center backdrop-blur-sm bg-lightblue/10 pl-8"
+          className="flex justify-start items-center hover:backdrop-blur-sm hover:bg-white/10 pl-8 "
         >
           <img src={dashboard} className="w-6 h-6" alt="" />
           <p className="font-main-font p-6 text-2xl text-white">DASHBOARD</p>
         </div>
         <div
+          aria-hidden="true"
           onClick={() => navigate("/Admin-User")}
-          className="flex justify-start items-center hover:backdrop-blur-sm hover:bg-white/10 pl-8 "
+          className="flex justify-start items-center backdrop-blur-sm bg-lightblue/10 pl-8"
         >
           <img src={user} className="w-6 h-6" alt="" />
           <p className="font-main-font p-6 text-2xl text-white">UTILISATEURS</p>
         </div>
 
         <div
+          aria-hidden="true"
           onClick={() => navigate("/Admin-Scores")}
           className="flex justify-start items-center hover:backdrop-blur-sm hover:bg-white/10 pl-8"
         >
@@ -43,6 +44,7 @@ function LateralMenu() {
           <p className="font-main-font p-6 text-2xl text-white">SCORES</p>
         </div>
         <div
+          aria-hidden="true"
           onClick={() => navigate("/Admin-Badges")}
           className="flex justify-start items-center hover:backdrop-blur-sm hover:bg-white/10 pl-8"
         >
@@ -50,6 +52,7 @@ function LateralMenu() {
           <p className="font-main-font p-6 text-2xl text-white">BADGES</p>
         </div>
         <div
+          aria-hidden="true"
           onClick={() => navigate("/Admin-Messages")}
           className="flex justify-start items-center hover:backdrop-blur-sm hover:bg-white/10 pl-8"
         >
@@ -57,6 +60,7 @@ function LateralMenu() {
           <p className="font-main-font p-6 text-2xl text-white">MESSAGES</p>
         </div>
         <div
+          aria-hidden="true"
           onClick={() => navigate("/Admin-Pictures")}
           className="flex justify-start items-center hover:backdrop-blur-sm hover:bg-white/10 pl-8"
         >
@@ -64,6 +68,7 @@ function LateralMenu() {
           <p className="font-main-font p-6 text-2xl text-white">PICTURE</p>
         </div>
         <div
+          aria-hidden="true"
           onClick={() => navigate("/Admin-Artist")}
           className="flex justify-start items-center hover:backdrop-blur-sm hover:bg-white/10 pl-8"
         >
@@ -71,6 +76,7 @@ function LateralMenu() {
           <p className="font-main-font p-6 text-2xl text-white">ARTIST</p>
         </div>
         <div
+          aria-hidden="true"
           onClick={() => navigate("/Admin-Shop")}
           className="flex justify-start items-center hover:backdrop-blur-sm hover:bg-white/10 pl-8"
         >
@@ -78,6 +84,7 @@ function LateralMenu() {
           <p className="font-main-font p-6 text-2xl text-white">SHOP</p>
         </div>
         <div
+          aria-hidden="true"
           onClick={() => navigate("/Admin-Artwork")}
           className="flex justify-start items-center hover:backdrop-blur-sm hover:bg-white/10 pl-8"
         >

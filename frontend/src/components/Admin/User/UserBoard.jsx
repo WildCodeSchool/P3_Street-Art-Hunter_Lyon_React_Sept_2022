@@ -1,5 +1,3 @@
-/* eslint-disable react/no-unstable-nested-components */
-/* eslint-disable camelcase */
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { alpha } from "@mui/material/styles";
@@ -26,6 +24,68 @@ import { useNavigate } from "react-router-dom";
 
 import Vincent from "../../../assets/Vincent.png";
 import { useCurrentUserContext } from "../../../contexts/userContext";
+
+function EnhancedTableToolbar(props) {
+  const navigate = useNavigate();
+  const { numSelected } = props;
+
+  return (
+    <Toolbar
+      sx={{
+        pl: { sm: 2 },
+        pr: { xs: 1, sm: 1 },
+        ...(numSelected > 0 && {
+          bgcolor: (theme) =>
+            alpha(
+              theme.palette.primary.main,
+              theme.palette.action.activatedOpacity
+            ),
+        }),
+      }}
+    >
+      {numSelected > 0 ? (
+        <Typography
+          sx={{ flex: "1 1 100%" }}
+          color="inherit"
+          variant="subtitle1"
+          component="div"
+        >
+          {numSelected} sélectionné
+        </Typography>
+      ) : (
+        <Typography
+          sx={{ flex: "1 1 100%" }}
+          variant="h6"
+          id="tableTitle"
+          component="div"
+        >
+          <p className="font-main-font text-[2rem]">Utilisateurs</p>
+        </Typography>
+      )}
+
+      {numSelected > 0 ? (
+        <Tooltip title="Supprimer">
+          <IconButton>
+            <DeleteIcon />
+          </IconButton>
+        </Tooltip>
+      ) : (
+        <IconButton
+          onClick={() => {
+            navigate("/Admin-Create-User");
+          }}
+        >
+          <AddIcon />
+          <p className="pl-1 text-[14px]">Ajouter</p>
+        </IconButton>
+      )}
+    </Toolbar>
+  );
+}
+
+EnhancedTableToolbar.propTypes = {
+  numSelected: PropTypes.number.isRequired,
+};
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -59,7 +119,7 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-    id: "Pseudo",
+    id: "pseudo",
     numeric: false,
     disablePadding: true,
     label: "Utilisateur",
@@ -185,72 +245,11 @@ export default function UserBoard() {
     setPage(0);
   };
 
-  const isSelected = (Pseudo) => selected.indexOf(Pseudo) !== -1;
+  const isSelected = (pseudo) => selected.indexOf(pseudo) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
-
-  function EnhancedTableToolbar(props) {
-    const { numSelected } = props;
-
-    return (
-      <Toolbar
-        sx={{
-          pl: { sm: 2 },
-          pr: { xs: 1, sm: 1 },
-          ...(numSelected > 0 && {
-            bgcolor: (theme) =>
-              alpha(
-                theme.palette.primary.main,
-                theme.palette.action.activatedOpacity
-              ),
-          }),
-        }}
-      >
-        {numSelected > 0 ? (
-          <Typography
-            sx={{ flex: "1 1 100%" }}
-            color="inherit"
-            variant="subtitle1"
-            component="div"
-          >
-            {numSelected} sélectionné
-          </Typography>
-        ) : (
-          <Typography
-            sx={{ flex: "1 1 100%" }}
-            variant="h6"
-            id="tableTitle"
-            component="div"
-          >
-            <p className="font-main-font text-[2rem]">Utilisateurs</p>
-          </Typography>
-        )}
-
-        {numSelected > 0 ? (
-          <Tooltip title="Supprimer">
-            <IconButton>
-              <DeleteIcon />
-            </IconButton>
-          </Tooltip>
-        ) : (
-          <IconButton
-            onClick={() => {
-              navigate("/Admin-Create-User");
-            }}
-          >
-            <AddIcon />
-            <p className="pl-1 text-[14px]">Ajouter</p>
-          </IconButton>
-        )}
-      </Toolbar>
-    );
-  }
-
-  EnhancedTableToolbar.propTypes = {
-    numSelected: PropTypes.number.isRequired,
-  };
 
   return (
     <div className="w-full pt-40">
@@ -276,7 +275,7 @@ export default function UserBoard() {
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.Pseudo);
+                  const isItemSelected = isSelected(row.pseudo);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
@@ -284,7 +283,7 @@ export default function UserBoard() {
                       hover
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.Pseudo}
+                      key={row.pseudo}
                       selected={isItemSelected}
                       className="cursor-pointer"
                     >
@@ -300,7 +299,7 @@ export default function UserBoard() {
                       >
                         <div className="flex items-center">
                           <Avatar alt="avatar" src={Vincent} className="mr-4" />
-                          {row.Pseudo}
+                          {row.pseudo}
                         </div>
                       </TableCell>
                       <TableCell

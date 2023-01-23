@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useCurrentUserContext } from "../../contexts/userContext";
@@ -12,6 +10,7 @@ export default function Menu() {
       <div className="backdrop-blur-sm">
         <div className="flex justify-end">
           <div
+            aria-hidden="true"
             onClick={handleClose}
             className="bg-menu-cross w-[12%] h-[4vh] bg-contain bg-no-repeat mt-7 mr-5"
           />

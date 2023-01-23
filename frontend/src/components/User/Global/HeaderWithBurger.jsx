@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from "react";
 import { useCurrentUserContext } from "../../../contexts/userContext";
 
@@ -10,6 +8,7 @@ function HeaderWithBurger() {
     <div>
       <div className="flex justify-end">
         <div
+          aria-hidden="true"
           onClick={handleClickOpen}
           className="bg-menu-burger w-[12%] h-[4vh] bg-contain bg-no-repeat mt-7 mr-5 cursor-pointer"
         />

@@ -1,10 +1,11 @@
+/* eslint-disable import/no-relative-packages */
 import React from "react";
-import graph2 from "../../../assets/graph2.jpg";
+import imgPic from "../../../../../backend/public/uploads/userId-3-workId-1.jpeg";
 
 function ImageCardUser() {
   return (
     <div className="flex justify-center">
-      <img src={graph2} className="w-[100%] h-[17vh] object-cover" alt="" />
+      <img src={imgPic} className="w-[100%] h-[17vh] object-cover" alt="" />
     </div>
   );
 }
