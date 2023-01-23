@@ -1,7 +1,5 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-
-// eslint-disable-next-line import/no-unresolved, import/extensions
 import SwitchButtonNav from "../Global/SwitchButtonNav";
 
 export default function Allive() {

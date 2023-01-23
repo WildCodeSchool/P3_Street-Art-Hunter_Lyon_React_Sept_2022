@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCurrentUserContext } from "../../contexts/userContext";
@@ -40,8 +39,7 @@ export default function BlocConnexion() {
         })
         .catch(console.error);
     } else {
-      // eslint-disable-next-line no-alert
-      alert("Please specify email or pseudo and password");
+      console.warn("Please specify email or pseudo and password");
     }
   };
   const [showPassWord, setshowPassWord] = useState(true);
@@ -126,9 +124,9 @@ export default function BlocConnexion() {
 
             <div className="flex items-center justify-between">
               <div className="text-sm">
-                <a href="#" className="font-medium text-center text-white">
+                <span className="font-medium text-center text-white">
                   Tu as oublié ton mot de passe ?
-                </a>
+                </span>
               </div>
             </div>
 
@@ -146,14 +144,14 @@ export default function BlocConnexion() {
                 Pas encore inscrit ?
               </h2>
             </div>
-            <div className="text-sm text-center">
-              <a
-                href="#"
-                className="font-medium text-center text-white hover:text-indigo-500"
-                onClick={() => navigate("/inscription")}
-              >
+            <div
+              aria-hidden="true"
+              className="text-sm text-center"
+              onClick={() => navigate("/inscription")}
+            >
+              <span className="font-medium text-center text-white hover:text-indigo-500">
                 Inscris toi
-              </a>
+              </span>
             </div>
           </form>
         </div>

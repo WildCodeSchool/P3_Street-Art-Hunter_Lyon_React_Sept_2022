@@ -1,10 +1,8 @@
 import React from "react";
-// eslint-disable-next-line import/no-unresolved
 import { NavLink } from "react-router-dom";
 import Next from "../../../assets/Next.svg";
 import Previous from "../../../assets/Previous.svg";
 
-// eslint-disable-next-line react/prop-types
 function Step2({ step, setStep }) {
   const nextStep = () => {
     setStep(step + 1);

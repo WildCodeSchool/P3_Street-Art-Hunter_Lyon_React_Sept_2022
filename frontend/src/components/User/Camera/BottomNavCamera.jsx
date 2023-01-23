@@ -24,7 +24,7 @@ function BottomNavCamera({ capture }) {
             bgColor="bg-bottomdark"
           />
         </NavLink>
-        <NavLink to="/galerie">
+        <NavLink to="/galerie/live">
           <SwitchButtonNav
             content="GALERIE"
             styleModif="mb-4 w-[100px] text-3xl"

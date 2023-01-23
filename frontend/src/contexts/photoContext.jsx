@@ -10,7 +10,6 @@ export function CurrentPhotoContextProvider({ children }) {
   const contextPhotoCoord = useRef([45.7578137, 4.8320114]);
 
   return (
-    // eslint-disable-next-line react/jsx-no-constructed-context-values
     <CurrentPhotoContext.Provider
       value={{
         contextPhoto,
