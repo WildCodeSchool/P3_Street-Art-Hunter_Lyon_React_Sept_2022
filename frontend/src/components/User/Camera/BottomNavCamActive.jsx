@@ -61,7 +61,7 @@ function BottomNavCamActive({ setPhoto, setValidation }) {
           </div>
         </button>
         <button type="button" className="  absolute right-8 top-28">
-          <NavLink to="/Galerie/live">
+          <NavLink to="/validation">
             <div className="bg-gradient-to-b from-pink to-lightblue rounded-[100%]  w-[3.6rem]  h-[3.6rem] p-[0.2rem]">
               <div className="w-full h-full rounded-[100%] bg-gradient-to-b from-bottomdark to-[#454377] flex justify-center items-center">
                 <img src={check} alt="Check Icon" className="w-[40%]" />

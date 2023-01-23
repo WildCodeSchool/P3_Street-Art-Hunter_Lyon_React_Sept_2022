@@ -59,6 +59,22 @@ const edit = (req, res) => {
     });
 };
 
+const modif = (req, res) => {
+  const user = req.body;
+  user.id = req.params.id;
+
+  models.user
+    .modif(user)
+    .then(([result]) => {
+      if (result.affectedRows === 0) res.sendStatus(404);
+      else res.sendStatus(204);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
+
 const destroy = (req, res) => {
   const { id } = req.params;
   models.user
@@ -118,4 +134,5 @@ module.exports = {
   leaderboard,
   getMyscore,
   getRanks,
+  modif,
 };

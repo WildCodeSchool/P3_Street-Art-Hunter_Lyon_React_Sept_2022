@@ -28,12 +28,12 @@ const read = (req, res) => {
 };
 
 const add = (req, res) => {
-  const user = req.body;
+  const badge = req.body;
 
   models.badge
-    .insert(user)
+    .insert(badge)
     .then(([result]) => {
-      res.location(`/user/${result.insertId}`).sendStatus(201);
+      res.location(`/badge/${result.insertId}`).sendStatus(201);
     })
     .catch((error) => {
       console.error(error);
@@ -71,10 +71,25 @@ const getUserBadges = (req, res) => {
     });
 };
 
+const destroy = (req, res) => {
+  const { id } = req.params;
+  models.badge
+    .delete(id)
+    .then(([result]) => {
+      if (result.affectedRows === 0) res.sendStatus(404);
+      else res.sendStatus(204);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
+
 module.exports = {
   browse,
   read,
   add,
   edit,
   getUserBadges,
+  destroy,
 };

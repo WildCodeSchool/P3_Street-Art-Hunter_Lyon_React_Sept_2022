@@ -1,18 +1,18 @@
-/* eslint-disable import/no-unresolved */
 import React, { useState } from "react";
 // eslint-disable-next-line import/no-extraneous-dependencies
 import Webcam from "react-webcam";
 import BottomNavCamera from "./BottomNavCamera";
 import BottomNavCamActive from "./BottomNavCamActive";
+import { useCurrentPhotoContext } from "../../../contexts/photoContext";
 import Geolocalisation from "../Global/Geolocalisation";
 
 function TakePicture() {
   const [photo, setPhoto] = useState(false);
   const [validation, setValidation] = useState(false);
-
+  const { contextPhoto } = useCurrentPhotoContext();
   const videoConstraints = {
-    height: 1000,
-    width: 450,
+    width: 400,
+    height: 600,
     facingMode: "user",
   };
   const webcamRef = React.useRef(null);
@@ -23,6 +23,7 @@ function TakePicture() {
     setImgSrc(imageSrc);
     setPhoto(!photo);
     setValidation(!validation);
+    contextPhoto.current = imageSrc;
   }, [webcamRef, setImgSrc]);
 
   return (
