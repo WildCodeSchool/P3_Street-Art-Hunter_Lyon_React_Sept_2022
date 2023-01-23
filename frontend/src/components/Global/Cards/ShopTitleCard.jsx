@@ -1,5 +1,5 @@
 import React from "react";
-import shop from "../../../assets/shopIcon.png";
+import shop from "../../../assets/shopIcon.svg";
 
 function ShopTitleCard() {
   return (

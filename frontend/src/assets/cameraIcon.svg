@@ -1,0 +1,9 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 26" width="28" height="26">
+	<title>cameraIcon</title>
+	<defs>
+		<image  width="28" height="26" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAaCAMAAACTisy7AAAAAXNSR0IB2cksfwAAAG9QTFRFAAAAn6f/oKj8oKn8oKn9n6f3oKn9oKn8n5//n6f8n6n7n6n7oKr9oKj9n6//n6X6oan9oKr8n6b8n6f7n6b7oKr8oKr8n6f7n6f6oKn8n6j8n6n8n6j6n6r6n6f8n6b6n6n7oKj8oKj8oKn8n6r6ahYdpwAAACV0Uk5TACC//88g398QoNDAz48QMH/vUECQn7+AYO/gUHAwYHCAr5+vYDXb1lwAAADzSURBVHicdVHbloIwDKymlAoqsKh4xcvu/3/jTkwK8YDz1HbSySTjXMJiSW/4zE2wCKTI44RcERUlsCbaTD7ix/uwhUI1PMd6CTREP3JvUcYvu8z02qfqw9h7pcdyMLkt9KlzYXRXYxh/TCbWdHJcIDevaixRH11HNJLc+1xIrwtRZskakpX46+A4j5YMosdznlATrSymUytXXYIh0aUV8qZlhuyHpbW6K0Oi/i5krxrWUKPLiEETsGQnMfMqHhOSoyLvx7A/NpTiyTWBDxJWsLzykWJgsqGnmwWy5Gifrxn8QoVn/gaM24d5qvmThc3hBmP/MVoQSbq8BcQAAAAASUVORK5CYII="/>
+	</defs>
+	<style>
+	</style>
+	<use id="Background" href="#img1" x="0" y="0"/>
+</svg>

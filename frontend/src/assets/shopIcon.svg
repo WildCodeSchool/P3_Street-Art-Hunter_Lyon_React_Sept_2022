@@ -1,0 +1,9 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 21" width="24" height="21">
+	<title>shopIcon</title>
+	<defs>
+		<image  width="24" height="21" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAVCAMAAABrN94UAAAAAXNSR0IB2cksfwAAAGlQTFRFAAAAoan9oKn8n6j7n6f8n6r7n6n7oan8oKn9oKr8n5//n6b8n6r6n6f3n6n8oKn8n6b7n6j6oKj8oKn9n6f6n6f7oKr8n6f/oKj9n6b6oKn8oKn8n6n7oKj9oKr8n6f7oKj8n6//n6n68lcwsgAAACN0Uk5TAH//kGCQgF/frxBQMCBQ75Bwv89ggL8gj3Cv38Df70CvEKCxRXsTAAAArklEQVR4nLWOURKCMAxEly0IVAGLVlQQ1Psf0kRQi/jrm06a7ptJCggRZ0SYiGjigORlIq4wYzWaRT6ZlOY7BxKmyHJp7Fqfm0JraaXkFbiV21GzeqeWe6meOFQFmoxHYE2eYM9sNeg0vLBN2F/Y5ex7mmegE0ofWzTOD8DgnbSxBjKhluXhl+Rxnfa4KhT9CfSjkBMg6R+EYx3Az/KbuQcY+xYLVGT8SYsy/snwABPRC68YLe4sAAAAAElFTkSuQmCC"/>
+	</defs>
+	<style>
+	</style>
+	<use id="Background" href="#img1" x="0" y="0"/>
+</svg>

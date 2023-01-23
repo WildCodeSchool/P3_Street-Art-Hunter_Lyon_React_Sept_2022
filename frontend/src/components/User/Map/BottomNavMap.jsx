@@ -1,8 +1,8 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import camera from "@assets/cameraIcon.png";
-import art from "@assets/artIcon.png";
-import shop from "@assets/shopIcon.png";
+import camera from "@assets/cameraIcon.svg";
+import art from "@assets/artIcon.svg";
+import shop from "@assets/shopIcon.svg";
 import SwitchButtonNav from "../Global/SwitchButtonNav";
 
 export default function BottomNavMap({ handleActiveShop, handleActiveArt }) {
