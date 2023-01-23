@@ -25,19 +25,6 @@ function PictureValidation() {
         body: JSON.stringify({
           image: contextPhoto.current,
           filename: `userId-${user.id}-workId-${idWork}`,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `Bearer ${token}`,
-        },
-      }).then((response) => response.json());
-
-      // on met les infos de la photo dans la table picture de la bdd
-
-      fetch(`${backURL}/pictures`, {
-        method: "POST",
-        body: JSON.stringify({
-          url: "https://upload.wikimedia.org/wikipedia/commons/7/75/Banksy-ps.jpg",
           workId: idWork,
           userId: user.id,
         }),
@@ -46,6 +33,8 @@ function PictureValidation() {
           authorization: `Bearer ${token}`,
         },
       }).then((response) => response.json());
+
+      // on met les infos de la photo dans la table picture de la bdd
     } else if (contextPhoto.current === "") {
       console.warn("Veuillez prendre une photo d'abord!");
     } else if (idWork === "") {
