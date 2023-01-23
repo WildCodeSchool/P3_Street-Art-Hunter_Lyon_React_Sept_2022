@@ -1,5 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import Next from "../../../assets/Next.svg";
+import Previous from "../../../assets/Previous.svg";
 
 function Step2({ step, setStep }) {
   const nextStep = () => {
@@ -21,16 +23,7 @@ function Step2({ step, setStep }) {
           <button type="button" className="" onClick={prevStep}>
             <div className="bg-gradient-to-b from-pink to-lightblue rounded-[100%]  w-[3.6rem]  h-[3.6rem] p-[0.2rem]">
               <div className="w-full h-full rounded-[100%] bg-gradient-to-b from-bottomdark to-[#454377] flex justify-center items-center">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="White"
-                  className="w-6 h-6"
-                >
-                  <path d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-                </svg>
+                <img className="w-6 h-6" src={Previous} alt="Previous button" />
               </div>
             </div>
           </button>
@@ -43,16 +36,7 @@ function Step2({ step, setStep }) {
           <button type="button" className="" onClick={nextStep}>
             <div className="bg-gradient-to-b from-pink to-lightblue rounded-[100%]  w-[3.6rem]  h-[3.6rem] p-[0.2rem]">
               <div className="w-full h-full rounded-[100%] bg-gradient-to-b from-bottomdark to-[#454377] flex justify-center items-center">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="white"
-                  className="w-6 h-6"
-                >
-                  <path d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                </svg>
+                <img className="w-6 h-6" src={Next} alt="Next button" />
               </div>
             </div>
           </button>
