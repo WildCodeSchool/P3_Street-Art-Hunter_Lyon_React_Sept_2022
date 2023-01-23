@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Step2 from "../../components/User/Stepper/Step2";
 import Step3 from "../../components/User/Stepper/Step3";
-import Step4 from "../../components/User/Stepper/Step4";
 import Step1 from "../../components/User/Stepper/Step1";
 import Header from "../../components/Global/Header";
 
@@ -14,7 +13,6 @@ function Stepper() {
       {step === 1 ? <Step1 step={step} setStep={setStep} /> : ""}
       {step === 2 ? <Step2 step={step} setStep={setStep} /> : ""}
       {step === 3 ? <Step3 step={step} setStep={setStep} /> : ""}
-      {step === 4 ? <Step4 step={step} setStep={setStep} /> : ""}
     </div>
   );
 }

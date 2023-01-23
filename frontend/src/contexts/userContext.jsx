@@ -25,7 +25,6 @@ export function CurrentUserContextProvider({ children }) {
   const [token, setToken] = useLocalStorage("token", "");
 
   return (
-    // eslint-disable-next-line react/jsx-no-constructed-context-values
     <CurrentUserContext.Provider
       value={{
         user,

@@ -1,29 +1,21 @@
 const express = require("express");
-const fs = require("fs");
+require("dotenv").config();
+
+const cloudinary = require("cloudinary").v2;
 
 const router = express.Router();
 
 // Upload des photos
 
-const multer = require("multer");
-
-const upload = multer({ dest: "./public/uploads/" });
-
-const fsUpload = (req, res) => {
+const fsUpload = (req, res, next) => {
   const { image, filename } = req.body;
-  // eslint-disable-next-line new-cap
-  const buffer = new Buffer.from(
-    image.replace(/^data:image\/\w+;base64,/, ""),
-    "base64"
-  );
-
-  fs.writeFile(`./public/uploads/${filename}.jpeg`, buffer, "binary", (err) => {
-    if (err) {
-      res.status(500).send(err);
-    } else {
-      res.status(200).send("File uploaded!");
-    }
-  });
+  cloudinary.uploader
+    .upload(image, { public_id: filename })
+    .then((result) => {
+      req.body.url = result.secure_url;
+      next();
+    })
+    .catch((err) => console.warn(err));
 };
 
 // service d'authentification
@@ -41,7 +33,7 @@ const workControllers = require("./controllers/workControllers");
 const pictureControllers = require("./controllers/pictureControllers");
 const messageControllers = require("./controllers/messageControllers");
 
-router.post("/photo", verifyToken, upload.single("photo"), fsUpload);
+router.post("/photo", verifyToken, fsUpload, pictureControllers.add);
 
 // Auth
 router.post("/inscription", hashPassword, userControllers.add);
@@ -59,7 +51,6 @@ router.get("/score/:id", userControllers.getMyscore);
 router.get("/rank/:id", userControllers.getRanks);
 
 router.post("/users", hashPassword, verifyToken, userControllers.add);
-// router.put("/users/:id", hashPassword, verifyToken, userControllers.edit);
 router.put("/users/:id", verifyToken, userControllers.modif);
 router.delete("/users/:id", verifyToken, userControllers.destroy);
 

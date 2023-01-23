@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import React from "react";
 import HeaderWithBurger from "../../components/User/Global/HeaderWithBurger";
 import modif from "../../assets/modif.svg";
@@ -28,37 +27,43 @@ export default function Profil() {
           <div className="flex justify-center">
             <form>
               <div className="flex flex-col justify-center items-start">
-                <label className="mb-2 text-xl">Pseudo :</label>
-                <div className="flex">
-                  <input
-                    className="rounded-lg mb-2 text-black h-[4vh]"
-                    type="text"
-                    name="pseudo"
-                    placeholder={user.pseudo}
-                  />
-                  <img src={modif} className="w-6 ml-4" alt="crayon icon" />
-                </div>
+                <label className="mb-2 text-xl">
+                  Pseudo :
+                  <div className="flex">
+                    <input
+                      className="rounded-lg mb-2 text-black h-[4vh]"
+                      type="text"
+                      name="pseudo"
+                      placeholder={user.pseudo}
+                    />
+                    <img src={modif} className="w-6 ml-4" alt="crayon icon" />
+                  </div>
+                </label>
 
-                <label className="mb-2 text-xl">Email :</label>
-                <div className="flex">
-                  <input
-                    className="rounded-lg mb-2 text-black h-[4vh]"
-                    type="text"
-                    name="email"
-                    placeholder={user.email}
-                  />
-                  <img src={modif} className="w-6 ml-4" alt="crayon icon" />
-                </div>
+                <label className="mb-2 text-xl">
+                  Email :
+                  <div className="flex">
+                    <input
+                      className="rounded-lg mb-2 text-black h-[4vh]"
+                      type="text"
+                      name="email"
+                      placeholder={user.email}
+                    />
+                    <img src={modif} className="w-6 ml-4" alt="crayon icon" />
+                  </div>
+                </label>
 
-                <label className="mb-2 text-xl">Mot de passe :</label>
-                <div className="flex">
-                  <input
-                    className="rounded-lg mb-2 text-black h-[4vh]"
-                    type="text"
-                    name="password"
-                  />
-                  <img src={modif} className="w-6 ml-4" alt="crayon icon" />
-                </div>
+                <label className="mb-2 text-xl">
+                  Mot de passe :
+                  <div className="flex">
+                    <input
+                      className="rounded-lg mb-2 text-black h-[4vh]"
+                      type="text"
+                      name="password"
+                    />
+                    <img src={modif} className="w-6 ml-4" alt="crayon icon" />
+                  </div>
+                </label>
                 <button
                   type="button"
                   className="bg-gradient-to-tl from-pink to-lightblue rounded-xl font-main-font text-[16px] py-1 px-3 mt-4 mb-5 text-black"

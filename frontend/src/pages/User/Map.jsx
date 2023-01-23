@@ -1,9 +1,6 @@
 import React, { useState } from "react";
-// eslint-disable-next-line import/no-unresolved
 import L from "leaflet";
-// eslint-disable-next-line import/no-unresolved
 import { MapContainer, TileLayer } from "react-leaflet";
-// eslint-disable-next-line import/no-unresolved
 import "leaflet/dist/leaflet.css";
 import BottomNavMap from "../../components/User/Map/BottomNavMap";
 import HeaderWithBurger from "../../components/User/Global/HeaderWithBurger";

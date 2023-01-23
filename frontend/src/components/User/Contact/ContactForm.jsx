@@ -53,7 +53,7 @@ function ContactForm() {
   };
 
   return (
-    <div className="mt-[7rem] flex flex-col justify-center items-center  backdrop-blur-sm rounded-[3rem]  ml-2 w-[95%]">
+    <div className="flex flex-col justify-center items-center  backdrop-blur-sm rounded-[3rem]  ml-2 w-[95%]">
       {doneMessage ? (
         ""
       ) : (

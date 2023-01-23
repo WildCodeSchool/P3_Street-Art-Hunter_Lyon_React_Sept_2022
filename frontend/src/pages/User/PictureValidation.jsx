@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import Header from "../../components/Global/Header";
 
@@ -14,6 +14,7 @@ function PictureValidation() {
 
   const [allWorks, setAllWorks] = useState([]);
   const [idWork, setIdWork] = useState("");
+  const navigate = useNavigate();
 
   const handleSendPhoto = () => {
     // on vérifie qu'on à toutes les datas
@@ -24,19 +25,6 @@ function PictureValidation() {
         body: JSON.stringify({
           image: contextPhoto.current,
           filename: `userId-${user.id}-workId-${idWork}`,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `Bearer ${token}`,
-        },
-      }).then((response) => response.json());
-
-      // on met les infos de la photo dans la table picture de la bdd
-
-      fetch(`${backURL}/pictures`, {
-        method: "POST",
-        body: JSON.stringify({
-          url: "https://upload.wikimedia.org/wikipedia/commons/7/75/Banksy-ps.jpg",
           workId: idWork,
           userId: user.id,
         }),
@@ -45,6 +33,8 @@ function PictureValidation() {
           authorization: `Bearer ${token}`,
         },
       }).then((response) => response.json());
+
+      // on met les infos de la photo dans la table picture de la bdd
     } else if (contextPhoto.current === "") {
       console.warn("Veuillez prendre une photo d'abord!");
     } else if (idWork === "") {
@@ -52,6 +42,7 @@ function PictureValidation() {
         "Veuillez sélectionner une oeuvre, si vous ne la trouvez pas sur la carte, créer la!"
       );
     }
+    navigate("/galerie/live");
   };
 
   useEffect(() => {
@@ -71,7 +62,7 @@ function PictureValidation() {
           Valide ta photo!
         </h2>
         <div className="w-full flex flex-col items-center">
-          <h3 className="text-white self-start font-main-font text-xl my-2 ml-2">
+          <h3 className="text-white self-start font-main-font text-3xl my-2 ml-2">
             Trouve l'oeuvre sur la carte :
           </h3>
           <MapContainer
@@ -103,15 +94,15 @@ function PictureValidation() {
           </MapContainer>
         </div>
         <div className="flex justify-around flex-wrap w-full">
-          <h3 className="text-white self-start font-main-font text-lg">
+          <h3 className="text-white self-start font-main-font text-2xl">
             Ton oeuvre n'est pas repertoriée ?
           </h3>
           <NavLink to="/creatework">
-            <h3 className="text-slate-400 self-start font-main-font text-lg  underline">
+            <h3 className="text-lightblue self-start font-main-font text-2xl  underline">
               Créer la!
             </h3>
           </NavLink>
-          <h3 className="text-slate-400  font-main-font text-lg ml-2 underline">
+          <h3 className="text-pink  font-main-font text-2xl ml-2 underline">
             Revoir ta photo
           </h3>
         </div>
@@ -127,7 +118,9 @@ function PictureValidation() {
           </NavLink>
           <button
             type="button"
-            onClick={handleSendPhoto}
+            onClick={() => {
+              handleSendPhoto();
+            }}
             className="bg-gradient-to-tl from-pink to-lightblue rounded-3xl font-main-font text-[32px] py-1 px-6  mt-5 w-[40%] min-w-fit text-center"
           >
             VALIDER

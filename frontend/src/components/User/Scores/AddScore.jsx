@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React, { useEffect } from "react";
 
 export default function AddScore({ points, setShowPoints }) {

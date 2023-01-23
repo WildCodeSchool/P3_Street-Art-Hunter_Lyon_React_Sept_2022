@@ -1,33 +1,33 @@
-/* eslint-disable import/no-unresolved */
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import Badges from "@pages/User/Badges";
-import Camera from "@pages/User/Camera";
-import Connexion from "@pages/Global/Connexion";
-import Favoris from "@pages/User/Favoris";
-import GalleryLive from "@pages/User/GalleryLive";
-import GalleryAll from "@pages/User/GalleryAll";
-import Help from "@pages/User/Help";
-import Home from "@pages/User/Home";
-import MyGallery from "@pages/User/MyGallery";
-import Map from "@pages/User/Map";
-import Menu from "@pages/User/Menu";
-import Profil from "@pages/User/Profil";
-import Scores from "@pages/User/Scores";
-import Stepper from "@pages/User/Stepper";
-import Contact from "@pages/User/Contact";
-import AdminUser from "@pages/Admin/AdminUser";
-import Dashboard from "@pages/Admin/Dashboard";
-import ModifUser from "@pages/Admin/ModifUser";
-import Registration from "@pages/Global/ Registration";
+import Camera from "./pages/User/Camera";
+import Connexion from "./pages/Global/Connexion";
+import Favoris from "./pages/User/Favoris";
+import GalleryLive from "./pages/User/GalleryLive";
+import GalleryAll from "./pages/User/GalleryAll";
+import Help from "./pages/User/Help";
+import Home from "./pages/User/Home";
+import MyGallery from "./pages/User/MyGallery";
+import Map from "./pages/User/Map";
+import Menu from "./pages/User/Menu";
+import Profil from "./pages/User/Profil";
+import Scores from "./pages/User/Scores";
+import Stepper from "./pages/User/Stepper";
+import Contact from "./pages/User/Contact";
+import AdminUser from "./pages/Admin/AdminUser";
+import Dashboard from "./pages/Admin/Dashboard";
+import ModifUser from "./pages/Admin/ModifUser";
+import Registration from "./pages/Global/ Registration";
+import CreateUser from "./pages/Admin/CreateUser";
+import CreateWork from "./pages/User/CreateWork";
+import PictureValidation from "./pages/User/PictureValidation";
+import Badges from "./pages/User/Badges";
 
-import CreateWork from "@pages/User/CreateWork";
-import PictureValidation from "@pages/User/PictureValidation";
-import AdminArtWork from "@pages/Admin/AdminArtWork";
-import ArtWorkPictures from "@pages/Admin/AdminArtWorkPictures";
-import AdminShop from "@pages/Admin/PageAdShop";
-import AdminArtist from "@pages/Admin/AdminArtist";
-import AdminMessage from "@pages/Admin/AdminMessage";
+import AdminArtWork from "./pages/Admin/AdminArtWork";
+import ArtWorkPictures from "./pages/Admin/AdminArtWorkPictures";
+import AdminShop from "./pages/Admin/PageAdShop";
+import AdminArtist from "./pages/Admin/AdminArtist";
+import AdminMessage from "./pages/Admin/AdminMessage";
 
 import "./App.css";
 
@@ -87,6 +87,7 @@ function App() {
             <Route path="/validation" element={<PictureValidation />} />
 
             <Route path="/Admin-User" element={<AdminUser />} />
+            <Route path="/Admin-Create-User" element={<CreateUser />} />
             <Route path="/Dashboard" element={<Dashboard />} />
             <Route path="/Admin-Scores" element={<Dashboard />} />
             <Route path="/Admin-Badges" element={<Dashboard />} />

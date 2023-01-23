@@ -29,7 +29,6 @@ const read = (req, res) => {
 
 const add = (req, res) => {
   const picture = req.body;
-
   // on verifie les données
 
   models.picture

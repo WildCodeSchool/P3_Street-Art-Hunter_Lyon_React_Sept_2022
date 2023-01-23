@@ -1,4 +1,3 @@
-/* eslint-disable no-const-assign */
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import InscriptionDone from "./Popupvalidationinscription";
@@ -7,39 +6,43 @@ const backURL = import.meta.env.VITE_BACKEND_URL;
 
 function Form() {
   const navigate = useNavigate();
-  const [pseudo, setPseudo] = useState("");
-  const [firstname, setFirstName] = useState("");
-  const [lastname, setLastName] = useState("");
-  const [scorepoint] = useState("0");
-  const [isAdmin] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [verifPassword, setVerifPassword] = useState("");
+
   const [doneinscr, setDoneInscr] = useState(false);
 
   const [redForm, setRedForm] = useState([]);
 
+  const [userInfo, setUserInfo] = useState({
+    pseudo: "",
+    firstname: "",
+    lastname: "",
+    scorepoint: "0",
+    isAdmin: false,
+    email: "",
+    password: "",
+    verifPassword: "",
+  });
+
   // soumettre le formulaire
   const handleForm = (e) => {
     if (
-      pseudo !== "" &&
-      firstname !== "" &&
-      lastname !== "" &&
-      email !== "" &&
-      password !== "" &&
-      password === verifPassword
+      userInfo.pseudo !== "" &&
+      userInfo.firstname !== "" &&
+      userInfo.lastname !== "" &&
+      userInfo.email !== "" &&
+      userInfo.password !== "" &&
+      userInfo.password === userInfo.verifPassword
     ) {
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
 
       const body = JSON.stringify({
-        firstname,
-        lastname,
-        scorepoint,
-        pseudo,
-        isAdmin,
-        email,
-        password,
+        is_admin: userInfo.isAdmin,
+        firstname: userInfo.firstname,
+        lastname: userInfo.lastname,
+        scorepoint: userInfo.scorepoint,
+        pseudo: userInfo.pseudo,
+        email: userInfo.email,
+        password: userInfo.password,
       });
 
       const requestOptions = {
@@ -63,12 +66,12 @@ function Form() {
     } else {
       e.preventDefault();
       const emptyFields = [];
-      if (pseudo === "") emptyFields.push("pseudo");
-      if (firstname === "") emptyFields.push("firstname");
-      if (lastname === "") emptyFields.push("lastname");
-      if (email === "") emptyFields.push("email");
-      if (password === "") emptyFields.push("password");
-      if (verifPassword === "") emptyFields.push("verifPassword");
+      if (userInfo.pseudo === "") emptyFields.push("pseudo");
+      if (userInfo.firstname === "") emptyFields.push("firstname");
+      if (userInfo.lastname === "") emptyFields.push("lastname");
+      if (userInfo.email === "") emptyFields.push("email");
+      if (userInfo.password === "") emptyFields.push("password");
+      if (userInfo.verifPassword === "") emptyFields.push("verifPassword");
       setRedForm(emptyFields);
     }
   };
@@ -97,7 +100,9 @@ function Form() {
                 } h-[90%]`}
               >
                 <input
-                  onChange={(e) => setPseudo(e.target.value)}
+                  onChange={(e) =>
+                    setUserInfo({ ...userInfo, pseudo: e.target.value })
+                  }
                   type="Pseudo"
                   name="Pseudo"
                   id="Pseudo"
@@ -126,7 +131,9 @@ function Form() {
                 } h-[90%]`}
               >
                 <input
-                  onChange={(e) => setFirstName(e.target.value)}
+                  onChange={(e) =>
+                    setUserInfo({ ...userInfo, firstname: e.target.value })
+                  }
                   type="firstname"
                   name="firstname"
                   id="firstName"
@@ -155,7 +162,9 @@ function Form() {
                 } h-[90%]`}
               >
                 <input
-                  onChange={(e) => setLastName(e.target.value)}
+                  onChange={(e) =>
+                    setUserInfo({ ...userInfo, lastname: e.target.value })
+                  }
                   type="lastname"
                   name="lastname"
                   id="lastName"
@@ -184,7 +193,9 @@ function Form() {
                 } h-[90%]`}
               >
                 <input
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) =>
+                    setUserInfo({ ...userInfo, email: e.target.value })
+                  }
                   type="email"
                   name="Adresse-email"
                   id="email"
@@ -213,7 +224,9 @@ function Form() {
                 } h-[90%]`}
               >
                 <input
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) =>
+                    setUserInfo({ ...userInfo, password: e.target.value })
+                  }
                   type={showPassWord ? "password" : "text"}
                   name="password"
                   id="password"
@@ -267,7 +280,9 @@ function Form() {
                 } h-[90%]`}
               >
                 <input
-                  onChange={(e) => setVerifPassword(e.target.value)}
+                  onChange={(e) =>
+                    setUserInfo({ ...userInfo, verifPassword: e.target.value })
+                  }
                   type={showPassWord ? "password" : "text"}
                   name="password"
                   id="password"

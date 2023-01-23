@@ -1,15 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Allive from "../../components/User/Gallery/AllLive";
 import BottomNav from "../../components/User/Global/BottomNav";
 
 import HeaderWithBurger from "../../components/User/Global/HeaderWithBurger";
 import UserCardContainer from "../../components/Global/Cards/UserCardContainer";
-import ShopCardContainer from "../../components/Global/Cards/ShopCardContainer";
+
 import { useCurrentUserContext } from "../../contexts/userContext";
 import Menu from "./Menu";
 
+const backURL = import.meta.env.VITE_BACKEND_URL;
+
 export default function GalleryLive() {
-  const { open } = useCurrentUserContext();
+  const { open, token } = useCurrentUserContext();
+
+  const [showPicture, setShowPicture] = useState([]);
+
+  const myHeaders = new Headers({
+    Authorization: `Bearer ${token}`,
+  });
+  myHeaders.append("Content-Type", "application/json");
+
+  const GETrequestOptions = {
+    method: "GET",
+    headers: myHeaders,
+  };
+
+  useEffect(() => {
+    fetch(`${backURL}/pictures`, GETrequestOptions)
+      .then((result) => result.json())
+      .then((result) => {
+        setShowPicture(result);
+      });
+  }, []);
+
   return (
     <div>
       {!open ? (
@@ -20,16 +43,9 @@ export default function GalleryLive() {
           </div>
 
           <div className="flex flex-wrap justify-around">
-            <UserCardContainer />
-            <ShopCardContainer />
-            <ShopCardContainer />
-            <UserCardContainer />
-            <UserCardContainer />
-            <UserCardContainer />
-            <UserCardContainer />
-            <UserCardContainer />
-            <UserCardContainer />
-            <UserCardContainer />
+            {showPicture.map((picture) => (
+              <UserCardContainer key={picture.id} picture={picture} />
+            ))}
           </div>
 
           <BottomNav />
