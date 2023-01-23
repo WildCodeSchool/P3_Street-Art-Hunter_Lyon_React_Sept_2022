@@ -42,7 +42,7 @@ class UserManager extends AbstractManager {
 
   update(users) {
     return this.connection.query(
-      `update ${this.table} set firstname = ?, lastname = ?, scorepoint = ?, pseudo = ?, is_admin = ?, email = ?, hashedPassword = ? where id = ?`,
+      `update ${this.table} set firstname = ?, lastname = ?, scorepoint = ?, pseudo = ?, is_admin = ?, email = ?, hashedPassword = ?, avatar = ? where id = ?`,
       [
         users.firstname,
         users.lastname,
@@ -51,7 +51,15 @@ class UserManager extends AbstractManager {
         users.is_admin,
         users.email,
         users.hashedPassword,
+        users.avatar,
       ]
+    );
+  }
+
+  updateProfile(users) {
+    return this.connection.query(
+      `update ${this.table} set avatar = ?, pseudo = ?, email = ?, hashedPassword = ? where id = ?`,
+      [users.avatar, users.pseudo, users.email, users.hashedPassword]
     );
   }
 
@@ -94,6 +102,13 @@ class UserManager extends AbstractManager {
     return this.connection.query(
       `select is_admin from  ${this.table} where id = ?`,
       [id]
+    );
+  }
+
+  updateAvatar(id, avatar) {
+    return this.connection.query(
+      `update ${this.table} set avatar = ? where id = ?`,
+      [avatar, id]
     );
   }
 }

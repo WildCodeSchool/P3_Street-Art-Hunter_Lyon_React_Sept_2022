@@ -16,6 +16,7 @@ function Form() {
   const [password, setPassword] = useState("");
   const [verifPassword, setVerifPassword] = useState("");
   const [doneinscr, setDoneInscr] = useState(false);
+  const [avatar] = useState("");
 
   const [redForm, setRedForm] = useState([]);
 
@@ -40,6 +41,7 @@ function Form() {
         isAdmin,
         email,
         password,
+        avatar,
       });
 
       const requestOptions = {

@@ -1,15 +1,12 @@
-/* eslint-disable import/no-unresolved */
 import React, { useState } from "react";
-// eslint-disable-next-line import/no-extraneous-dependencies, import/no-unresolved
 import Webcam from "react-webcam";
-// eslint-disable-next-line import/no-extraneous-dependencies
-import Geolocalisation from "@components/Geolocalisation";
-// eslint-disable-next-line import/extensions
-import { useCurrentPhotoContext } from "../../contexts/photoContext";
-import BottomNavCamActive from "./BottomNavCamActive";
+import Geolocalisation from "@components/User/Global/Geolocalisation";
+// eslint-disable-next-line import/no-unresolved
+import { useCurrentPhotoContext } from "../../../contexts/photoContext";
 import BottomNavCamera from "./BottomNavCamera";
+import BottomNavCamActive from "./BottomNavCamActive";
 // eslint-disable-next-line import/extensions
-import { useCurrentUserContext } from " @contexts/userContext";
+import { useCurrentUserContext } from "../../../contexts/userContext";
 
 const backURL = import.meta.env.VITE_BACKEND_URL;
 

@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import Daryl from "@assets/images/Daryl.jpg";
 import { useCurrentUserContext } from "../../../contexts/userContext";
 
+const backURL = import.meta.env.VITE_BACKEND_URL;
+
 function ArtistCardContainer() {
   const [artists, setArtists] = useState([]);
 
@@ -24,10 +26,7 @@ function ArtistCardContainer() {
       };
 
       try {
-        const response = await fetch(
-          "http://localhost:5000/Picture",
-          requestOptions
-        );
+        const response = await fetch(`${backURL}/Picture`, requestOptions);
         const pictureList = await response.json();
         setPictures(pictureList);
       } catch (error) {

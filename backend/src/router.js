@@ -7,6 +7,7 @@ const router = express.Router();
 const multer = require("multer");
 
 const upload = multer({ dest: "./public/uploads/" });
+const uploadAvatar = multer({ dest: "./public/avatar/" });
 
 const fsUpload = (req, res) => {
   const { image, filename } = req.body;
@@ -37,6 +38,7 @@ const userControllers = require("./controllers/userControllers");
 const PictureControllers = require("./controllers/PictureControllers");
 const ArtistControllers = require("./controllers/ArtistControllers");
 const badgeControllers = require("./controllers/badgeControllers");
+const fileControllers = require("./controllers/fileControllers");
 
 // Auth
 router.post("/inscription", hashPassword, userControllers.add);
@@ -55,7 +57,14 @@ router.get("/score/:id", userControllers.getMyscore);
 router.get("/rank/:id", userControllers.getRanks);
 
 router.post("/user", hashPassword, verifyToken, userControllers.add);
-router.put("/user/:id", hashPassword, verifyToken, userControllers.edit);
+router.put(
+  "/user/:id",
+  verifyToken,
+  hashPassword,
+  fileControllers.sendAvatar,
+  userControllers.updateAvatar,
+  userControllers.editProfile
+);
 router.delete("/user/:id", verifyToken, userControllers.destroy);
 // Gestion des badges
 router.get("/badges", badgeControllers.browse);
@@ -91,5 +100,15 @@ router.put(
   authControllers.isUserAdmin,
   badgeControllers.edit
 );
+
+// Gestion des avatars
+router.post(
+  "/api/avatars",
+  verifyToken,
+  uploadAvatar.single("avatar"),
+  fileControllers.renameAvatar,
+  userControllers.updateAvatar
+);
+router.get("/api/avatars/:fileName", fileControllers.sendAvatar);
 
 module.exports = router;

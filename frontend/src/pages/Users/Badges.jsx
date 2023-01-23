@@ -1,8 +1,9 @@
 /* eslint-disable import/no-unresolved */
-import BadgeContainer from "@components/BadgeContainer";
-import BadgesCollectionModal from "@components/User/Badges/BadgesCollectionModal";
-import Header from "@components/Header";
+import BadgeContainer from "@components/User/Badg/BadgeContainer";
+import Header from "@components/Global/Header";
 import React, { useState } from "react";
+
+import BadgesCollectionModal from "@components/User/Badg/BadgesCollectionModal";
 
 export default function Badges() {
   const [modalOpen, setModalOpen] = useState(false);

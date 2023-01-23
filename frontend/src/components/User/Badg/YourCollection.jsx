@@ -2,13 +2,15 @@ import React, { useEffect, useState } from "react";
 import Badge from "./Badge";
 import { useCurrentUserContext } from "../../../contexts/userContext";
 
+const backURL = import.meta.env.VITE_BACKEND_URL;
+
 export default function YourCollection({ setSelectedBadge }) {
   const [userCollection, setUserCollection] = useState([]);
   const { user } = useCurrentUserContext();
 
   // fectching la collection de bage de l'utilisateur connecté
   useEffect(() => {
-    fetch(`http://localhost:5000/user/badges/${user.id}`)
+    fetch(`${backURL}/user/badges/${user.id}`)
       .then((result) => result.json())
       .then((data) => {
         setUserCollection(data);
