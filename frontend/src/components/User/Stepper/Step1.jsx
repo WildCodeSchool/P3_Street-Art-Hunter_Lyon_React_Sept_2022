@@ -1,5 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import Next from "../../../assets/Next.svg";
 
 // eslint-disable-next-line react/prop-types
 function Step1({ setStep, step }) {
@@ -42,16 +43,7 @@ function Step1({ setStep, step }) {
           <button type="button" className="" onClick={nextStep}>
             <div className="bg-gradient-to-b from-pink to-lightblue rounded-[100%]  w-[3.6rem]  h-[3.6rem] p-[0.2rem]">
               <div className="w-full h-full rounded-[100%] bg-gradient-to-b from-bottomdark to-[#454377] flex justify-center items-center">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="white"
-                  className="w-6 h-6"
-                >
-                  <path d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                </svg>
+                <img className="w-6 h-6" src={Next} alt="Next button" />
               </div>
             </div>
           </button>
