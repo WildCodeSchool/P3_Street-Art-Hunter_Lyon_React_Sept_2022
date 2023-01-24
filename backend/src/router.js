@@ -31,6 +31,21 @@ const badgeControllers = require("./controllers/badgeControllers");
 const artistControllers = require("./controllers/artistControllers");
 const workControllers = require("./controllers/workControllers");
 const pictureControllers = require("./controllers/pictureControllers");
+const mailControllers = require("./controllers/mailControllers");
+const passwordControllers = require("./controllers/passwordControllers");
+
+router.post(
+  "/forgottenpassword",
+  passwordControllers.verifyEmail,
+  passwordControllers.generatePasswordToken,
+  mailControllers.sendForgottenPassword
+);
+router.post(
+  `/resetpassword`,
+  passwordControllers.verifyTokenPassword,
+  hashPassword,
+  passwordControllers.resetPassword
+);
 
 router.post("/photo", verifyToken, fsUpload, pictureControllers.add);
 

@@ -24,6 +24,7 @@ export default function BlocConnexion() {
 
     const requestOptions = {
       method: "POST",
+      redirect: "follow",
       headers: myHeaders,
       body,
     };
@@ -61,7 +62,7 @@ export default function BlocConnexion() {
           >
             <input type="hidden" name="remember" defaultValue="true" />
             <div className="space-y-px rounded-md shadow-sm">
-              <div>
+              <div className="mb-8">
                 <h2 className="font-secondary-font mt-6 text-left text-1xl  tracking-tight text-white">
                   Adresse e-mail ou Pseudo
                 </h2>
@@ -74,17 +75,17 @@ export default function BlocConnexion() {
                   }
                   id="email-address"
                   name="email"
-                  className="relative block w-full appearance-none bg-transparent rounded-full border border-gray-300 px-3 py-2 text-white placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                  className="mt-1 relative block w-full appearance-none bg-transparent rounded-full border border-gray-300 px-3 py-2 text-white placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                   placeholder="burrito.koala@paradise.fr"
                 />
               </div>
 
               <label
                 htmlFor="password"
-                className="flex flex-col justify-center text-white"
+                className="flex flex-col justify-center text-white "
               >
                 Mot de passe
-                <div className="flex flex-row-reverse border rounded-[3rem] border-white h-[90%]">
+                <div className=" mt-1 flex flex-row-reverse border rounded-[3rem] border-white h-[90%]">
                   <input
                     onChange={(e) => setPassword(e.target.value)}
                     id="password"
@@ -124,9 +125,15 @@ export default function BlocConnexion() {
 
             <div className="flex items-center justify-between">
               <div className="text-sm">
-                <span className="font-medium text-center text-white">
-                  Tu as oublié ton mot de passe ?
-                </span>
+                <div
+                  aria-hidden="true"
+                  onClick={() => navigate("/forgottenpassword")}
+                  className="font-medium text-center text-white"
+                >
+                  <span className="font-medium text-center text-white hover:text-indigo-500">
+                    Mot de passe oublié ? clique ICI
+                  </span>
+                </div>
               </div>
             </div>
 
@@ -150,7 +157,7 @@ export default function BlocConnexion() {
               onClick={() => navigate("/inscription")}
             >
               <span className="font-medium text-center text-white hover:text-indigo-500">
-                Inscris toi
+                Inscris toi ICI
               </span>
             </div>
           </form>

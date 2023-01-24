@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
+import NewPassword from "./pages/User/NewPassword";
 import Camera from "./pages/User/Camera";
 import Connexion from "./pages/Global/Connexion";
 import Favoris from "./pages/User/Favoris";
@@ -22,6 +23,7 @@ import CreateUser from "./pages/Admin/CreateUser";
 import CreateWork from "./pages/User/CreateWork";
 import PictureValidation from "./pages/User/PictureValidation";
 import Badges from "./pages/User/Badges";
+import ResetPassword from "./pages/User/ResetPassword";
 
 import "./App.css";
 
@@ -43,6 +45,11 @@ function App() {
             <Route path="/menu" element={<Menu />} />
             <Route path="/help" element={<Help />} />
             <Route path="/creatework" element={<CreateWork />} />
+            <Route path="/forgottenpassword" element={<NewPassword />} />
+            <Route
+              path="/resetpassword/:passwordtoken"
+              element={<ResetPassword />}
+            />
 
             <Route
               path="/galerie/live"
