@@ -12,6 +12,19 @@ const browse = (req, res) => {
     });
 };
 
+const myPict = (req, res) => {
+  const { userId } = req.params;
+  models.picture
+    .findByUser(userId)
+    .then(([results]) => {
+      res.send(results);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
+
 const read = (req, res) => {
   const { id } = req.params;
 
@@ -46,4 +59,5 @@ module.exports = {
   add,
   browse,
   read,
+  myPict,
 };

@@ -11,6 +11,13 @@ class PictureManager extends AbstractManager {
     ]);
   }
 
+  findByUser(userId) {
+    return this.connection.query(
+      `select * from ${this.table} where user_id = ?`,
+      [userId]
+    );
+  }
+
   findAll() {
     return this.connection.query(`select * from  ${this.table}`);
   }

@@ -74,7 +74,7 @@ router.put(
 );
 
 // Gestion message
-router.post("message", messageControllers.add);
+router.post("/message", messageControllers.add);
 router.get("/message", messageControllers.browse);
 
 // Gestion des artistes
@@ -86,7 +86,7 @@ router.get("/works/:id", workControllers.read);
 router.post("/works", verifyToken, workControllers.add);
 
 // Gestion des photos
-
+router.get("/users/:userId/pictures", pictureControllers.myPict);
 router.get("/pictures", pictureControllers.browse);
 router.get("/pictures/:id", pictureControllers.read);
 router.post("/pictures", pictureControllers.add);
