@@ -1,17 +1,10 @@
 import React from "react";
-import ArtDashContainer from "../Global/ArtDashContainer";
+import Validation from "./Validation";
 
 function Board() {
   return (
-    <div className="bg-[#f6f6f6] h-screen flex justify-around flex-wrap items-center pl-20 pr-20">
-      <ArtDashContainer />
-      <ArtDashContainer />
-      <ArtDashContainer />
-      <ArtDashContainer />
-      <ArtDashContainer />
-      <ArtDashContainer />
-      <ArtDashContainer />
-      <ArtDashContainer />
+    <div className="w-full h-screen flex justify-center items-center mt-40">
+      <Validation />
     </div>
   );
 }

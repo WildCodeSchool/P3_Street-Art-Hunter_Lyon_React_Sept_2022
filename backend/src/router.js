@@ -31,8 +31,10 @@ const badgeControllers = require("./controllers/badgeControllers");
 const artistControllers = require("./controllers/artistControllers");
 const workControllers = require("./controllers/workControllers");
 const pictureControllers = require("./controllers/pictureControllers");
+const favoriteControllers = require("./controllers/favoriteControllers");
 
 router.post("/photo", verifyToken, fsUpload, pictureControllers.add);
+router.post("/creationOeuvre", verifyToken, fsUpload, workControllers.add);
 
 // Auth
 router.post("/inscription", hashPassword, userControllers.add);
@@ -77,13 +79,25 @@ router.get("/artists", artistControllers.browse);
 
 // Gestion des oeuvres
 router.get("/works", workControllers.browse);
+router.get("/validation", workControllers.showValidation);
 router.get("/works/:id", workControllers.read);
 router.post("/works", verifyToken, workControllers.add);
+router.put("/works/:id", verifyToken, workControllers.edit);
+router.delete("/works/:id", verifyToken, workControllers.destroy);
 
 // Gestion des photos
 
 router.get("/pictures", pictureControllers.browse);
 router.get("/pictures/:id", pictureControllers.read);
 router.post("/pictures", pictureControllers.add);
+
+// Gestion des favoris
+router.post("/favorites", verifyToken, favoriteControllers.add);
+router.delete(
+  "/favorites/:user_id/:picture_id",
+  verifyToken,
+  favoriteControllers.destroy
+);
+router.get("/user/favoris/:user_id", pictureControllers.getUserFavorites);
 
 module.exports = router;
