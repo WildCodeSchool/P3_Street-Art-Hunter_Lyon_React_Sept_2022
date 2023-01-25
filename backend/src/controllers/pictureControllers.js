@@ -42,8 +42,25 @@ const add = (req, res) => {
     });
 };
 
+const addAndPassToNext = (req, res, next) => {
+  const picture = req.body;
+  // on verifie les données
+
+  models.picture
+    .insert(picture)
+    .then(([result]) => {
+      res.location(`/picture/${result.insertId}`).sendStatus(201);
+      next();
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
+
 module.exports = {
   add,
   browse,
   read,
+  addAndPassToNext,
 };

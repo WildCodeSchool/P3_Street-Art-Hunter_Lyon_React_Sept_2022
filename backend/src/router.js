@@ -43,11 +43,13 @@ router.post(
 );
 
 // Gestion des users
+
 router.get("/users", userControllers.browse);
 router.get("/users/:id", userControllers.read);
 router.get("/leader", userControllers.leaderboard);
 router.get("/score/:id", userControllers.getMyscore);
 router.get("/rank/:id", userControllers.getRanks);
+router.put("/users/:id/score", userControllers.zzz);
 
 router.post("/users", hashPassword, verifyToken, userControllers.add);
 router.put("/users/:id", verifyToken, userControllers.modif);
@@ -78,6 +80,8 @@ router.get("/artists", artistControllers.browse);
 // Gestion des oeuvres
 router.get("/works", workControllers.browse);
 router.get("/works/:id", workControllers.read);
+router.get("/works/value/:id", workControllers.readValuePassItToNext);
+
 router.post("/works", verifyToken, workControllers.add);
 
 // Gestion des photos

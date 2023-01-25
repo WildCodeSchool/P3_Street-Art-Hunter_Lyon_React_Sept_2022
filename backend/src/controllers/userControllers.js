@@ -113,7 +113,7 @@ const getMyscore = (req, res) => {
     });
 };
 
-const getRanks = (req, res) => {
+const getRanks = async (req, res) => {
   models.user
     .getIdByScorepoint(req.params.id)
     .then(([results]) => {
@@ -125,6 +125,58 @@ const getRanks = (req, res) => {
     });
 };
 
+const getScoreAndPassToNext = (req, res) => {
+  models.user
+    .getScore(req.params.id)
+    .then(([results]) => {
+      req.body.score = results[0].scorepoint;
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
+
+const addPoints = (req, res) => {
+  const { value, score } = req.body;
+  const userId = req.params.id;
+  const newScore = value + score;
+  models.user
+    .addUserPoints(newScore, userId)
+    .then(([result]) => {
+      if (result.affectedRows === 0) res.sendStatus(404);
+      else {
+        res.send(`${value}`);
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
+
+const zzz = async (req, res) => {
+  try {
+    const { workId } = req.body;
+    const [points] = await models.work.getWorkValue(workId);
+    req.body.value = points[0].value_point;
+    const [datas] = await models.user.getScore(req.params.id);
+    req.body.score = datas[0].scorepoint;
+    const { value, score } = req.body;
+    const userId = req.params.id;
+    const newScore = value + score;
+    const [result] = await models.user.addUserPoints(newScore, userId);
+    if (result.affectedRows === 0) res.sendStatus(404);
+    else {
+      res.send(`${value}`);
+    }
+  } catch (error) {
+    console.warn(error);
+    res.sendStatus(500);
+  }
+};
 module.exports = {
   browse,
   read,
@@ -135,4 +187,7 @@ module.exports = {
   getMyscore,
   getRanks,
   modif,
+  addPoints,
+  getScoreAndPassToNext,
+  zzz,
 };

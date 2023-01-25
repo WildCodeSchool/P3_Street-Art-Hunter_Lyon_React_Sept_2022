@@ -41,8 +41,25 @@ const add = (req, res) => {
       res.sendStatus(500);
     });
 };
+
+const readValuePassItToNext = (req, res, next) => {
+  const { workId } = req.body;
+  models.work
+    .getWorkValue(workId)
+    .then(([results]) => {
+      if (results[0]) {
+        req.body.value = results[0].value_point;
+        next();
+      } else res.sendStatus(404);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
 module.exports = {
   browse,
   add,
   read,
+  readValuePassItToNext,
 };
