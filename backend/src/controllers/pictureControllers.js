@@ -42,8 +42,41 @@ const add = (req, res) => {
     });
 };
 
+const getUserFavorites = (req, res) => {
+  const favorite = req.body;
+
+  favorite.user_id = req.params;
+
+  models.picture
+    .pictureIsFavorite(favorite.user_id)
+    .then(([results]) => {
+      res.send(results);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
+const addAndPassToNext = (req, res, next) => {
+  const picture = req.body;
+  // on verifie les données
+
+  models.picture
+    .insert(picture)
+    .then(([result]) => {
+      res.location(`/picture/${result.insertId}`);
+      next();
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
+
 module.exports = {
   add,
   browse,
   read,
+  getUserFavorites,
+  addAndPassToNext,
 };

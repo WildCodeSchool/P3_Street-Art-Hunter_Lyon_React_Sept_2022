@@ -26,6 +26,15 @@ class PictureManager extends AbstractManager {
       [picture.url, new Date(), picture.workId, picture.userId]
     );
   }
+
+  pictureIsFavorite(favorite) {
+    return this.connection.query(
+      `select * from picture as p
+  inner join user_has_fav_picture as uhfp on p.id = uhfp.picture_id
+  where uhfp.user_id=?;`,
+      [favorite.user_id]
+    );
+  }
 }
 
 module.exports = PictureManager;

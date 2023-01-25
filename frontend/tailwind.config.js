@@ -34,6 +34,7 @@ module.exports = {
         fondStepper: "url('/src/assets/bg-stepper.png')",
         localisation: "url('/src/assets/localisation.svg')",
         map: "url('/src/assets/map.svg')",
+        logout: "url('/src/assets/logout.svg')",
       },
       fontFamily: {
         "main-font": ["ui-monospace", "VT323"],

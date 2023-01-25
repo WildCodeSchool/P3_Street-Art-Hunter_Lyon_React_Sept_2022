@@ -42,9 +42,11 @@ function GalleryAll({ allOrLive }) {
           <Allive />
           <Filters allOrLive={allOrLive} />
           <div className="flex flex-wrap justify-around">
-            {showWork.map((work) => (
-              <ArtistCardContainer key={work.id} work={work} />
-            ))}
+            {showWork.map((work) =>
+              work.is_validated === 1 ? (
+                <ArtistCardContainer key={work.id} work={work} />
+              ) : null
+            )}
           </div>
 
           <BottomNav />

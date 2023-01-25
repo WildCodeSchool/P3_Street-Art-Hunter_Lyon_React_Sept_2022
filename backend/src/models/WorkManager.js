@@ -28,5 +28,25 @@ class WorkManager extends AbstractManager {
       ]
     );
   }
+
+  findValidationWaiting() {
+    return this.connection.query(
+      `select * from  ${this.table} where is_validated = 0`
+    );
+  }
+
+  modif(work) {
+    return this.connection.query(
+      `update ${this.table} set is_validated = ? where id = ?`,
+      [work, work.id]
+    );
+  }
+
+  getWorkValue(id) {
+    return this.connection.query(
+      `select value_point from  ${this.table} where id = ?`,
+      [id]
+    );
+  }
 }
 module.exports = WorkManager;
