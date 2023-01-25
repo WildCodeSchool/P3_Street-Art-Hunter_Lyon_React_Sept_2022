@@ -10,12 +10,31 @@
     "fix": "prettier --write . && eslint --fix --ext .jsx ."
   },
   "dependencies": {
+    "@emotion/react": "~11.9.0",
+    "@emotion/styled": "~11.8.1",
+    "@mui/icons-material": "~5.8.0",
+    "@mui/material": "~5.8.0",
+    "@mui/material-next": "^6.0.0-alpha.70",
+    "@mui/styled-engine-sc": "^5.11.0",
+    "@mui/system": "~5.8.0",
+    "@mui/utils": "^5.11.2",
+    "@mui/x-data-grid": "^5.17.19",
+    "@mui/x-data-grid-generator": "^5.17.19",
+    "@mui/x-date-pickers": "5.0.0-alpha.3",
+    "leaflet": "^1.9.3",
+    "leaflet-geocoder-ban": "^1.0.7",
     "prop-types": "^15.8.1",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "react-geolocated": "^4.0.3",
+    "react-leaflet": "^4.2.0",
+    "react-router-dom": "^6.5.0",
+    "react-webcam": "^7.0.1",
+    "styled-components": "^5.3.6"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^1.0.7",
+    "autoprefixer": "^10.4.13",
     "eslint": "^8.11.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.5.0",
@@ -26,7 +45,9 @@
     "eslint-plugin-react": "^7.29.4",
     "eslint-plugin-react-hooks": "^4.3.0",
     "husky": "^7.0.0",
+    "postcss": "^8.4.20",
     "prettier": "^2.5.1",
+    "tailwindcss": "^3.2.4",
     "vite": "^2.8.0"
   }
 }
