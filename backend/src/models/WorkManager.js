@@ -41,5 +41,12 @@ class WorkManager extends AbstractManager {
       [work, work.id]
     );
   }
+
+  getWorkValue(id) {
+    return this.connection.query(
+      `select value_point from  ${this.table} where id = ?`,
+      [id]
+    );
+  }
 }
 module.exports = WorkManager;

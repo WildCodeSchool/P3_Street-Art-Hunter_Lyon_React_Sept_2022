@@ -103,6 +103,13 @@ class UserManager extends AbstractManager {
       [id]
     );
   }
+
+  addUserPoints(points, userId) {
+    return this.connection.query(
+      `update ${this.table} set scorepoint = ? where id = ?`,
+      [points, userId]
+    );
+  }
 }
 
 module.exports = UserManager;

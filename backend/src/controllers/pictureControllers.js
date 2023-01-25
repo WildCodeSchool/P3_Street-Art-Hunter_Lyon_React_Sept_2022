@@ -57,10 +57,26 @@ const getUserFavorites = (req, res) => {
       res.sendStatus(500);
     });
 };
+const addAndPassToNext = (req, res, next) => {
+  const picture = req.body;
+  // on verifie les données
+
+  models.picture
+    .insert(picture)
+    .then(([result]) => {
+      res.location(`/picture/${result.insertId}`);
+      next();
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
 
 module.exports = {
   add,
   browse,
   read,
   getUserFavorites,
+  addAndPassToNext,
 };

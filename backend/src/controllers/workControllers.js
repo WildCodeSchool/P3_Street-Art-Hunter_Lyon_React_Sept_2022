@@ -52,6 +52,21 @@ const showValidation = (req, res) => {
       res.sendStatus(500);
     });
 };
+const readValuePassItToNext = (req, res, next) => {
+  const { workId } = req.body;
+  models.work
+    .getWorkValue(workId)
+    .then(([results]) => {
+      if (results[0]) {
+        req.body.value = results[0].value_point;
+        next();
+      } else res.sendStatus(404);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
 
 const edit = (req, res) => {
   const work = req.body;
@@ -83,22 +98,6 @@ const destroy = (req, res) => {
     });
 };
 
-// const addAndPassInsertIdToNext = (req, res, next) => {
-//   const work = req.body;
-//   // on verifie les données
-
-//   models.work
-//     .insert(work)
-//     .then(([result]) => {
-//       res.location(`/work/${result.insertId}`).sendStatus(201);
-//       req.body.picture.workId = result.insertId;
-//       next();
-//     })
-//     .catch((error) => {
-//       console.error(error);
-//       res.sendStatus(500);
-//     });
-// };
 module.exports = {
   browse,
   add,
@@ -106,4 +105,5 @@ module.exports = {
   showValidation,
   edit,
   destroy,
+  readValuePassItToNext,
 };
