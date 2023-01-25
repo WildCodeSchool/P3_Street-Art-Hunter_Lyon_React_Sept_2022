@@ -16,6 +16,7 @@ function PictureValidation() {
   const [validated, setValidated] = useState(false);
   const [allWorks, setAllWorks] = useState([]);
   const [idWork, setIdWork] = useState("");
+  const [points, setPoints] = useState("0");
   const navigate = useNavigate();
 
   const handleSendPhoto = () => {
@@ -35,19 +36,14 @@ function PictureValidation() {
           authorization: `Bearer ${token}`,
         },
       })
-        .then(
-          fetch(`${backURL}/users/${user.id}/score`, {
-            method: "PUT",
-            body: JSON.stringify({
-              workId: idWork,
-            }),
-            headers: {
-              "Content-Type": "application/json",
-              authorization: `Bearer ${token}`,
-            },
-          })
-        )
-        .then((response) => response.json());
+        .then((response) => response.json())
+        .then((value) => setPoints(value))
+        .then(() => {
+          setValidated(true);
+          setTimeout(() => {
+            navigate("/galerie/live");
+          }, 3000);
+        });
 
       // on met les infos de la photo dans la table picture de la bdd
     } else if (contextPhoto.current === "") {
@@ -57,10 +53,6 @@ function PictureValidation() {
         "Veuillez sélectionner une oeuvre, si vous ne la trouvez pas sur la carte, créer la!"
       );
     }
-    setValidated(true);
-    setTimeout(() => {
-      navigate("/galerie/live");
-    }, 3000);
   };
 
   useEffect(() => {
@@ -145,7 +137,11 @@ function PictureValidation() {
           </button>
         </div>
       </div>
-      {validated ? <AddScore points="100" setShowPoints={setValidated} /> : ""}
+      {validated ? (
+        <AddScore points={points} setShowPoints={setValidated} />
+      ) : (
+        ""
+      )}
     </div>
   );
 }

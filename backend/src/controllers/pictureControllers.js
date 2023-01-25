@@ -49,7 +49,7 @@ const addAndPassToNext = (req, res, next) => {
   models.picture
     .insert(picture)
     .then(([result]) => {
-      res.location(`/picture/${result.insertId}`).sendStatus(201);
+      res.location(`/picture/${result.insertId}`);
       next();
     })
     .catch((error) => {

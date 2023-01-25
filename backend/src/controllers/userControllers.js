@@ -157,15 +157,14 @@ const addPoints = (req, res) => {
     });
 };
 
-const zzz = async (req, res) => {
+const pointsOnPictureValidation = async (req, res) => {
   try {
-    const { workId } = req.body;
+    const { workId, userId } = req.body;
     const [points] = await models.work.getWorkValue(workId);
     req.body.value = points[0].value_point;
-    const [datas] = await models.user.getScore(req.params.id);
+    const [datas] = await models.user.getScore(userId);
     req.body.score = datas[0].scorepoint;
     const { value, score } = req.body;
-    const userId = req.params.id;
     const newScore = value + score;
     const [result] = await models.user.addUserPoints(newScore, userId);
     if (result.affectedRows === 0) res.sendStatus(404);
@@ -189,5 +188,5 @@ module.exports = {
   modif,
   addPoints,
   getScoreAndPassToNext,
-  zzz,
+  pointsOnPictureValidation,
 };
