@@ -10,7 +10,9 @@ function AdminArtWork() {
       <LateralMenu />
       <div className="flex flex-col w-full">
         <HeaderAdmin nav={nav} />
-        <Board />
+        <div className="mt-36">
+          <Board />
+        </div>
       </div>
     </div>
   );

@@ -74,8 +74,8 @@ router.put(
 );
 
 // Gestion message
-router.post("/message", messageControllers.add);
-router.get("/message", messageControllers.browse);
+router.post("/messages", messageControllers.add);
+router.get("/messages", messageControllers.browse);
 
 // Gestion des artistes
 router.get("/artists", artistControllers.browse);

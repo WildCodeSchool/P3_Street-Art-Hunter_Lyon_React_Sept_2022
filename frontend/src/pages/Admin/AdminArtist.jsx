@@ -10,7 +10,9 @@ function AdminArtist() {
       <LateralMenu />
       <div className="flex flex-col w-full">
         <HeaderAdmin nav={nav} />
-        <AdminArtistList />
+        <div className="mt-40">
+          <AdminArtistList />
+        </div>
       </div>
     </div>
   );

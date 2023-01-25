@@ -10,7 +10,9 @@ function AdminShop() {
       <LateralMenu />
       <div className="flex flex-col w-full">
         <HeaderAdmin nav={nav} />
-        <AdminShopList />
+        <div className="mt-40">
+          <AdminShopList />
+        </div>
       </div>
     </div>
   );

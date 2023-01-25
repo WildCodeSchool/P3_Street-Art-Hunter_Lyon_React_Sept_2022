@@ -16,13 +16,6 @@ function Favoris() {
           </div>
           <div className="flex justify-around flex-wrap overflow-auto h-[70vh]">
             <UserCardContainer />
-            <UserCardContainer />
-            <UserCardContainer />
-            <UserCardContainer />
-            <UserCardContainer />
-            <UserCardContainer />
-            <UserCardContainer />
-            <UserCardContainer />
           </div>
         </div>
       ) : (
