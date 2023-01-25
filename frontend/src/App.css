@@ -8,13 +8,7 @@
   box-sizing: border-box;
 }
 
-.logo-container {
-  padding-top: 16rem;
-}
 
-.h-logo {
-  height: 50vh;
-}
 
 .flicker-3 {
   -webkit-animation: flicker-3 2.5s linear infinite both;
@@ -450,4 +444,28 @@
   color: black;
   z-index: 10000000000000000000 !important;
   display: none;
+}
+
+
+.typewriter div {
+  overflow: hidden; /* Ensures the content is not revealed until the animation */
+  border-right: .15em solid orange; /* The typwriter cursor */
+  white-space: nowrap; /* Keeps the content on a single line */
+  margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+  letter-spacing: .15em; /* Adjust as needed */
+  animation: 
+    typing 3.5s steps(40, end),
+    blink-caret .75s step-end infinite;
+}
+
+/* The typing effect */
+@keyframes typing {
+  from { width: 0 }
+  to { width: 80% }
+}
+
+/* The typewriter cursor effect */
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: #FF66C4; }
 }

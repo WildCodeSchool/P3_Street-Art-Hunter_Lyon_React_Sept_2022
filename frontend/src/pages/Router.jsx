@@ -1,4 +1,3 @@
-import { Score } from "@mui/icons-material";
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { useCurrentUserContext } from "../contexts/userContext";
@@ -25,6 +24,7 @@ import Menu from "./User/Menu";
 import MyGallery from "./User/MyGallery";
 import PictureValidation from "./User/PictureValidation";
 import Profil from "./User/Profil";
+import Scores from "./User/Scores";
 import Stepper from "./User/Stepper";
 
 export default function Router() {
@@ -40,7 +40,7 @@ export default function Router() {
         path="/scores"
         element={
           <Protected verifyCondition={user.id}>
-            <Score />
+            <Scores />
           </Protected>
         }
       />
