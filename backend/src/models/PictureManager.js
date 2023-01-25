@@ -26,6 +26,20 @@ class PictureManager extends AbstractManager {
       [picture.url, new Date(), picture.workId, picture.userId]
     );
   }
+
+  findPictureByUserAndWork(userId, workId) {
+    return this.connection.query(
+      `select * from ${this.table} where user_id= ? and work_id= ?`,
+      [userId, workId]
+    );
+  }
+
+  updateURLAndDate(url, pictureId) {
+    return this.connection.query(
+      `update ${this.table} set picture_url = ?, creation_date = ? where id = ?`,
+      [url, new Date(), pictureId]
+    );
+  }
 }
 
 module.exports = PictureManager;

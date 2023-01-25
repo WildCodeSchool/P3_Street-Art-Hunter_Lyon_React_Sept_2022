@@ -17,8 +17,10 @@ function PictureValidation() {
   const [allWorks, setAllWorks] = useState([]);
   const [idWork, setIdWork] = useState("");
   const [points, setPoints] = useState("0");
+  const [pictureToModify, setPictureToModify] = useState("");
   const navigate = useNavigate();
 
+  // fonction qui upload une photo sur cloudinary, vérifie si le user à déja une photo pour cette oeuvre puis la met dans la db et attribue les points
   const handleSendPhoto = () => {
     // on vérifie qu'on à toutes les datas
     if (contextPhoto.current !== "" && idWork !== "" && user.id) {
@@ -37,20 +39,27 @@ function PictureValidation() {
         },
       })
         .then((response) => response.json())
-        .then((value) => setPoints(value))
-        .then(() => {
-          setValidated(true);
-          setTimeout(() => {
-            navigate("/galerie/live");
-          }, 3000);
+        .then((value) => {
+          if (value.id) {
+            console.warn(
+              "Tu as déja pris cette oeuvre en photo, veux tu remplacer ta photo? (Tu ne toucheras pas à nouveau les points !)"
+            );
+            setPictureToModify(value);
+          } else {
+            setPoints(value);
+            setValidated(true);
+            setTimeout(() => {
+              navigate("/galerie/live");
+            }, 3000);
+          }
         });
 
       // on met les infos de la photo dans la table picture de la bdd
     } else if (contextPhoto.current === "") {
-      console.warn("Veuillez prendre une photo d'abord!");
+      console.warn("Prends une photo d'abord!");
     } else if (idWork === "") {
       console.warn(
-        "Veuillez sélectionner une oeuvre, si vous ne la trouvez pas sur la carte, créer la!"
+        "Sélectionne une oeuvre, si tu ne la trouves pas sur la carte, crée la!"
       );
     }
   };
@@ -62,6 +71,21 @@ function PictureValidation() {
         setAllWorks(result);
       });
   }, []);
+
+  // fonction qui upload une nouvelle photo pour un user/oeuvre et remplace l'url et la date de création dans la table picture
+  const handleReplacePicture = () => {
+    fetch(`${backURL}/pictures/changepicture/${pictureToModify.id}`, {
+      method: "PUT",
+      body: JSON.stringify({
+        image: contextPhoto.current,
+        filename: `userId-${user.id}-workId-${idWork}`,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${token}`,
+      },
+    }).then(navigate("/galerie/live"));
+  };
 
   return (
     <div className="bg-main-background bg-cover w-auto h-screen ">
@@ -134,6 +158,15 @@ function PictureValidation() {
             className="bg-gradient-to-tl from-pink to-lightblue rounded-3xl font-main-font text-[32px] py-1 px-6  mt-5 w-[40%] min-w-fit text-center"
           >
             VALIDER
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              handleReplacePicture();
+            }}
+            className="bg-gradient-to-tl from-pink to-lightblue rounded-3xl font-main-font text-[32px] py-1 px-6  mt-5 w-[40%] min-w-fit text-center"
+          >
+            VALIDER 2
           </button>
         </div>
       </div>

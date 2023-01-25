@@ -7,7 +7,7 @@ const router = express.Router();
 
 // Upload des photos
 
-const fsUpload = (req, res, next) => {
+const cloudinaryUpload = (req, res, next) => {
   const { image, filename } = req.body;
   cloudinary.uploader
     .upload(image, { public_id: filename })
@@ -35,7 +35,8 @@ const pictureControllers = require("./controllers/pictureControllers");
 router.post(
   "/photo",
   verifyToken,
-  fsUpload,
+  cloudinaryUpload,
+  pictureControllers.verifyIfUserHasPictureOnWork,
   pictureControllers.addAndPassToNext,
   userControllers.pointsOnPictureValidation
 );
@@ -87,6 +88,7 @@ router.get("/artists", artistControllers.browse);
 router.get("/works", workControllers.browse);
 router.get("/works/:id", workControllers.read);
 router.get("/works/value/:id", workControllers.readValuePassItToNext);
+router.get("works/:userId");
 
 router.post("/works", verifyToken, workControllers.add);
 
@@ -95,5 +97,10 @@ router.post("/works", verifyToken, workControllers.add);
 router.get("/pictures", pictureControllers.browse);
 router.get("/pictures/:id", pictureControllers.read);
 router.post("/pictures", pictureControllers.add);
+router.put(
+  "/pictures/changepicture/:id",
+  cloudinaryUpload,
+  pictureControllers.putNewPicture
+);
 
 module.exports = router;
