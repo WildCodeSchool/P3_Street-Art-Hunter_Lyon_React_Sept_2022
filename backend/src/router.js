@@ -33,6 +33,7 @@ const workControllers = require("./controllers/workControllers");
 const pictureControllers = require("./controllers/pictureControllers");
 const mailControllers = require("./controllers/mailControllers");
 const passwordControllers = require("./controllers/passwordControllers");
+const userMessageControllers = require("./controllers/userMessageControllers");
 
 router.post(
   "/forgottenpassword",
@@ -96,6 +97,10 @@ router.put(
   badgeControllers.edit
 );
 
+// Gestion message
+router.post("/userMessage", userMessageControllers.add);
+router.get("/userMessage", userMessageControllers.getMessage);
+
 // Gestion des artistes
 router.get("/artists", artistControllers.browse);
 
@@ -110,7 +115,7 @@ router.put("/works/:id", verifyToken, workControllers.edit);
 router.delete("/works/:id", verifyToken, workControllers.destroy);
 
 // Gestion des photos
-
+router.get("/users/:userId/pictures", pictureControllers.myPict);
 router.get("/pictures", pictureControllers.browse);
 router.get("/pictures/:id", pictureControllers.read);
 router.post("/pictures", pictureControllers.add);

@@ -1,21 +1,8 @@
 const models = require("../models");
 
 const browse = (req, res) => {
-  models.picture
+  models.userMessage
     .findAll()
-    .then(([results]) => {
-      res.send(results);
-    })
-    .catch((error) => {
-      console.error(error);
-      res.sendStatus(500);
-    });
-};
-
-const myPict = (req, res) => {
-  const { userId } = req.params;
-  models.picture
-    .findByUser(userId)
     .then(([results]) => {
       res.send(results);
     })
@@ -28,7 +15,7 @@ const myPict = (req, res) => {
 const read = (req, res) => {
   const { id } = req.params;
 
-  models.picture
+  models.userMessage
     .find(id)
     .then(([results]) => {
       if (results[0]) res.send(results[0]);
@@ -41,13 +28,14 @@ const read = (req, res) => {
 };
 
 const add = (req, res) => {
-  const picture = req.body;
+  const userMessage = req.body;
+
   // on verifie les données
 
-  models.picture
-    .insert(picture)
+  models.userMessage
+    .insert(userMessage)
     .then(([result]) => {
-      res.location(`/picture/${result.insertId}`).sendStatus(201);
+      res.location(`/userMessage/${result.insertId}`).sendStatus(201);
     })
     .catch((error) => {
       console.error(error);
@@ -55,29 +43,41 @@ const add = (req, res) => {
     });
 };
 
-const getUserFavorites = (req, res) => {
-  const favorite = req.body;
+const edit = (req, res) => {
+  const userMessage = req.body;
+  userMessage.id = req.params.id;
 
-  favorite.user_id = req.params;
+  models.userMessage
+    .update(userMessage)
+    .then(([result]) => {
+      if (result.affectedRows === 0) res.sendStatus(404);
+      else res.sendStatus(204);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
 
-  models.picture
-    .pictureIsFavorite(favorite.user_id)
+const destroy = (req, res) => {
+  const { id } = req.params;
+  models.userMessage
+    .delete(id)
+    .then(([result]) => {
+      if (result.affectedRows === 0) res.sendStatus(404);
+      else res.sendStatus(204);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
+const getMessage = (req, res, next) => {
+  models.userMessage
+
+    .getMessageAndUser()
     .then(([results]) => {
       res.send(results);
-    })
-    .catch((error) => {
-      console.error(error);
-      res.sendStatus(500);
-    });
-};
-const addAndPassToNext = (req, res, next) => {
-  const picture = req.body;
-  // on verifie les données
-
-  models.picture
-    .insert(picture)
-    .then(([result]) => {
-      res.location(`/picture/${result.insertId}`);
       next();
     })
     .catch((error) => {
@@ -87,10 +87,10 @@ const addAndPassToNext = (req, res, next) => {
 };
 
 module.exports = {
-  add,
   browse,
   read,
-  getUserFavorites,
-  addAndPassToNext,
-  myPict,
+  add,
+  edit,
+  destroy,
+  getMessage,
 };
