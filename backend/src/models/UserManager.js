@@ -103,6 +103,19 @@ class UserManager extends AbstractManager {
       [id]
     );
   }
+
+  getUsersByMessage() {
+    return this.connection.query(
+      `select pseudo from ${this.table} inner join userMessage on user.id = user_id`
+    );
+  }
+
+  getUserByMessage(id) {
+    return this.connection.query(
+      `select pseudo from ${this.table} inner join userMessage on user.id = user_id`,
+      [id]
+    );
+  }
 }
 
 module.exports = UserManager;

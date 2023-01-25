@@ -10,7 +10,7 @@ export default function MessageList() {
   const [mess, setMess] = useState([]);
 
   useEffect(() => {
-    fetch(`${backURL}/messages`)
+    fetch(`${backURL}/userMessage`)
       .then((results) => results.json())
       .then((datas) => {
         setMess(datas);
@@ -35,7 +35,7 @@ export default function MessageList() {
                       scope="col"
                       className="py-3.5 pl-4 pr-3 text-left text-sm font-main-font text-gray-900 sm:pl-6"
                     >
-                      UserName
+                      User
                     </th>
                     <th
                       scope="col"
@@ -55,17 +55,15 @@ export default function MessageList() {
                 <tbody className="divide-y divide-gray-200 bg-white">
                   {mess.map((inbox) => (
                     <tr key={inbox.id}>
-                      <button onClick={() => setShow(!setShow)} type="button">
-                        <td className="whitespace-nowrap px-3 py-4 font-bold text-sm text-gray-500">
-                          {inbox.UserName}
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-4 font-bold text-sm text-gray-500">
-                          {inbox.objet}
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-4font-bold text-sm text-gray-500">
-                          {inbox.message}
-                        </td>
-                      </button>
+                      <td className="whitespace-nowrap px-3 py-4 font-bold text-sm text-gray-500">
+                        {inbox.pseudo}
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-4 font-bold text-sm text-gray-500">
+                        {inbox.objet}
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-4font-bold text-sm text-gray-500">
+                        {inbox.userMessage}
+                      </td>
                     </tr>
                   ))}
                 </tbody>

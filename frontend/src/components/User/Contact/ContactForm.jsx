@@ -2,25 +2,30 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MessageSend from "./PopUpMessageSend";
 
+import { useCurrentUserContext } from "../../../contexts/userContext";
+
 const backURL = import.meta.env.VITE_BACKEND_URL;
 
 function ContactForm() {
   const navigate = useNavigate();
   const [objet, setobjet] = useState("");
   const [pseudo, setPseudo] = useState("");
-  const [message, setmessage] = useState("");
+  const [userMessage, setuserMessage] = useState("");
   const [doneMessage, setDoneMessage] = useState(false);
+
+  const { user } = useCurrentUserContext();
 
   const [redForm, setRedForm] = useState([]);
 
   const sendForm = (e) => {
-    if (objet !== "" && pseudo !== "" && message !== "") {
+    if (objet !== "" && pseudo !== "" && userMessage !== "") {
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
 
       const body = JSON.stringify({
-        message,
         objet,
+        userMessage,
+        user_id: user.id,
       });
 
       const requestOptions = {
@@ -30,7 +35,7 @@ function ContactForm() {
       };
       e.preventDefault();
       // on créé un nouvel utilisateur et on reutilise
-      fetch(`${backURL}/messages`, requestOptions)
+      fetch(`${backURL}/userMessage`, requestOptions)
         .then(() => {
           setDoneMessage(true);
 
@@ -46,7 +51,7 @@ function ContactForm() {
       const emptyFields = [];
       if (objet === "") emptyFields.push("object");
       if (pseudo === "") emptyFields.push("pseudo");
-      if (message === "") emptyFields.push("message");
+      if (userMessage === "") emptyFields.push("userMessage");
 
       setRedForm(emptyFields);
     }
@@ -102,14 +107,14 @@ function ContactForm() {
               Ton message
               <div
                 className={`flex flex-row-reverse align-baseline border rounded-[1.75rem] border-${
-                  redForm.includes("object") ? "red-700" : "white"
+                  redForm.includes("userMessage") ? "red-700" : "white"
                 } h-[90%]`}
               >
                 <textarea
-                  onChange={(e) => setmessage(e.target.value)}
+                  onChange={(e) => setuserMessage(e.target.value)}
                   type="text"
-                  name="message"
-                  id="message"
+                  name="userMessage"
+                  id="userMessage"
                   className="form-control block w-[17rem] appearance-none bg-transparent rounded-[1.75rem] px-3 py-2 text-white placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                 />
               </div>

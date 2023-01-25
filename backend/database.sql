@@ -207,3 +207,30 @@ CREATE TABLE artist
 (picture_id) REFERENCES picture
 (id)
             );
+
+
+            -- -----------------------------------------------------
+            -- Table `street_art_hunter`.`userMessage`
+            -- -----------------------------------------------------
+            DROP TABLE IF EXISTS userMessage
+            ;
+
+            CREATE TABLE userMessage
+            (
+              id INT PRIMARY KEY NOT NULL
+              AUTO_INCREMENT,
+  objet VARCHAR
+              (150) NOT NULL,
+  userMessage VARCHAR
+              (500) NOT NULL,
+ 
+  user_id INT NOT NULL,
+
+  INDEX fk_message_user1_idx
+              (user_id ASC) VISIBLE,
+  CONSTRAINT fk_message_user1
+  FOREIGN KEY
+              (user_id) REFERENCES user
+              (id)
+
+  );

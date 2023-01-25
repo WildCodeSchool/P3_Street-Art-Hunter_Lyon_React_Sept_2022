@@ -31,7 +31,7 @@ const badgeControllers = require("./controllers/badgeControllers");
 const artistControllers = require("./controllers/artistControllers");
 const workControllers = require("./controllers/workControllers");
 const pictureControllers = require("./controllers/pictureControllers");
-const messageControllers = require("./controllers/messageControllers");
+const userMessageControllers = require("./controllers/userMessageControllers");
 
 router.post("/photo", verifyToken, fsUpload, pictureControllers.add);
 
@@ -74,8 +74,8 @@ router.put(
 );
 
 // Gestion message
-router.post("/messages", messageControllers.add);
-router.get("/messages", messageControllers.browse);
+router.post("/userMessage", userMessageControllers.add);
+router.get("/userMessage", userMessageControllers.getMessage);
 
 // Gestion des artistes
 router.get("/artists", artistControllers.browse);
