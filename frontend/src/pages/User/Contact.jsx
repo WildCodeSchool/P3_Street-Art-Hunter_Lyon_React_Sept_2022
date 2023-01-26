@@ -12,8 +12,9 @@ function Contact() {
       {!open ? (
         <div className="bg-main-background bg-cover w-full h-screen">
           <HeaderWithBurger />
-
-          <ContactForm />
+          <div className="mt-40">
+            <ContactForm />
+          </div>
         </div>
       ) : (
         <div className="bg-main-background backdrop-blur-md text-white font-main-font bg-cover w-full h-screen">

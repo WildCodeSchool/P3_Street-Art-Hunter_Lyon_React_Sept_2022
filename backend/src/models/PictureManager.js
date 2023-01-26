@@ -11,6 +11,13 @@ class PictureManager extends AbstractManager {
     ]);
   }
 
+  findByUser(userId) {
+    return this.connection.query(
+      `select * from ${this.table} where user_id = ?`,
+      [userId]
+    );
+  }
+
   findAll() {
     return this.connection.query(`select * from  ${this.table}`);
   }
@@ -24,6 +31,15 @@ class PictureManager extends AbstractManager {
       work_id,
       user_id) VALUES (?, ?, 1, ?, ?)`,
       [picture.url, new Date(), picture.workId, picture.userId]
+    );
+  }
+
+  pictureIsFavorite(favorite) {
+    return this.connection.query(
+      `select * from picture as p
+  inner join user_has_fav_picture as uhfp on p.id = uhfp.picture_id
+  where uhfp.user_id=?;`,
+      [favorite.user_id]
     );
   }
 

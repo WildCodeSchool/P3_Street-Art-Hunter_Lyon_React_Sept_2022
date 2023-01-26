@@ -11,6 +11,7 @@ export function CurrentUserContextProvider({ children }) {
 
   const [open, setOpen] = React.useState(false);
   const [id, setId] = React.useState();
+
   const [pseudoID, setPseudoID] = React.useState();
 
   const handleClickOpen = () => {

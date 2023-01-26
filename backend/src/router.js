@@ -31,12 +31,29 @@ const badgeControllers = require("./controllers/badgeControllers");
 const artistControllers = require("./controllers/artistControllers");
 const workControllers = require("./controllers/workControllers");
 const pictureControllers = require("./controllers/pictureControllers");
+const mailControllers = require("./controllers/mailControllers");
+const passwordControllers = require("./controllers/passwordControllers");
+const userMessageControllers = require("./controllers/userMessageControllers");
+
+router.post(
+  "/forgottenpassword",
+  passwordControllers.verifyEmail,
+  passwordControllers.generatePasswordToken,
+  mailControllers.sendForgottenPassword
+);
+router.post(
+  `/resetpassword`,
+  passwordControllers.verifyTokenPassword,
+  hashPassword,
+  passwordControllers.resetPassword
+);
+const favoriteControllers = require("./controllers/favoriteControllers");
 
 router.post(
   "/photo",
   verifyToken,
-  cloudinaryUpload,
   pictureControllers.verifyIfUserHasPictureOnWork,
+  cloudinaryUpload,
   pictureControllers.addAndPassToNext,
   userControllers.pointsOnPictureValidation
 );
@@ -81,19 +98,26 @@ router.put(
   badgeControllers.edit
 );
 
+// Gestion message
+router.post("/userMessage", userMessageControllers.add);
+router.get("/userMessage", userMessageControllers.getMessage);
+
 // Gestion des artistes
 router.get("/artists", artistControllers.browse);
 
 // Gestion des oeuvres
 router.get("/works", workControllers.browse);
+router.get("/validation", workControllers.showValidation);
 router.get("/works/:id", workControllers.read);
 router.get("/works/value/:id", workControllers.readValuePassItToNext);
-router.get("works/:userId");
+router.get("/workswithpicture", workControllers.getAllWithPicture);
 
 router.post("/works", verifyToken, workControllers.add);
+router.put("/works/:id", verifyToken, workControllers.edit);
+router.delete("/works/:id", verifyToken, workControllers.destroy);
 
 // Gestion des photos
-
+router.get("/users/:userId/pictures", pictureControllers.myPict);
 router.get("/pictures", pictureControllers.browse);
 router.get("/pictures/:id", pictureControllers.read);
 router.post("/pictures", pictureControllers.add);
@@ -102,5 +126,14 @@ router.put(
   cloudinaryUpload,
   pictureControllers.putNewPicture
 );
+
+// Gestion des favoris
+router.post("/favorites", verifyToken, favoriteControllers.add);
+router.delete(
+  "/favorites/:user_id/:picture_id",
+  verifyToken,
+  favoriteControllers.destroy
+);
+router.get("/user/favoris/:user_id", pictureControllers.getUserFavorites);
 
 module.exports = router;

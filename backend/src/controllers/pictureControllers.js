@@ -12,6 +12,19 @@ const browse = (req, res) => {
     });
 };
 
+const myPict = (req, res) => {
+  const { userId } = req.params;
+  models.picture
+    .findByUser(userId)
+    .then(([results]) => {
+      res.send(results);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
+
 const read = (req, res) => {
   const { id } = req.params;
 
@@ -42,6 +55,21 @@ const add = (req, res) => {
     });
 };
 
+const getUserFavorites = (req, res) => {
+  const favorite = req.body;
+
+  favorite.user_id = req.params;
+
+  models.picture
+    .pictureIsFavorite(favorite.user_id)
+    .then(([results]) => {
+      res.send(results);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
 const addAndPassToNext = (req, res, next) => {
   const picture = req.body;
   // on verifie les données
@@ -91,7 +119,9 @@ module.exports = {
   add,
   browse,
   read,
+  getUserFavorites,
   addAndPassToNext,
+  myPict,
   verifyIfUserHasPictureOnWork,
   putNewPicture,
 };
