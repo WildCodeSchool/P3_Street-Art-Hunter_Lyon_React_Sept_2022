@@ -176,6 +176,21 @@ const pointsOnPictureValidation = async (req, res) => {
     res.sendStatus(500);
   }
 };
+
+const modifyProfil = (req, res) => {
+  const user = req.body;
+
+  models.user
+    .updateProfil(user)
+    .then(([result]) => {
+      if (result.affectedRows === 0) res.sendStatus(404);
+      else res.sendStatus(204);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
 module.exports = {
   browse,
   read,
@@ -189,4 +204,5 @@ module.exports = {
   addPoints,
   getScoreAndPassToNext,
   pointsOnPictureValidation,
+  modifyProfil,
 };

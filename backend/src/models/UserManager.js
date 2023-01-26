@@ -145,6 +145,14 @@ class UserManager extends AbstractManager {
       [id]
     );
   }
+
+  // update profil user
+  modifyProfil(user) {
+    return this.connection.query(
+      `update ${this.table} set avatar = ?, pseudo = ?, email = ? where id = ?`,
+      [user.avatar, user.pseudo, user.email, user.id]
+    );
+  }
 }
 
 module.exports = UserManager;

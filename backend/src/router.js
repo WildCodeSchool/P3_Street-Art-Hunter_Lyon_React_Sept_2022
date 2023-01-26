@@ -18,6 +18,19 @@ const fsUpload = (req, res, next) => {
     .catch((err) => console.warn(err));
 };
 
+// Upload avatar
+
+const fsUploadAvatar = (req, res, next) => {
+  const { avatar, filename } = req.body;
+  cloudinary.uploader
+    .upload(avatar, { public_id: filename })
+    .then((result) => {
+      req.body.url = result.secure_url;
+      next();
+    })
+    .catch((err) => console.warn(err));
+};
+
 // service d'authentification
 
 const {
@@ -55,6 +68,15 @@ router.post(
   fsUpload,
   pictureControllers.addAndPassToNext,
   userControllers.pointsOnPictureValidation
+);
+
+// modify profil
+
+router.put(
+  "/modifyprofil",
+  verifyToken,
+  fsUploadAvatar,
+  userControllers.modifyProfil
 );
 
 // Auth
