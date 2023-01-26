@@ -8,9 +8,9 @@ const router = express.Router();
 // Upload des photos
 
 const cloudinaryUpload = (req, res, next) => {
-  const { image, filename } = req.body;
+  const { image, userId, workId } = req.body;
   cloudinary.uploader
-    .upload(image, { public_id: filename })
+    .upload(image, { public_id: `userId-${userId}-workId-${workId}` })
     .then((result) => {
       req.body.url = result.secure_url;
       next();
@@ -113,6 +113,14 @@ router.get("/works/value/:id", workControllers.readValuePassItToNext);
 router.get("/workswithpicture", workControllers.getAllWithPicture);
 
 router.post("/works", verifyToken, workControllers.add);
+router.post(
+  "/workandpicture",
+  verifyToken,
+  workControllers.addAndPassWorkIdToNext,
+  cloudinaryUpload,
+  pictureControllers.add
+);
+
 router.put("/works/:id", verifyToken, workControllers.edit);
 router.delete("/works/:id", verifyToken, workControllers.destroy);
 

@@ -54,6 +54,22 @@ const add = (req, res) => {
     });
 };
 
+const addAndPassWorkIdToNext = (req, res, next) => {
+  const work = req.body;
+  // on verifie les données
+
+  models.work
+    .insert(work)
+    .then(([result]) => {
+      req.body.workId = result.insertId;
+      next();
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
+
 const showValidation = (req, res) => {
   models.work
     .findValidationWaiting()
@@ -120,4 +136,5 @@ module.exports = {
   destroy,
   readValuePassItToNext,
   getAllWithPicture,
+  addAndPassWorkIdToNext,
 };

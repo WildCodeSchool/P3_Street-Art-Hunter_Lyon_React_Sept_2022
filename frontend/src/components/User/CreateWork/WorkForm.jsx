@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useCurrentPhotoContext } from "../../../contexts/photoContext";
 
 import { useCurrentUserContext } from "../../../contexts/userContext";
 
 const backURL = import.meta.env.VITE_BACKEND_URL;
 
 function WorkForm({ markerLatitude, markerLongitude }) {
-  const { token } = useCurrentUserContext();
+  const { token, user } = useCurrentUserContext();
+  const { contextPhoto } = useCurrentPhotoContext();
 
   const [name, setName] = useState("Nom Inconnu");
   const [artistList, setArtistList] = useState([]);
@@ -26,6 +28,7 @@ function WorkForm({ markerLatitude, markerLongitude }) {
   // soumettre le formulaire
   const handleForm = (e) => {
     e.preventDefault();
+    if (name === "") setName("Nom Inconnu");
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("authorization", `Bearer ${token}`);
@@ -36,6 +39,8 @@ function WorkForm({ markerLatitude, markerLongitude }) {
       longitude: markerLongitude,
       validated,
       value: 100,
+      image: contextPhoto.current,
+      userId: user.id,
     });
 
     const requestOptions = {
@@ -46,7 +51,7 @@ function WorkForm({ markerLatitude, markerLongitude }) {
     navigate("/galerie/all");
     e.preventDefault();
     // on créé un nouvel utilisateur et on reutilise
-    fetch(`${backURL}/works`, requestOptions).catch((err) => {
+    fetch(`${backURL}/workandpicture`, requestOptions).catch((err) => {
       console.warn(err);
     });
   };
