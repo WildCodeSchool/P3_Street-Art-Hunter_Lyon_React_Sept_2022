@@ -9,30 +9,28 @@ SET @OLD_SQL_MODE=@@SQL_MODE
 
 
 -- -----------------------------------------------------
--- Table `street_art_hunter`.`artist`
+-- Table `artist`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `street_art_hunter`.`artist` ;
+DROP TABLE IF EXISTS `artist` ;
 
 CREATE TABLE
-IF NOT EXISTS `street_art_hunter`.`artist`
+IF NOT EXISTS `artist`
 (
   `id` INT NOT NULL AUTO_INCREMENT,
   `artist_name` VARCHAR
 (45) NULL DEFAULT NULL,
   PRIMARY KEY
 (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER
-SET = utf8mb4;
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `street_art_hunter`.`badge`
+-- Table `badge`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `street_art_hunter`.`badge` ;
+DROP TABLE IF EXISTS `badge` ;
 
 CREATE TABLE
-IF NOT EXISTS `street_art_hunter`.`badge`
+IF NOT EXISTS `badge`
 (
   `id` INT NOT NULL AUTO_INCREMENT,
   `badge_name` VARCHAR
@@ -45,19 +43,16 @@ IF NOT EXISTS `street_art_hunter`.`badge`
 (200) NOT NULL,
   PRIMARY KEY
 (`id`))
-ENGINE = InnoDB
-AUTO_INCREMENT = 6
-DEFAULT CHARACTER
-SET = utf8mb4;
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `street_art_hunter`.`user`
+-- Table `user`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `street_art_hunter`.`user` ;
+DROP TABLE IF EXISTS `user` ;
 
 CREATE TABLE
-IF NOT EXISTS `street_art_hunter`.`user`
+IF NOT EXISTS `user`
 (
   `id` INT NOT NULL AUTO_INCREMENT,
   `firstname` VARCHAR
@@ -74,20 +69,17 @@ IF NOT EXISTS `street_art_hunter`.`user`
 (100) NOT NULL,
   PRIMARY KEY
 (`id`))
-ENGINE = InnoDB
-AUTO_INCREMENT = 11
-DEFAULT CHARACTER
-SET = utf8mb4;
+ENGINE = InnoDB;
 
 
 
 -- -----------------------------------------------------
--- Table `street_art_hunter`.`work`
+-- Table `work`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `street_art_hunter`.`work` ;
+DROP TABLE IF EXISTS `work` ;
 
 CREATE TABLE
-IF NOT EXISTS `street_art_hunter`.`work`
+IF NOT EXISTS `work`
 (
   `id` INT NOT NULL AUTO_INCREMENT,
   `work_name` VARCHAR(150) NOT NULL,
@@ -100,25 +92,21 @@ IF NOT EXISTS `street_art_hunter`.`work`
   `artist_id` INT NOT NULL,
   PRIMARY KEY
 (`id`),
-  INDEX `fk_work_artist1_idx`
-(`artist_id` ASC) VISIBLE,
   CONSTRAINT `fk_work_artist1`
     FOREIGN KEY
 (`artist_id`)
-    REFERENCES `street_art_hunter`.`artist`
+    REFERENCES `artist`
 (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER
-SET = utf8mb4;
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `street_art_hunter`.`picture`
+-- Table `picture`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `street_art_hunter`.`picture` ;
+DROP TABLE IF EXISTS `picture` ;
 
 CREATE TABLE
-IF NOT EXISTS `street_art_hunter`.`picture`
+IF NOT EXISTS `picture`
 (
   `id` INT NOT NULL AUTO_INCREMENT,
   `picture_url` VARCHAR(150) NOT NULL,
@@ -128,32 +116,26 @@ IF NOT EXISTS `street_art_hunter`.`picture`
   `user_id` INT NOT NULL,
   PRIMARY KEY
 (`id`),
-  INDEX `fk_picture_work1_idx`
-(`work_id` ASC) VISIBLE,
-  INDEX `fk_picture_user1_idx`
-(`user_id` ASC) VISIBLE,
   CONSTRAINT `fk_picture_user1`
     FOREIGN KEY
 (`user_id`)
-    REFERENCES `street_art_hunter`.`user`
+    REFERENCES `user`
 (`id`),
   CONSTRAINT `fk_picture_work1`
     FOREIGN KEY
 (`work_id`)
-    REFERENCES `street_art_hunter`.`work`
+    REFERENCES `work`
 (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER
-SET = utf8mb4;
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `street_art_hunter`.`shop`
+-- Table `shop`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `street_art_hunter`.`shop` ;
+DROP TABLE IF EXISTS `shop` ;
 
 CREATE TABLE
-IF NOT EXISTS `street_art_hunter`.`shop`
+IF NOT EXISTS `shop`
 (
   `id` INT NOT NULL AUTO_INCREMENT,
   `type` VARCHAR
@@ -166,98 +148,76 @@ IF NOT EXISTS `street_art_hunter`.`shop`
 (45) NULL DEFAULT NULL,
   PRIMARY KEY
 (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER
-SET = utf8mb4;
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `street_art_hunter`.`user_has_badge`
+-- Table `user_has_badge`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `street_art_hunter`.`user_has_badge` ;
+DROP TABLE IF EXISTS `user_has_badge` ;
 
 CREATE TABLE
-IF NOT EXISTS `street_art_hunter`.`user_has_badge`
+IF NOT EXISTS `user_has_badge`
 (
   `badge_id` INT NOT NULL,
   `user_id` INT NOT NULL,
-  INDEX `fk_user_has_badge_badge1_idx`
-(`badge_id` ASC) VISIBLE,
-  INDEX `fk_user_has_badge_user1_idx`
-(`user_id` ASC) VISIBLE,
   CONSTRAINT `fk_user_has_badge_badge1`
     FOREIGN KEY
 (`badge_id`)
-    REFERENCES `street_art_hunter`.`badge`
+    REFERENCES `badge`
 (`id`),
   CONSTRAINT `fk_user_has_badge_user1`
     FOREIGN KEY
 (`user_id`)
-    REFERENCES `street_art_hunter`.`user`
+    REFERENCES `user`
 (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER
-SET = utf8mb4;
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `street_art_hunter`.`user_has_fav_picture`
+-- Table `user_has_fav_picture`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `street_art_hunter`.`user_has_fav_picture` ;
+DROP TABLE IF EXISTS `user_has_fav_picture` ;
 
 CREATE TABLE
-IF NOT EXISTS `street_art_hunter`.`user_has_fav_picture`
+IF NOT EXISTS `user_has_fav_picture`
 (
   `user_id` INT NOT NULL,
   `picture_id` INT NOT NULL,
-  INDEX `fk_user_has_fav_picture_user1_idx`
-(`user_id` ASC) VISIBLE,
-  INDEX `fk_user_has_fav_picture_picture1_idx`
-(`picture_id` ASC) VISIBLE,
   CONSTRAINT `fk_user_has_fav_picture_picture1`
     FOREIGN KEY
 (`picture_id`)
-    REFERENCES `street_art_hunter`.`picture`
+    REFERENCES `picture`
 (`id`),
   CONSTRAINT `fk_user_has_fav_picture_user1`
     FOREIGN KEY
 (`user_id`)
-    REFERENCES `street_art_hunter`.`user`
+    REFERENCES `user`
 (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER
-SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `street_art_hunter`.`user_has_fav_work`
+-- Table `user_has_fav_work`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `street_art_hunter`.`user_has_fav_work` ;
+DROP TABLE IF EXISTS `user_has_fav_work` ;
 
 CREATE TABLE
-IF NOT EXISTS `street_art_hunter`.`user_has_fav_work`
+IF NOT EXISTS `user_has_fav_work`
 (
   `user_id` INT NOT NULL,
   `work_id` INT NOT NULL,
-  INDEX `fk_user_has_fav_work_user1_idx`
-(`user_id` ASC) VISIBLE,
-  INDEX `fk_user_has_fav_work_work1_idx`
-(`work_id` ASC) VISIBLE,
   CONSTRAINT `fk_user_has_fav_work_user1`
     FOREIGN KEY
 (`user_id`)
-    REFERENCES `street_art_hunter`.`user`
+    REFERENCES `user`
 (`id`),
   CONSTRAINT `fk_user_has_fav_work_work1`
     FOREIGN KEY
 (`work_id`)
-    REFERENCES `street_art_hunter`.`work`
+    REFERENCES `work`
 (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER
-SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+ENGINE = InnoDB;
 
 
 SET SQL_MODE
@@ -304,10 +264,10 @@ values
   (1, 4),
   (4, 4);
 
-ALTER TABLE `street_art_hunter`.`user` 
+ALTER TABLE `user` 
 ADD COLUMN `avatar` VARCHAR(45) NULL AFTER `hashedPassword`;
 
-INSERT INTO `street_art_hunter`.`artist`
+INSERT INTO `artist`
 (
 `artist_name`)
 VALUES
