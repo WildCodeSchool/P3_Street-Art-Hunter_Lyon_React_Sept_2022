@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import UserCardContainer from "../../components/Global/Cards/UserCardContainer";
 import Allive from "../../components/User/Gallery/AllLive";
-import BottomNav from "../../components/User/Global/BottomNav";
 import Filters from "../../components/User/Gallery/Filters";
+import BottomNav from "../../components/User/Global/BottomNav";
 import HeaderWithBurger from "../../components/User/Global/HeaderWithBurger";
-import ArtistCardContainer from "../../components/Global/Cards/ArtistCardContainer";
+
 import { useCurrentUserContext } from "../../contexts/userContext";
 import Menu from "./Menu";
 
 const backURL = import.meta.env.VITE_BACKEND_URL;
 
-function GalleryAll({ allOrLive }) {
+function PictByWork(allOrLive) {
   const { open } = useCurrentUserContext();
-
   const { token } = useCurrentUserContext();
-
-  const [showWork, setShowWork] = useState([]);
+  const [ShowPictureWork, setShowPictureWork] = useState([]);
+  const { workId } = useParams();
 
   const myHeaders = new Headers({
     Authorization: `Bearer ${token}`,
@@ -28,32 +28,29 @@ function GalleryAll({ allOrLive }) {
   };
 
   useEffect(() => {
-    fetch(`${backURL}/works`, GETrequestOptions)
+    fetch(`${backURL}/${workId}/pictures`, GETrequestOptions)
       .then((result) => result.json())
       .then((result) => {
-        setShowWork(result);
+        setShowPictureWork(result);
       });
   }, []);
 
   return (
-    <div>
+    <div className="bg-main-background text-white font-main-font bg-cover w-full h-screen">
       {!open ? (
-        <div className="bg-main-background text-white font-main-font bg-cover w-full h-screen">
+        <>
           <HeaderWithBurger />
           <Allive />
           <Filters allOrLive={allOrLive} />
-          <div className="flex flex-wrap justify-around">
-            {showWork.map((work) =>
-              work.is_validated === 1 ? (
-                <NavLink to={`/galerie/all/oeuvres/${work.id}`}>
-                  <ArtistCardContainer key={work.id} work={work} />
-                </NavLink>
-              ) : null
-            )}
+          <div className="flex flex-wrap justify-around mt-[6rem]">
+            {ShowPictureWork.map((picture) => (
+              <UserCardContainer key={picture.id} picture={picture} />
+            ))}
           </div>
-
-          <BottomNav />
-        </div>
+          <div>
+            <BottomNav />
+          </div>
+        </>
       ) : (
         <Menu />
       )}
@@ -61,4 +58,4 @@ function GalleryAll({ allOrLive }) {
   );
 }
 
-export default GalleryAll;
+export default PictByWork;

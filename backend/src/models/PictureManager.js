@@ -18,6 +18,13 @@ class PictureManager extends AbstractManager {
     );
   }
 
+  findByWork(workId) {
+    return this.connection.query(
+      `select * from ${this.table} where work_id = ?`,
+      [workId]
+    );
+  }
+
   findAll() {
     return this.connection.query(`select * from  ${this.table}`);
   }

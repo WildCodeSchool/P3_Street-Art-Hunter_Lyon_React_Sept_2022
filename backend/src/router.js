@@ -142,6 +142,7 @@ router.delete("/works/:id", verifyToken, workControllers.destroy);
 
 // Gestion des photos
 router.get("/users/:userId/pictures", pictureControllers.myPict);
+router.get("/:workId/pictures", pictureControllers.workPict);
 router.get("/pictures", pictureControllers.browse);
 router.get("/pictures/:id", pictureControllers.read);
 router.post("/pictures", pictureControllers.add);
