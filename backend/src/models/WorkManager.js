@@ -23,7 +23,7 @@ class WorkManager extends AbstractManager {
 
   insert(work) {
     return this.connection.query(
-      `insert into ${this.table} (work_name, longitude, latitude, value_point, is_validated, artist_id) VALUES (?, ?, ?, ?, ?, ?)`,
+      `insert into ${this.table} (work_name, longitude, latitude, value_point, is_validated, artist_id, added_by) VALUES (?, ?, ?, ?, ?, ?, ?)`,
       [
         work.name,
         work.longitude,
@@ -31,6 +31,7 @@ class WorkManager extends AbstractManager {
         work.value,
         work.validated,
         work.artistId,
+        work.userId,
       ]
     );
   }

@@ -121,7 +121,12 @@ router.post(
   pictureControllers.add
 );
 
-router.put("/works/:id", verifyToken, workControllers.edit);
+router.put(
+  "/works/:id",
+  verifyToken,
+  workControllers.editAndNext,
+  userControllers.pointsOnWorkValidation
+);
 router.delete("/works/:id", verifyToken, workControllers.destroy);
 
 // Gestion des photos

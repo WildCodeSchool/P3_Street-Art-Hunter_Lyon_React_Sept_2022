@@ -88,6 +88,7 @@ function WorkModif() {
 
   const body = JSON.stringify({
     is_validated,
+    added_by: showWork.added_by,
   });
 
   const PUTrequestOptions = {
@@ -184,25 +185,43 @@ function WorkModif() {
                   />
                 </div>
               </div>
-              <div className="flex justif-center items-center mb-8">
-                <div className="flex flex-col justify-center items-start">
-                  <label
-                    className="font-main-font text-2xl"
-                    htmlFor="artist_id"
-                  >
-                    ID de l'artiste
-                  </label>
+              <div className="flex justify-around items-center mb-8">
+                <div className="flex justif-center items-center mb-8">
+                  <div className="flex flex-col justify-center items-start">
+                    <label
+                      className="font-main-font text-2xl"
+                      htmlFor="artist_id"
+                    >
+                      ID de l'artiste
+                    </label>
 
-                  <input
-                    className="text-black rounded-md w-[80%]"
-                    type="number"
-                    readOnly
-                    defaultValue={showWork.artist_id}
-                  />
+                    <input
+                      className="text-black rounded-md w-[80%]"
+                      type="number"
+                      readOnly
+                      defaultValue={showWork.artist_id}
+                    />
+                  </div>
+                </div>
+                <div className="flex justif-center items-center mb-8">
+                  <div className="flex flex-col justify-center items-start">
+                    <label
+                      className="font-main-font text-2xl"
+                      htmlFor="artist_id"
+                    >
+                      Ajouter par :
+                    </label>
+
+                    <input
+                      className="text-black rounded-md w-[80%]"
+                      type="text"
+                      readOnly
+                      defaultValue={showWork.added_by}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
-
             <div className="w-full flex justify-around items-center mt-[2rem]">
               <Button
                 variant="contained"

@@ -113,6 +113,22 @@ const edit = (req, res) => {
     });
 };
 
+const editAndNext = (req, res, next) => {
+  const work = req.body;
+  work.id = req.params.id;
+
+  models.work
+    .modif(work)
+    .then(([result]) => {
+      if (result.affectedRows === 0) res.sendStatus(404);
+      else next();
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
+
 const destroy = (req, res) => {
   const { id } = req.params;
   models.work
@@ -137,4 +153,5 @@ module.exports = {
   readValuePassItToNext,
   getAllWithPicture,
   addAndPassWorkIdToNext,
+  editAndNext,
 };
