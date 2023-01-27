@@ -5,7 +5,7 @@ import { useCurrentUserContext } from "../../../contexts/userContext";
 
 const backURL = import.meta.env.VITE_BACKEND_URL;
 
-function BottomCardShop({ picture }) {
+function BottomCardFavorite({ picture }) {
   const { token, user } = useCurrentUserContext();
   const hours = picture.creation_date.slice(0, 10);
 
@@ -43,16 +43,17 @@ function BottomCardShop({ picture }) {
   };
 
   useEffect(() => {
-    if (!active) {
-      setChecked(!checked);
+    if (active) {
+      setChecked(checked);
       fetch(
         `${backURL}/favorites/${user_id}/${picture_id}`,
         DELETErequestOptions
       ).catch(console.error);
-    } else if (active) {
+    } else if (!active) {
       fetch(`${backURL}/favorites`, requestOptions).catch(console.error);
     }
-  }, [active]);
+  });
+
   return (
     <div className="flex justify-around items-center m-1">
       <p className="font-main-font m-1 text-sm text-black">Lyon</p>
@@ -77,4 +78,4 @@ function BottomCardShop({ picture }) {
   );
 }
 
-export default BottomCardShop;
+export default BottomCardFavorite;

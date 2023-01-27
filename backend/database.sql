@@ -282,7 +282,6 @@ VALUES
   (9, 'test', '02', 0, 'Test02', 0, 'toast@live.fr', '$argon2id$v=19$m=65536,t=5,p=1$FjSe7NKP24AgOGHuZQviwA$A8+hy8vJP0pmELqXEoKjBjxDxskKISWlMxoTjbhHBs4'),
   (10, 'Burrito', 'Salsa', 0, 'Taco', 0, 'taco@live.fr', '$argon2id$v=19$m=65536,t=5,p=1$D6WDLZAd3QzAqvC+PNqdjQ$JkcbA54pwnwp1RQoIRj6oZjDG2C+FbUkXDQv6DNd+no');
 
-
 insert into badge
 VALUES
   (1, "Médaille d'Or", "Tu as atteint le sommet", "https://i.imgur.com/RGyBBHB.png", "Atteindre le rang 1"),
@@ -303,6 +302,9 @@ values
   (2, 4),
   (1, 4),
   (4, 4);
+
+
+
 
 ALTER TABLE `street_art_hunter`.`user` 
 ADD COLUMN `avatar` VARCHAR(45) NULL AFTER `hashedPassword`;

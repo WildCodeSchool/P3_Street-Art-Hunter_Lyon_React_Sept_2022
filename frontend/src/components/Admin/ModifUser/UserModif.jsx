@@ -138,17 +138,17 @@ function UserModif() {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className="pt-[12rem] w-full">
+      <div className="pt-[1rem] w-full ">
         <form
           className="w-full flex justify-center items-center"
           onSubmit={handleForm}
         >
           <div className="flex flex-col justify-center items-center">
-            <div className="w-full mr-[3rem] flex flex-col justify-center items-center mb-4">
+            <div className="w-full mr-[3rem] flex flex-col justify-center items-center mb-2">
               <img
                 alt="avatar"
                 src={Vincent}
-                className="bg-black p-1 w-[18%] h-[16vh] rounded-full mb-4 "
+                className="bg-black p-1 w-[15%] h-[12vh] rounded-full mb-2 "
               />
               <div className="flex items-center justify-center mb-2 w-full">
                 <IconButton
@@ -164,7 +164,7 @@ function UserModif() {
                 </IconButton>
               </div>
             </div>
-            <div className="flex flex-col justify-center items-start mb-8">
+            <div className="flex flex-col justify-center items-start mb-4">
               <label className="font-main-font text-2xl" htmlFor="pseudo">
                 Pseudo
               </label>
@@ -187,7 +187,7 @@ function UserModif() {
               )}
             </div>
             <div className="flex flex-col justify-center items-center ">
-              <div className="flex justify-around items-center mb-8">
+              <div className="flex justify-around items-center mb-4">
                 <div className="flex flex-col justify-center items-start ">
                   <label
                     className="font-main-font text-2xl"
@@ -258,7 +258,7 @@ function UserModif() {
                   )}
                 </div>
               </div>
-              <div className="flex justif-center items-center mb-8">
+              <div className="flex justif-center items-center mb-4">
                 <div className="flex flex-col justify-center items-start">
                   <label
                     className="font-main-font text-2xl"
@@ -307,7 +307,7 @@ function UserModif() {
                 </div>
               </div>
             </div>
-            <div className="flex flex-col justify-center items-start mb-8">
+            <div className="flex flex-col justify-center items-start mb-4">
               <label className="font-main-font text-2xl" htmlFor="droit">
                 Droit:
               </label>
