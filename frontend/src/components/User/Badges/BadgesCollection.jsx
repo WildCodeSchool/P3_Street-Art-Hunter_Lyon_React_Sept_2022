@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Badge from "./Badge";
 
+const backURL = import.meta.env.VITE_BACKEND_URL;
+
 export default function BadgesCollection({ setSelectedBadge, setModalOpen }) {
   const [badgesCollection, setBadgesCollection] = useState([]);
 
   // fectching la collection de bage de l'utilisateur connecté
   useEffect(() => {
-    fetch(`http://localhost:5000/badges`)
+    fetch(`${backURL}/badges`)
       .then((result) => result.json())
       .then((data) => {
         setBadgesCollection(data);

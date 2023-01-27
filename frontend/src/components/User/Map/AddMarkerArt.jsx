@@ -14,12 +14,8 @@ const icon = L.icon({
   popupAnchor: [8, -40],
   iconUrl: artMarker,
 });
-const position = [
-  [45.74579881690067, 4.827313676020127],
-  [45.762515857311286, 4.8276275268335045],
-];
 
-function AddMarkerArt({ handleActiveArt, layerGroup }) {
+function AddMarkerArt({ layerGroup }) {
   const { token } = useCurrentUserContext();
   const [showWork, setShowWork] = useState([]);
 
@@ -42,8 +38,8 @@ function AddMarkerArt({ handleActiveArt, layerGroup }) {
   }, []);
   const map = useMap();
   useEffect(() => {
-    position.forEach((element) => {
-      const coordinate = element;
+    showWork.forEach((element) => {
+      const coordinate = [element.latitude, element.longitude];
       const [lat, lng] = coordinate;
       L.marker([lat, lng], { icon })
         .bindPopup(
@@ -56,7 +52,7 @@ function AddMarkerArt({ handleActiveArt, layerGroup }) {
     });
 
     map.addLayer(layerGroup);
-  }, [handleActiveArt]);
+  }, [showWork]);
 
   return null;
 }

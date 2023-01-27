@@ -1,78 +1,135 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import MessageSend from "./PopUpMessageSend";
+
+import { useCurrentUserContext } from "../../../contexts/userContext";
+
+const backURL = import.meta.env.VITE_BACKEND_URL;
 
 function ContactForm() {
-  const [setFirstName] = useState("");
-  const [setLastName] = useState("");
-  const [setEmail] = useState("");
-  const [setmessage] = useState("");
+  const navigate = useNavigate();
+  const [objet, setobjet] = useState("");
+  const [pseudo, setPseudo] = useState("");
+  const [userMessage, setuserMessage] = useState("");
+  const [doneMessage, setDoneMessage] = useState(false);
 
-  const sendForm = () => {};
+  const { user } = useCurrentUserContext();
+
+  const [redForm, setRedForm] = useState([]);
+
+  const sendForm = (e) => {
+    if (objet !== "" && pseudo !== "" && userMessage !== "") {
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+
+      const body = JSON.stringify({
+        objet,
+        userMessage,
+        user_id: user.id,
+      });
+
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body,
+      };
+      e.preventDefault();
+      // on créé un nouvel utilisateur et on reutilise
+      fetch(`${backURL}/userMessage`, requestOptions)
+        .then(() => {
+          setDoneMessage(true);
+
+          setTimeout(() => {
+            navigate("/menu");
+          }, 3000);
+        })
+        .catch((err) => {
+          console.warn(err);
+        });
+    } else {
+      e.preventDefault();
+      const emptyFields = [];
+      if (objet === "") emptyFields.push("object");
+      if (pseudo === "") emptyFields.push("pseudo");
+      if (userMessage === "") emptyFields.push("userMessage");
+
+      setRedForm(emptyFields);
+    }
+  };
 
   return (
-    <div className="flex flex-col justify-center items-center  backdrop-blur-sm rounded-[3rem] mt-2 ml-2 w-[95%]">
-      <h1 className="text-white font-main-font text-4xl mb-5 mt-4">
-        NOUS CONTACTER
-      </h1>
-      <form
-        onSubmit={sendForm}
-        className="flex flex-col justify-center items-center space-y-5 mb-4"
-      >
-        <label className="flex flex-col justify-center text-white">
-          Adresse email
-          <div className="flex flex-row-reverse border rounded-[3rem] border-white h-[90%]">
-            <input
-              onChange={setEmail}
-              type="text"
-              name="Adresse-email"
-              id="email"
-              className="form-control relative block w-full appearance-none bg-transparent rounded-full border border-gray-300 px-3 py-2 text-white placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-            />
-          </div>
-        </label>
-        <label className="flex flex-col justify-center text-white">
-          Prénom
-          <div className="flex flex-row-reverse border rounded-[3rem] border-white h-[90%]">
-            <input
-              onChange={setFirstName}
-              type="text"
-              name="firstname"
-              id="firstName"
-              className="form-control relative block w-full appearance-none bg-transparent rounded-full border border-gray-300 px-3 py-2 text-white placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-            />
-          </div>
-        </label>
-        <label className="flex flex-col justify-center text-white">
-          Nom
-          <div className="flex flex-row-reverse border rounded-[3rem] border-white h-[90%]">
-            <input
-              onChange={setLastName}
-              type="text"
-              name="lastname"
-              id="lastName"
-              className="form-control relative block w-full appearance-none bg-transparent rounded-full border border-gray-300 px-3 py-2 text-white placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-            />
-          </div>
-        </label>
-        <label className="flex flex-col justify-center text-white h-[10rem]">
-          Ton message
-          <div className="flex flex-row-reverse align-baseline border rounded-[1.75rem] border-white h-[90%]">
-            <textarea
-              onChange={setmessage}
-              type="text"
-              name="message"
-              id="message"
-              className="form-control block w-[17rem] appearance-none bg-transparent rounded-[1.75rem] px-3 py-2 text-white placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-            />
-          </div>
-        </label>
+    <div className="flex flex-col justify-center items-center  backdrop-blur-sm rounded-[3rem]  ml-2 w-[95%]">
+      {doneMessage ? (
+        ""
+      ) : (
+        <>
+          <h1 className="text-white font-main-font text-4xl mb-5 mt-4">
+            NOUS CONTACTER
+          </h1>
+          <form
+            onSubmit={sendForm}
+            className="flex flex-col justify-center items-center space-y-5 mb-4"
+          >
+            <label className="flex flex-col justify-center text-white">
+              Pseudo
+              <div
+                className={`flex flex-row-reverse border rounded-[3rem] border-${
+                  redForm.includes("pseudo") ? "red-700" : "white"
+                } h-[90%]`}
+              >
+                <input
+                  onChange={(e) => setPseudo(e.target.value)}
+                  type="text"
+                  name="Pseudo"
+                  id="Pseudo"
+                  className="form-control relative block w-full appearance-none bg-transparent rounded-full border border-gray-300 px-3 py-2 text-white placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                />
+              </div>
+            </label>
 
-        <button
-          type="submit"
-          className="bg-gradient-to-tl from-pink to-lightblue rounded-3xl font-main-font text-[32px] py-1 px-6 "
-        >
-          ENVOYER
-        </button>
-      </form>
+            <label className="flex flex-col justify-center text-white">
+              Object
+              <div
+                className={`flex flex-row-reverse border rounded-[3rem] border-${
+                  redForm.includes("object") ? "red-700" : "white"
+                } h-[90%]`}
+              >
+                <input
+                  onChange={(e) => setobjet(e.target.value)}
+                  type="text"
+                  name="objet"
+                  id="objet"
+                  className="form-control relative block w-full appearance-none bg-transparent rounded-full border border-gray-300 px-3 py-2 text-white placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                />
+              </div>
+            </label>
+            <label className="flex flex-col justify-center text-white h-[10rem]">
+              Ton message
+              <div
+                className={`flex flex-row-reverse align-baseline border rounded-[1.75rem] border-${
+                  redForm.includes("userMessage") ? "red-700" : "white"
+                } h-[90%]`}
+              >
+                <textarea
+                  onChange={(e) => setuserMessage(e.target.value)}
+                  type="text"
+                  name="userMessage"
+                  id="userMessage"
+                  className="form-control block w-[17rem] appearance-none bg-transparent rounded-[1.75rem] px-3 py-2 text-white placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                />
+              </div>
+            </label>
+
+            <button
+              type="submit"
+              className="bg-gradient-to-tl from-pink to-lightblue rounded-3xl font-main-font text-[32px] py-1 px-6 "
+            >
+              ENVOYER
+            </button>
+          </form>
+        </>
+      )}
+      {doneMessage ? <MessageSend /> : ""}
     </div>
   );
 }

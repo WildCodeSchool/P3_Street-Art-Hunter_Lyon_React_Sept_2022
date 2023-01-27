@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-
 import { useCurrentPhotoContext } from "../../../contexts/photoContext";
+
 import { useCurrentUserContext } from "../../../contexts/userContext";
 
 const backURL = import.meta.env.VITE_BACKEND_URL;
 
 function WorkForm({ markerLatitude, markerLongitude }) {
+  const { token, user } = useCurrentUserContext();
   const { contextPhoto } = useCurrentPhotoContext();
-  const { user, token } = useCurrentUserContext();
-
-  const [idWork] = useState("");
 
   const [name, setName] = useState("Nom Inconnu");
   const [artistList, setArtistList] = useState([]);
@@ -18,45 +16,6 @@ function WorkForm({ markerLatitude, markerLongitude }) {
   const validated = 0;
 
   const navigate = useNavigate();
-
-  const handleSendPhoto = () => {
-    // on vérifie qu'on à toutes les datas
-    if (contextPhoto.current !== "" && idWork !== "" && user.id) {
-      // on upload la photo
-      fetch(`${backURL}/photo`, {
-        method: "POST",
-        body: JSON.stringify({
-          image: contextPhoto.current,
-          filename: `userId-${user.id}-workId-${idWork}`,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `Bearer ${token}`,
-        },
-      }).then((response) => response.json());
-
-      // on met les infos de la photo dans la table picture de la bdd
-
-      fetch(`${backURL}/pictures`, {
-        method: "POST",
-        body: JSON.stringify({
-          url: "https://upload.wikimedia.org/wikipedia/commons/7/75/Banksy-ps.jpg",
-          workId: idWork,
-          userId: user.id,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `Bearer ${token}`,
-        },
-      }).then((response) => response.json());
-    } else if (contextPhoto.current === "") {
-      console.warn("Veuillez prendre une photo d'abord!");
-    } else if (idWork === "") {
-      console.warn(
-        "Veuillez sélectionner une oeuvre, si vous ne la trouvez pas sur la carte, créer la!"
-      );
-    }
-  };
 
   useEffect(() => {
     fetch(`${backURL}/artists`)
@@ -69,6 +28,7 @@ function WorkForm({ markerLatitude, markerLongitude }) {
   // soumettre le formulaire
   const handleForm = (e) => {
     e.preventDefault();
+    if (name === "") setName("Nom Inconnu");
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("authorization", `Bearer ${token}`);
@@ -79,6 +39,8 @@ function WorkForm({ markerLatitude, markerLongitude }) {
       longitude: markerLongitude,
       validated,
       value: 100,
+      image: contextPhoto.current,
+      userId: user.id,
     });
 
     const requestOptions = {
@@ -89,7 +51,7 @@ function WorkForm({ markerLatitude, markerLongitude }) {
     navigate("/galerie/all");
     e.preventDefault();
     // on créé un nouvel utilisateur et on reutilise
-    fetch(`${backURL}/works`, requestOptions).catch((err) => {
+    fetch(`${backURL}/workandpicture`, requestOptions).catch((err) => {
       console.warn(err);
     });
   };
@@ -151,7 +113,6 @@ function WorkForm({ markerLatitude, markerLongitude }) {
           <button
             type="submit"
             className="bg-gradient-to-tl from-pink to-lightblue rounded-3xl font-main-font text-[32px] py-1 px-6 w-[50%]  mt-5"
-            onClick={handleSendPhoto}
           >
             CREER
           </button>
