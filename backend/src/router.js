@@ -21,9 +21,10 @@ const fsUpload = (req, res, next) => {
 // Upload avatar
 
 const fsUploadAvatar = (req, res, next) => {
-  const { avatar, filename } = req.body;
+  const { avatar } = req.body;
+  console.warn(avatar);
   cloudinary.uploader
-    .upload(avatar, { public_id: filename })
+    .upload(avatar, { public_id: req.body.avatar })
     .then((result) => {
       req.body.url = result.secure_url;
       next();
@@ -47,6 +48,7 @@ const pictureControllers = require("./controllers/pictureControllers");
 const mailControllers = require("./controllers/mailControllers");
 const passwordControllers = require("./controllers/passwordControllers");
 const userMessageControllers = require("./controllers/userMessageControllers");
+const fileControllers = require("./controllers/fileControllers");
 
 router.post(
   "/forgottenpassword",
@@ -69,15 +71,17 @@ router.post(
   pictureControllers.addAndPassToNext,
   userControllers.pointsOnPictureValidation
 );
+// gestion des avatars
+router.post(
+  "/api/avatars",
+  verifyToken,
+  fsUploadAvatar,
+  fileControllers.updateAvatar
+);
 
 // modify profil
 
-router.put(
-  "/modifyprofil",
-  verifyToken,
-  fsUploadAvatar,
-  userControllers.modifyProfil
-);
+router.put("/modifyprofil/:id", verifyToken, userControllers.modifyProfil);
 
 // Auth
 router.post("/inscription", hashPassword, userControllers.add);
