@@ -25,6 +25,19 @@ const myPict = (req, res) => {
     });
 };
 
+const workPict = (req, res) => {
+  const { workId } = req.params;
+  models.picture
+    .findByWork(workId)
+    .then(([results]) => {
+      res.send(results);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
+
 const read = (req, res) => {
   const { id } = req.params;
 
@@ -122,6 +135,7 @@ module.exports = {
   getUserFavorites,
   addAndPassToNext,
   myPict,
+  workPict,
   verifyIfUserHasPictureOnWork,
   putNewPicture,
 };

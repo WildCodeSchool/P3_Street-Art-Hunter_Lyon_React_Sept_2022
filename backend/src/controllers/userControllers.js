@@ -177,6 +177,36 @@ const pointsOnPictureValidation = async (req, res) => {
   }
 };
 
+const modifyProfil = (req, res) => {
+  const user = req.body;
+  console.warn(user);
+  // on verifie les données
+  models.user
+    .updateProfil(user)
+    .then(([result]) => {
+      if (result.affectedRows === 0) res.sendStatus(404);
+      else res.sendStatus(204);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
+const addAvatar = (req, res) => {
+  const avatar = req.body;
+  // on verifie les données
+
+  models.user
+    .modifyAvatar(avatar)
+    .then(([result]) => {
+      if (result.affectedRows === 0) res.sendStatus(404);
+      else res.sendStatus(204);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
 const pointsOnWorkValidation = async (req, res) => {
   try {
     const userId = req.body.added_by;
@@ -208,5 +238,7 @@ module.exports = {
   addPoints,
   getScoreAndPassToNext,
   pointsOnPictureValidation,
+  modifyProfil,
+  addAvatar,
   pointsOnWorkValidation,
 };

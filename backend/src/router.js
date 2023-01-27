@@ -18,6 +18,20 @@ const cloudinaryUpload = (req, res, next) => {
     .catch((err) => console.warn(err));
 };
 
+// Upload avatar
+
+const fsUploadAvatar = (req, res, next) => {
+  const { avatar } = req.body;
+  console.warn(avatar);
+  cloudinary.uploader
+    .upload(avatar, { public_id: req.body.avatar })
+    .then((result) => {
+      req.body.url = result.secure_url;
+      next();
+    })
+    .catch((err) => console.warn(err));
+};
+
 // service d'authentification
 
 const {
@@ -34,6 +48,7 @@ const pictureControllers = require("./controllers/pictureControllers");
 const mailControllers = require("./controllers/mailControllers");
 const passwordControllers = require("./controllers/passwordControllers");
 const userMessageControllers = require("./controllers/userMessageControllers");
+const fileControllers = require("./controllers/fileControllers");
 
 router.post(
   "/forgottenpassword",
@@ -57,6 +72,17 @@ router.post(
   pictureControllers.addAndPassToNext,
   userControllers.pointsOnPictureValidation
 );
+// gestion des avatars
+router.post(
+  "/api/avatars",
+  verifyToken,
+  fsUploadAvatar,
+  fileControllers.updateAvatar
+);
+
+// modify profil
+
+router.put("/modifyprofil/:id", verifyToken, userControllers.modifyProfil);
 
 // Auth
 router.post("/inscription", hashPassword, userControllers.add);
@@ -131,6 +157,7 @@ router.delete("/works/:id", verifyToken, workControllers.destroy);
 
 // Gestion des photos
 router.get("/users/:userId/pictures", pictureControllers.myPict);
+router.get("/:workId/pictures", pictureControllers.workPict);
 router.get("/pictures", pictureControllers.browse);
 router.get("/pictures/:id", pictureControllers.read);
 router.post("/pictures", pictureControllers.add);

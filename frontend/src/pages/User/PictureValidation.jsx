@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
-import AddScore from "@components/User/Scores/AddScore";
-
+import AddScore from "../../components/User/Scores/AddScore";
 import Header from "../../components/Global/Header";
 
 import { useCurrentPhotoContext } from "../../contexts/photoContext";

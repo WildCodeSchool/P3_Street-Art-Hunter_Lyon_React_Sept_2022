@@ -35,6 +35,7 @@ import AdminArtist from "./Admin/AdminArtist";
 import AdminShop from "./Admin/PageAdShop";
 import AdminArtWork from "./Admin/AdminArtWork";
 import ArtWorkPictures from "./Admin/AdminArtWorkPictures";
+import PictByWork from "./User/PictByWork";
 
 export default function Router() {
   const { user } = useCurrentUserContext();
@@ -140,6 +141,14 @@ export default function Router() {
         element={
           <Protected verifyCondition={user.id}>
             <GalleryAll allOrLive="all" />
+          </Protected>
+        }
+      />
+      <Route
+        path="/galerie/all/oeuvres/:workId"
+        element={
+          <Protected verifyCondition={user.id}>
+            <PictByWork allOrLive="all" />
           </Protected>
         }
       />
