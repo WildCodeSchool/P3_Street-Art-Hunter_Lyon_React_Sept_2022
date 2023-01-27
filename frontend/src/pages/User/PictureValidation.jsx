@@ -16,8 +16,11 @@ function PictureValidation() {
   const [allWorks, setAllWorks] = useState([]);
   const [idWork, setIdWork] = useState("");
   const [points, setPoints] = useState("0");
+  const [pictureToModify, setPictureToModify] = useState("");
+  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
+  // fonction qui upload une photo sur cloudinary, vérifie si le user à déja une photo pour cette oeuvre puis la met dans la db et attribue les points
   const handleSendPhoto = () => {
     // on vérifie qu'on à toutes les datas
     if (contextPhoto.current !== "" && idWork !== "" && user.id) {
@@ -36,20 +39,25 @@ function PictureValidation() {
         },
       })
         .then((response) => response.json())
-        .then((value) => setPoints(value))
-        .then(() => {
-          setValidated(true);
-          setTimeout(() => {
-            navigate("/galerie/live");
-          }, 3000);
+        .then((value) => {
+          if (value.id) {
+            setPictureToModify(value);
+            setShowModal(true);
+          } else {
+            setPoints(value);
+            setValidated(true);
+            setTimeout(() => {
+              navigate("/galerie/live");
+            }, 3000);
+          }
         });
 
       // on met les infos de la photo dans la table picture de la bdd
     } else if (contextPhoto.current === "") {
-      console.warn("Veuillez prendre une photo d'abord!");
+      console.warn("Prends une photo d'abord!");
     } else if (idWork === "") {
       console.warn(
-        "Veuillez sélectionner une oeuvre, si vous ne la trouvez pas sur la carte, créer la!"
+        "Sélectionne une oeuvre, si tu ne la trouves pas sur la carte, crée la!"
       );
     }
   };
@@ -62,8 +70,62 @@ function PictureValidation() {
       });
   }, []);
 
+  // fonction qui upload une nouvelle photo pour un user/oeuvre et remplace l'url et la date de création dans la table picture
+  const handleReplacePicture = () => {
+    fetch(`${backURL}/pictures/changepicture/${pictureToModify.id}`, {
+      method: "PUT",
+      body: JSON.stringify({
+        image: contextPhoto.current,
+        filename: `userId-${user.id}-workId-${idWork}`,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${token}`,
+      },
+    }).then(navigate("/galerie/live"));
+  };
+
   return (
     <div className="bg-main-background bg-cover w-auto h-screen ">
+      {showModal ? (
+        <div className="w-screen h-screen absolute z-20 bg-black/50 flex justify-center items-center">
+          <div
+            className="w-screen h-screen absolute"
+            onClick={() => setShowModal(false)}
+            onKeyDown={() => setShowModal(false)}
+            role="button"
+            tabIndex={0}
+            aria-label="close"
+          />
+          <div className="h-[35vh] w-[80vw] absolute flex bg-black/20 border-solid border-2 border-indigo-500/50  backdrop-blur-sm rounded-2xl text-white text-xl font-main-font justify-center items-center flex-wrap">
+            <p className="text-center text-2xl mx-2">
+              Tu as déja pris cette oeuvre en photo, veux tu remplacer ta photo?
+              <br />
+            </p>
+            <p className="text-center">
+              (Tu ne gagneras pas à nouveau de points !)
+            </p>
+            <div className="flex justify-between w-[75%] mb-2">
+              <button
+                type="button"
+                className="bg-gradient-to-tl from-pink to-lightblue rounded-3xl font-main-font text-[32px] py-2 px-6  mt-5 min-w-fit text-center text-black"
+                onClick={() => setShowModal(false)}
+              >
+                Non
+              </button>
+              <button
+                type="button"
+                onClick={handleReplacePicture}
+                className="bg-gradient-to-tl from-pink to-lightblue rounded-3xl font-main-font text-[32px] py-2 px-6  mt-5 min-w-fit text-center text-black"
+              >
+                Oui
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
       <Header />
 
       <div className="flex flex-col justify-around items-center backdrop-blur-sm rounded-[3rem] ml-2 w-[95%] border-[1px] border-white/10 pictureValidation h-[75vh]">
@@ -71,7 +133,7 @@ function PictureValidation() {
           Valide ta photo!
         </h2>
         <div className="w-full flex flex-col items-center">
-          <h3 className="text-white self-start font-main-font text-3xl my-2 ml-2">
+          <h3 className="text-white text-center self-start font-main-font text-2xl my-2 ml-2">
             Trouve l'oeuvre sur la carte :
           </h3>
           <MapContainer

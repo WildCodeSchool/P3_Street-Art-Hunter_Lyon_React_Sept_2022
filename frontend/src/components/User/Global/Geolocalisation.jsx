@@ -3,7 +3,7 @@ import * as React from "react";
 import { useCurrentPhotoContext } from "../../../contexts/photoContext";
 
 function Geolocalisation() {
-  const [open] = React.useState(true);
+  const [open] = React.useState(false);
 
   const { contextPhotoCoord } = useCurrentPhotoContext();
 

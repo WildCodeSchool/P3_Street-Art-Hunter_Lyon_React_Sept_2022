@@ -11,6 +11,19 @@ const browse = (req, res) => {
       res.sendStatus(500);
     });
 };
+
+const getAllWithPicture = (req, res) => {
+  models.work
+    .findAllWithFirstPicture()
+    .then(([results]) => {
+      res.send(results);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
+
 const read = (req, res) => {
   const { id } = req.params;
 
@@ -34,6 +47,22 @@ const add = (req, res) => {
     .insert(work)
     .then(([result]) => {
       res.location(`/work/${result.insertId}`).sendStatus(201);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
+
+const addAndPassWorkIdToNext = (req, res, next) => {
+  const work = req.body;
+  // on verifie les données
+
+  models.work
+    .insert(work)
+    .then(([result]) => {
+      req.body.workId = result.insertId;
+      next();
     })
     .catch((error) => {
       console.error(error);
@@ -84,6 +113,22 @@ const edit = (req, res) => {
     });
 };
 
+const editAndNext = (req, res, next) => {
+  const work = req.body;
+  work.id = req.params.id;
+
+  models.work
+    .modif(work)
+    .then(([result]) => {
+      if (result.affectedRows === 0) res.sendStatus(404);
+      else next();
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
+
 const destroy = (req, res) => {
   const { id } = req.params;
   models.work
@@ -106,4 +151,7 @@ module.exports = {
   edit,
   destroy,
   readValuePassItToNext,
+  getAllWithPicture,
+  addAndPassWorkIdToNext,
+  editAndNext,
 };

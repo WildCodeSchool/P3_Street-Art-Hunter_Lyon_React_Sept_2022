@@ -207,6 +207,24 @@ const addAvatar = (req, res) => {
       res.sendStatus(500);
     });
 };
+const pointsOnWorkValidation = async (req, res) => {
+  try {
+    const userId = req.body.added_by;
+    const [datas] = await models.user.getScore(userId);
+    req.body.score = datas[0].scorepoint;
+    const { score } = req.body;
+    const value = 300;
+    const newScore = value + score;
+    const [result] = await models.user.addUserPoints(newScore, userId);
+    if (result.affectedRows === 0) res.sendStatus(404);
+    else {
+      res.send(`${value}`);
+    }
+  } catch (error) {
+    console.warn(error);
+    res.sendStatus(500);
+  }
+};
 module.exports = {
   browse,
   read,
@@ -222,4 +240,5 @@ module.exports = {
   pointsOnPictureValidation,
   modifyProfil,
   addAvatar,
+  pointsOnWorkValidation,
 };

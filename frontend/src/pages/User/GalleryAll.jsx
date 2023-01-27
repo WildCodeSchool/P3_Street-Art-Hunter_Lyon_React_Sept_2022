@@ -28,7 +28,7 @@ function GalleryAll({ allOrLive }) {
   };
 
   useEffect(() => {
-    fetch(`${backURL}/works`, GETrequestOptions)
+    fetch(`${backURL}/workswithpicture`, GETrequestOptions)
       .then((result) => result.json())
       .then((result) => {
         setShowWork(result);

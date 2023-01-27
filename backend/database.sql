@@ -111,6 +111,13 @@ CREATE TABLE artist
   CONSTRAINT fk_work_artist1
   FOREIGN KEY
         (artist_id) REFERENCES artist
+        (id),
+  added_by INT NOT NULL,
+  INDEX fk_work_user1_idx
+        (added_by ASC) VISIBLE,
+  CONSTRAINT fk_work_user1
+  FOREIGN KEY
+        (added_by) REFERENCES user
         (id)
   );
         -- -----------------------------------------------------

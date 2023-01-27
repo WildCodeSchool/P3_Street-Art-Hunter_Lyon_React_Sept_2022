@@ -7,10 +7,10 @@ const router = express.Router();
 
 // Upload des photos
 
-const fsUpload = (req, res, next) => {
-  const { image, filename } = req.body;
+const cloudinaryUpload = (req, res, next) => {
+  const { image, userId, workId } = req.body;
   cloudinary.uploader
-    .upload(image, { public_id: filename })
+    .upload(image, { public_id: `userId-${userId}-workId-${workId}` })
     .then((result) => {
       req.body.url = result.secure_url;
       next();
@@ -67,7 +67,8 @@ const favoriteControllers = require("./controllers/favoriteControllers");
 router.post(
   "/photo",
   verifyToken,
-  fsUpload,
+  pictureControllers.verifyIfUserHasPictureOnWork,
+  cloudinaryUpload,
   pictureControllers.addAndPassToNext,
   userControllers.pointsOnPictureValidation
 );
@@ -135,9 +136,23 @@ router.get("/works", workControllers.browse);
 router.get("/validation", workControllers.showValidation);
 router.get("/works/:id", workControllers.read);
 router.get("/works/value/:id", workControllers.readValuePassItToNext);
+router.get("/workswithpicture", workControllers.getAllWithPicture);
 
 router.post("/works", verifyToken, workControllers.add);
-router.put("/works/:id", verifyToken, workControllers.edit);
+router.post(
+  "/workandpicture",
+  verifyToken,
+  workControllers.addAndPassWorkIdToNext,
+  cloudinaryUpload,
+  pictureControllers.add
+);
+
+router.put(
+  "/works/:id",
+  verifyToken,
+  workControllers.editAndNext,
+  userControllers.pointsOnWorkValidation
+);
 router.delete("/works/:id", verifyToken, workControllers.destroy);
 
 // Gestion des photos
@@ -146,6 +161,11 @@ router.get("/:workId/pictures", pictureControllers.workPict);
 router.get("/pictures", pictureControllers.browse);
 router.get("/pictures/:id", pictureControllers.read);
 router.post("/pictures", pictureControllers.add);
+router.put(
+  "/pictures/changepicture/:id",
+  cloudinaryUpload,
+  pictureControllers.putNewPicture
+);
 
 // Gestion des favoris
 router.post("/favorites", verifyToken, favoriteControllers.add);
