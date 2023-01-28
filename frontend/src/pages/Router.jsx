@@ -28,6 +28,14 @@ import Scores from "./User/Scores";
 import Stepper from "./User/Stepper";
 import BoardWork from "./Admin/BoardWork";
 import AdminValidateWork from "./Admin/AdminValidateWork";
+import NewPassword from "./User/NewPassword";
+import ResetPassword from "./User/ResetPassword";
+import AdminMessage from "./Admin/AdminMessage";
+import AdminArtist from "./Admin/AdminArtist";
+import AdminShop from "./Admin/PageAdShop";
+import AdminArtWork from "./Admin/AdminArtWork";
+import ArtWorkPictures from "./Admin/AdminArtWorkPictures";
+import PictByWork from "./User/PictByWork";
 
 export default function Router() {
   const { user } = useCurrentUserContext();
@@ -137,6 +145,14 @@ export default function Router() {
         }
       />
       <Route
+        path="/galerie/all/oeuvres/:workId"
+        element={
+          <Protected verifyCondition={user.id}>
+            <PictByWork allOrLive="all" />
+          </Protected>
+        }
+      />
+      <Route
         path="/galerie/all/shop"
         element={
           <Protected verifyCondition={user.id}>
@@ -168,6 +184,8 @@ export default function Router() {
           </Protected>
         }
       />
+      <Route path="/forgottenpassword" element={<NewPassword />} />
+      <Route path="/resetpassword/:passwordtoken" element={<ResetPassword />} />
       {user.id && user.is_admin === 1 && (
         <>
           <Route path="/dashboard" element={<Dashboard />} />
@@ -175,15 +193,16 @@ export default function Router() {
           <Route path="/Dashboard" element={<Dashboard />} />
           <Route path="/Admin-Scores" element={<Dashboard />} />
           <Route path="/Admin-Badges" element={<Dashboard />} />
-          <Route path="/Admin-Messages" element={<Dashboard />} />
           <Route path="/Admin-Pictures" element={<Dashboard />} />
-          <Route path="/Admin-Artist" element={<Dashboard />} />
-          <Route path="/Admin-Shop" element={<Dashboard />} />
-          <Route path="/Admin-Artwork" element={<Dashboard />} />
           <Route path="/Admin-Modif-User" element={<ModifUser />} />
           <Route path="/Admin-Create-User" element={<CreateUser />} />
           <Route path="/Admin-Works" element={<BoardWork />} />
           <Route path="/Admin-Validate-Work" element={<AdminValidateWork />} />
+          <Route path="/Admin-Messages" element={<AdminMessage />} />
+          <Route path="/Admin-Artist" element={<AdminArtist />} />
+          <Route path="/Admin-Shop" element={<AdminShop />} />
+          <Route path="/Admin-Artwork" element={<AdminArtWork />} />
+          <Route path="/Admin-ArtworkPict" element={<ArtWorkPictures />} />
         </>
       )}
       <Route path="*" element={<Error />} />

@@ -176,6 +176,55 @@ const pointsOnPictureValidation = async (req, res) => {
     res.sendStatus(500);
   }
 };
+
+const modifyProfil = (req, res) => {
+  const user = req.body;
+  console.warn(user);
+  // on verifie les données
+  models.user
+    .updateProfil(user)
+    .then(([result]) => {
+      if (result.affectedRows === 0) res.sendStatus(404);
+      else res.sendStatus(204);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
+const addAvatar = (req, res) => {
+  const avatar = req.body;
+  // on verifie les données
+
+  models.user
+    .modifyAvatar(avatar)
+    .then(([result]) => {
+      if (result.affectedRows === 0) res.sendStatus(404);
+      else res.sendStatus(204);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
+const pointsOnWorkValidation = async (req, res) => {
+  try {
+    const userId = req.body.added_by;
+    const [datas] = await models.user.getScore(userId);
+    req.body.score = datas[0].scorepoint;
+    const { score } = req.body;
+    const value = 300;
+    const newScore = value + score;
+    const [result] = await models.user.addUserPoints(newScore, userId);
+    if (result.affectedRows === 0) res.sendStatus(404);
+    else {
+      res.send(`${value}`);
+    }
+  } catch (error) {
+    console.warn(error);
+    res.sendStatus(500);
+  }
+};
 module.exports = {
   browse,
   read,
@@ -189,4 +238,7 @@ module.exports = {
   addPoints,
   getScoreAndPassToNext,
   pointsOnPictureValidation,
+  modifyProfil,
+  addAvatar,
+  pointsOnWorkValidation,
 };

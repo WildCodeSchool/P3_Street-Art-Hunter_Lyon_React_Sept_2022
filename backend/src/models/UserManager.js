@@ -7,7 +7,7 @@ class UserManager extends AbstractManager {
 
   find(id) {
     return this.connection.query(
-      `select id, firstname, lastname, scorepoint, pseudo, is_admin, email from  ${this.table} where id = ?`,
+      `select id, firstname, lastname, scorepoint, pseudo, is_admin, email, avatar from  ${this.table} where id = ?`,
       [id]
     );
   }
@@ -21,13 +21,13 @@ class UserManager extends AbstractManager {
 
   findAll() {
     return this.connection.query(
-      `select id, firstname, lastname, scorepoint, pseudo, is_admin, email from  ${this.table}`
+      `select id, firstname, lastname, scorepoint, pseudo, is_admin, email, avatar from  ${this.table}`
     );
   }
 
   insert(users) {
     return this.connection.query(
-      `insert into ${this.table} (pseudo, firstname, lastname, scorepoint, is_admin, email, hashedPassword) values (?, ?, ?, ?, ?, ?, ?)`,
+      `insert into ${this.table} (pseudo, firstname, lastname, scorepoint, is_admin, email, avatar, hashedPassword) values (?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         users.pseudo,
         users.firstname,
@@ -35,6 +35,7 @@ class UserManager extends AbstractManager {
         users.scorepoint,
         users.is_admin,
         users.email,
+        users.avatar,
         users.hashedPassword,
       ]
     );
@@ -42,7 +43,7 @@ class UserManager extends AbstractManager {
 
   update(users) {
     return this.connection.query(
-      `update ${this.table} set firstname = ?, lastname = ?, scorepoint = ?, pseudo = ?, is_admin = ?, email = ?, hashedPassword = ? where id = ?`,
+      `update ${this.table} set firstname = ?, lastname = ?, scorepoint = ?, pseudo = ?, is_admin = ?, email = ?, avatar = ?, hashedPassword = ? where id = ?`,
       [
         users.firstname,
         users.lastname,
@@ -50,6 +51,7 @@ class UserManager extends AbstractManager {
         users.pseudo,
         users.is_admin,
         users.email,
+        users.avatar,
         users.hashedPassword,
       ]
     );
@@ -104,10 +106,61 @@ class UserManager extends AbstractManager {
     );
   }
 
+  // update password token
+  updatePasswordToken(user) {
+    return this.connection.query(
+      `update ${this.table} set passwordtoken = ? where id = ?`,
+      [user.passwordtoken, user.id]
+    );
+  }
+
+  selectToken(passwordtoken) {
+    return this.connection.query(
+      `select * from ${this.table} where passwordtoken = ?`,
+      [passwordtoken]
+    );
+  }
+
+  updatePasswordAfterReset(user) {
+    return this.connection.query(
+      `update ${this.table} set hashedPassword = ?, passwordtoken = NULL where id = ?`,
+      [user.hashedPassword, user.id]
+    );
+  }
+
   addUserPoints(points, userId) {
     return this.connection.query(
       `update ${this.table} set scorepoint = ? where id = ?`,
       [points, userId]
+    );
+  }
+
+  getUsersByMessage() {
+    return this.connection.query(
+      `select pseudo from ${this.table} inner join userMessage on user.id = user_id`
+    );
+  }
+
+  getUserByMessage(id) {
+    return this.connection.query(
+      `select pseudo from ${this.table} inner join userMessage on user.id = user_id`,
+      [id]
+    );
+  }
+
+  // update profil user
+  updateProfil(user) {
+    return this.connection.query(
+      `update ${this.table} set pseudo = ?, email = ? where id = ?`,
+      [user.pseudo, user.email, user.id]
+    );
+  }
+
+  // update avatar user
+  modifyAvatar(user) {
+    return this.connection.query(
+      `update ${this.table} set avatar = ? where id = ?`,
+      [user.url, user.id]
     );
   }
 }

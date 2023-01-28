@@ -7,10 +7,24 @@ const router = express.Router();
 
 // Upload des photos
 
-const fsUpload = (req, res, next) => {
-  const { image, filename } = req.body;
+const cloudinaryUpload = (req, res, next) => {
+  const { image, userId, workId } = req.body;
   cloudinary.uploader
-    .upload(image, { public_id: filename })
+    .upload(image, { public_id: `userId-${userId}-workId-${workId}` })
+    .then((result) => {
+      req.body.url = result.secure_url;
+      next();
+    })
+    .catch((err) => console.warn(err));
+};
+
+// Upload avatar
+
+const fsUploadAvatar = (req, res, next) => {
+  const { avatar } = req.body;
+  console.warn(avatar);
+  cloudinary.uploader
+    .upload(avatar, { public_id: req.body.avatar })
     .then((result) => {
       req.body.url = result.secure_url;
       next();
@@ -31,15 +45,44 @@ const badgeControllers = require("./controllers/badgeControllers");
 const artistControllers = require("./controllers/artistControllers");
 const workControllers = require("./controllers/workControllers");
 const pictureControllers = require("./controllers/pictureControllers");
+const mailControllers = require("./controllers/mailControllers");
+const passwordControllers = require("./controllers/passwordControllers");
+const userMessageControllers = require("./controllers/userMessageControllers");
+const fileControllers = require("./controllers/fileControllers");
+
+router.post(
+  "/forgottenpassword",
+  passwordControllers.verifyEmail,
+  passwordControllers.generatePasswordToken,
+  mailControllers.sendForgottenPassword
+);
+router.post(
+  `/resetpassword`,
+  passwordControllers.verifyTokenPassword,
+  hashPassword,
+  passwordControllers.resetPassword
+);
 const favoriteControllers = require("./controllers/favoriteControllers");
 
 router.post(
   "/photo",
   verifyToken,
-  fsUpload,
+  pictureControllers.verifyIfUserHasPictureOnWork,
+  cloudinaryUpload,
   pictureControllers.addAndPassToNext,
   userControllers.pointsOnPictureValidation
 );
+// gestion des avatars
+router.post(
+  "/api/avatars",
+  verifyToken,
+  fsUploadAvatar,
+  fileControllers.updateAvatar
+);
+
+// modify profil
+
+router.put("/modifyprofil/:id", verifyToken, userControllers.modifyProfil);
 
 // Auth
 router.post("/inscription", hashPassword, userControllers.add);
@@ -81,6 +124,10 @@ router.put(
   badgeControllers.edit
 );
 
+// Gestion message
+router.post("/userMessage", userMessageControllers.add);
+router.get("/userMessage", userMessageControllers.getMessage);
+
 // Gestion des artistes
 router.get("/artists", artistControllers.browse);
 
@@ -89,16 +136,36 @@ router.get("/works", workControllers.browse);
 router.get("/validation", workControllers.showValidation);
 router.get("/works/:id", workControllers.read);
 router.get("/works/value/:id", workControllers.readValuePassItToNext);
+router.get("/workswithpicture", workControllers.getAllWithPicture);
 
 router.post("/works", verifyToken, workControllers.add);
-router.put("/works/:id", verifyToken, workControllers.edit);
+router.post(
+  "/workandpicture",
+  verifyToken,
+  workControllers.addAndPassWorkIdToNext,
+  cloudinaryUpload,
+  pictureControllers.add
+);
+
+router.put(
+  "/works/:id",
+  verifyToken,
+  workControllers.editAndNext,
+  userControllers.pointsOnWorkValidation
+);
 router.delete("/works/:id", verifyToken, workControllers.destroy);
 
 // Gestion des photos
-
+router.get("/users/:userId/pictures", pictureControllers.myPict);
+router.get("/:workId/pictures", pictureControllers.workPict);
 router.get("/pictures", pictureControllers.browse);
 router.get("/pictures/:id", pictureControllers.read);
 router.post("/pictures", pictureControllers.add);
+router.put(
+  "/pictures/changepicture/:id",
+  cloudinaryUpload,
+  pictureControllers.putNewPicture
+);
 
 // Gestion des favoris
 router.post("/favorites", verifyToken, favoriteControllers.add);

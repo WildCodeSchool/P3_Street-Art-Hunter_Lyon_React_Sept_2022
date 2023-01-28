@@ -15,9 +15,15 @@ class WorkManager extends AbstractManager {
     return this.connection.query(`select * from  ${this.table}`);
   }
 
+  findAllWithFirstPicture() {
+    return this.connection.query(
+      `select work.*, (select picture.picture_url from picture where picture.work_id = work.id order by picture.creation_date Limit 1) as picture_url from work inner join picture on picture.work_id = work.id group by work.id`
+    );
+  }
+
   insert(work) {
     return this.connection.query(
-      `insert into ${this.table} (work_name, longitude, latitude, value_point, is_validated, artist_id) VALUES (?, ?, ?, ?, ?, ?)`,
+      `insert into ${this.table} (work_name, longitude, latitude, value_point, is_validated, artist_id, added_by) VALUES (?, ?, ?, ?, ?, ?, ?)`,
       [
         work.name,
         work.longitude,
@@ -25,6 +31,7 @@ class WorkManager extends AbstractManager {
         work.value,
         work.validated,
         work.artistId,
+        work.userId,
       ]
     );
   }
