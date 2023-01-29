@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useCurrentUserContext } from "../../../contexts/userContext";
 
 function HeaderWithBurger() {
-  const { handleClickOpen, setUser } = useCurrentUserContext();
+  const { setUser } = useCurrentUserContext();
   const navigate = useNavigate();
   return (
     <div>
@@ -19,7 +19,9 @@ function HeaderWithBurger() {
         />
         <div
           aria-hidden="true"
-          onClick={handleClickOpen}
+          onClick={() => {
+            navigate("/menu");
+          }}
           className="bg-menu-burger bg-center w-[12%] h-[4.5vh] bg-contain bg-no-repeat mt-7 mr-5 cursor-pointer"
         />
       </div>

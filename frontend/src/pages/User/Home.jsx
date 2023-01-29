@@ -14,15 +14,13 @@ function Home() {
     useCurrentResponsiveContext();
   const nav = useNavigate();
 
-  if (isMobile || isTablet || isLittleMobile) {
-    useEffect(() => {
-      if (user.id) {
-        nav("/camera");
-      } else {
-        nav("/");
-      }
-    }, []);
-  }
+  useEffect(() => {
+    if ((isMobile || isTablet || isLittleMobile) && user.id) {
+      nav("/camera");
+    } else if (isDesktop) {
+      nav("/");
+    }
+  });
 
   return (
     <div>

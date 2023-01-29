@@ -225,6 +225,21 @@ const pointsOnWorkValidation = async (req, res) => {
     res.sendStatus(500);
   }
 };
+
+const putNewAvatar = (req, res) => {
+  const { avatar } = req.body;
+  const { id } = req.params;
+  models.user
+    .updateAvatar(avatar, id)
+    .then(([result]) => {
+      if (result.affectedRows === 0) res.sendStatus(404);
+      else res.sendStatus(204);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
 module.exports = {
   browse,
   read,
@@ -241,4 +256,5 @@ module.exports = {
   modifyProfil,
   addAvatar,
   pointsOnWorkValidation,
+  putNewAvatar,
 };
