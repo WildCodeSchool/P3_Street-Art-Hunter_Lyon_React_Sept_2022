@@ -12,7 +12,17 @@ export default function Profil() {
   const [msg, setMsg] = useState("");
   const avatarRef = useRef();
   const notifySuccess = () => {
-    toast("Profil modifié avec success.", {
+    toast("Profil modifié avec succes.", {
+      icon: "👍",
+    });
+  };
+  const SuccessAvatar = () => {
+    toast("Avatar modifié avec succes.", {
+      icon: "👍",
+    });
+  };
+  const ErrorAvatar = () => {
+    toast("Upload Echoué", {
       icon: "👍",
     });
   };
@@ -64,7 +74,7 @@ export default function Profil() {
       myHeader.append("Authorization", `Bearer ${token}`);
 
       const formData = new FormData();
-      formData.append("file", File);
+      formData.append("file", avatar);
 
       const requestOptions = {
         method: "POST",
@@ -79,44 +89,17 @@ export default function Profil() {
           setAvatar(results.avatar);
           console.warn(results);
           setMsg("Upload réussi !");
+          SuccessAvatar();
         })
         .catch((error) => {
           console.error(error);
           setMsg("Upload échoué !");
+          ErrorAvatar();
         });
     } else {
       setMsg("Aucun fichier");
     }
   };
-
-  // const handleForm = (e) => {
-  //   const myHeaders = new Headers({
-  //     Authorization: `Bearer ${token}`,
-  //   });
-  //   myHeaders.append("Content-Type", "application/json");
-
-  //   const body = JSON.stringify({
-  //     pseudo,
-  //     email,
-  //   });
-
-  //   const requestOptions = {
-  //     method: "PUT",
-  //     headers: myHeaders,
-  //     body,
-  //   };
-  //   e.preventDefault();
-  //   // on créé un nouvel utilisateur et on reutilise
-  //   fetch(`${backURL}/modifyprofil/${user.id}`, requestOptions)
-  //     .then((response) => response.json())
-  //     .then((result) => {
-  //       setUser(result.user);
-  //       notifySuccess();
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  // };
 
   return (
     <div>
@@ -133,26 +116,28 @@ export default function Profil() {
 
             {/* <div className="border-2 border-white w-[20%] bg-graph1 h-[10vh] bg-cover rounded-full " /> */}
             <form encType="file" onSubmit={handleSubmit}>
-              <img
-                src={avatar}
-                alt="avatar"
-                className="border-2 border-white w-[20%] bg-graph1 h-[10vh] rounded-full"
-              />
-              <input
-                name="avatar"
-                className="text-black bg-gradient-to-tl from-pink to-lightblue rounded-xl font-main-font text-[15px] py-1 px-3 mt-4 mb-5"
-                type="file"
-                ref={avatarRef}
-                id="file"
-                onChange={(e) => setAvatar(e.target.files[0])}
-              />
-              <button
-                className="bg-gradient-to-tl from-pink to-lightblue rounded-xl font-main-font text-[16px] py-1 px-3 mt-4 mb-5 text-black"
-                type="submit"
-              >
-                Envoyer
-              </button>
-              <p>{msg}</p>
+              <div className="flex justify-center items-center flex-col mt-[6rem]  ">
+                <img
+                  src={user.avatar}
+                  alt="avatar"
+                  className="border-2 border-white w-[15%] bg-graph1 h-[40%] rounded-full"
+                />
+                <input
+                  name="avatar"
+                  className="text-black bg-gradient-to-tl from-pink to-lightblue rounded-xl font-main-font text-[15px] py-1 px-3 mt-4 mb-5"
+                  type="file"
+                  ref={avatarRef}
+                  id="file"
+                  onChange={(e) => setAvatar(e.target.files[0])}
+                />
+                <button
+                  className="bg-gradient-to-tl from-pink to-lightblue rounded-xl font-main-font text-[16px] py-1 px-3 mt-4 mb-5 text-black"
+                  type="submit"
+                >
+                  Envoyer
+                </button>
+                <p>{msg}</p>
+              </div>
             </form>
           </div>
 

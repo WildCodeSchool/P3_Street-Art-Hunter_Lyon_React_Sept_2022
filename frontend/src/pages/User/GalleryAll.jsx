@@ -38,19 +38,20 @@ function GalleryAll({ allOrLive }) {
   return (
     <div>
       {!open ? (
-        <div className="bg-main-background text-white font-main-font bg-cover w-full h-screen">
+        <div className=" bg-main-background text-white font-main-font bg-cover w-full h-screen">
           <HeaderWithBurger />
           <Allive />
           <Filters allOrLive={allOrLive} />
-          <div className="flex flex-wrap justify-around">
-            {showWork.map((work) =>
-              work.is_validated === 1 ? (
-                <NavLink to={`/galerie/all/oeuvres/${work.id}`}>
+
+          {showWork.map((work) =>
+            work.is_validated === 1 ? (
+              <NavLink to={`/galerie/all/oeuvres/${work.id}`}>
+                <div className=" flex flex-wrap justify-around">
                   <ArtistCardContainer key={work.id} work={work} />
-                </NavLink>
-              ) : null
-            )}
-          </div>
+                </div>
+              </NavLink>
+            ) : null
+          )}
 
           <BottomNav />
         </div>
