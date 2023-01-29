@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import Allive from "../../components/User/Gallery/AllLive";
 import BottomNav from "../../components/User/Global/BottomNav";
-import Filters from "../../components/User/Gallery/Filters";
 import HeaderWithBurger from "../../components/User/Global/HeaderWithBurger";
 import ArtistCardContainer from "../../components/Global/Cards/ArtistCardContainer";
 import { useCurrentUserContext } from "../../contexts/userContext";
@@ -10,7 +9,7 @@ import Menu from "./Menu";
 
 const backURL = import.meta.env.VITE_BACKEND_URL;
 
-function GalleryAll({ allOrLive }) {
+function GalleryAll() {
   const { open } = useCurrentUserContext();
 
   const { token } = useCurrentUserContext();
@@ -38,20 +37,19 @@ function GalleryAll({ allOrLive }) {
   return (
     <div>
       {!open ? (
-        <div className=" bg-main-background text-white font-main-font bg-cover w-full h-screen">
+        <div className="bg-main-background text-white font-main-font bg-cover w-full h-screen">
           <HeaderWithBurger />
           <Allive />
-          <Filters allOrLive={allOrLive} />
-
-          {showWork.map((work) =>
-            work.is_validated === 1 ? (
-              <NavLink to={`/galerie/all/oeuvres/${work.id}`}>
-                <div className=" flex flex-wrap justify-around">
+          {/* <Filters allOrLive={allOrLive} /> */}
+          <div className="flex flex-wrap justify-around">
+            {showWork.map((work) =>
+              work.is_validated === 1 ? (
+                <NavLink to={`/galerie/all/oeuvres/${work.id}`}>
                   <ArtistCardContainer key={work.id} work={work} />
-                </div>
-              </NavLink>
-            ) : null
-          )}
+                </NavLink>
+              ) : null
+            )}
+          </div>
 
           <BottomNav />
         </div>

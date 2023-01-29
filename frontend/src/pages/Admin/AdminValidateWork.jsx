@@ -11,7 +11,9 @@ function AdminValidateWork() {
       <LateralMenu />
       <div className="flex flex-col w-full overflow-auto">
         <HeaderAdmin nav={nav} />
-        <WorkModif />
+        <div className="pl-[25rem] w-[96%]">
+          <WorkModif />
+        </div>
       </div>
     </div>
   );

@@ -6,6 +6,7 @@ import "./App.css";
 import { CurrentUserContextProvider } from "./contexts/userContext";
 import { CurrentPhotoContextProvider } from "./contexts/photoContext";
 import { CurrentAdminContextProvider } from "./contexts/adminContext";
+import { CurrentResponsiveContextProvider } from "./contexts/responsiveContext";
 
 function App() {
   return (
@@ -13,7 +14,9 @@ function App() {
       <CurrentUserContextProvider>
         <CurrentPhotoContextProvider>
           <CurrentAdminContextProvider>
-            <Router />
+            <CurrentResponsiveContextProvider>
+              <Router />
+            </CurrentResponsiveContextProvider>
           </CurrentAdminContextProvider>
         </CurrentPhotoContextProvider>
       </CurrentUserContextProvider>

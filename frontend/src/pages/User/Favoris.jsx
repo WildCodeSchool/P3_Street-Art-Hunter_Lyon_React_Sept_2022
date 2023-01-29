@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import HeaderWithBurger from "../../components/User/Global/HeaderWithBurger";
-import UserCardContainer from "../../components/Global/Cards/UserCardContainer";
+import FavoriteCard from "../../components/Global/Cards/FavoriteCard";
 import { useCurrentUserContext } from "../../contexts/userContext";
 import Menu from "./Menu";
 
@@ -9,7 +9,7 @@ const backURL = import.meta.env.VITE_BACKEND_URL;
 function Favoris() {
   const { open, token, user } = useCurrentUserContext();
 
-  const [showPicture, setShowPicture] = useState([]);
+  const [showFav, setShowFav] = useState([]);
 
   const myHeaders = new Headers({
     Authorization: `Bearer ${token}`,
@@ -25,7 +25,7 @@ function Favoris() {
     fetch(`${backURL}/user/favoris/${user.id}`, GETrequestOptions)
       .then((result) => result.json())
       .then((result) => {
-        setShowPicture(result);
+        setShowFav(result);
       });
   }, []);
 
@@ -38,8 +38,8 @@ function Favoris() {
             TES COUPS DE COEUR
           </div>
           <div className="flex justify-around flex-wrap overflow-auto h-[70vh]">
-            {showPicture.map((picture) => (
-              <UserCardContainer key={picture.id} picture={picture} />
+            {showFav.map((picture) => (
+              <FavoriteCard key={picture.id} picture={picture} />
             ))}
           </div>
         </div>

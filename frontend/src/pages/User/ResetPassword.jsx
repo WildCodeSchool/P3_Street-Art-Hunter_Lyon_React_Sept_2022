@@ -1,12 +1,12 @@
 import React from "react";
 import ResetPasswordForm from "../../components/User/Contact/ResetPasswordForm";
 
-import Header from "../../components/Global/Header";
+import HeaderWithBurger from "../../components/User/Global/HeaderWithBurger";
 
 function NewPassword() {
   return (
     <div className="bg-main-background bg-cover w-full h-screen">
-      <Header />
+      <HeaderWithBurger />
       <ResetPasswordForm />
     </div>
   );

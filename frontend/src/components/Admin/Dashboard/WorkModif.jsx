@@ -225,19 +225,19 @@ function WorkModif() {
             <div className="w-full flex justify-around items-center mt-[2rem]">
               <Button
                 variant="contained"
-                color="primary"
-                startIcon={<DoneIcon />}
-                onClick={handleClickOpenConfirm}
-              >
-                Approuver
-              </Button>
-              <Button
-                variant="contained"
                 color="secondary"
                 startIcon={<CloseIcon />}
                 onClick={handleClickOpenDelete}
               >
                 Refuser
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                startIcon={<DoneIcon />}
+                onClick={handleClickOpenConfirm}
+              >
+                Approuver
               </Button>
             </div>
           </div>
