@@ -26,10 +26,10 @@ CREATE TABLE artist
     (artist_name)
   VALUES
     ('Artiste inconnu'),
-    ('Vincent'),
-    ('Daryl'),
-    ('Younes'),
-    ('Gaelle');
+    ('Wenc'),
+    ('Big Ben'),
+    ('Auburtin'),
+    ('Birdy Kids');
   -- -----------------------------------------------------
   -- Table `street_art_hunter`.`badge`
   -- -----------------------------------------------------
@@ -131,6 +131,9 @@ CREATE TABLE artist
         (added_by) REFERENCES user
         (id)
   );
+
+
+
         -- -----------------------------------------------------
         -- Table `street_art_hunter`.`picture`
         -- -----------------------------------------------------
@@ -470,3 +473,33 @@ CREATE TABLE artist
               (id)
 
   );
+
+
+              INSERT INTO work
+
+                (id, work_name, longitude, latitude, value_point, is_validated, artist_id, added_by)
+              VALUES
+                (1, "L'escalier Mermet", 4.833990, 45.770168, 100, 1, 1, 1),
+                (2, "Sacré regard", 4.8298789, 45.7713791, 100, 1, 2, 3),
+                (3, "La muse de la comédie", 4.8341466, 45.7708385, 100, 1, 3, 4),
+                (4, "Tag Birdy Kids", 4.8426674, 45.7567626, 100, 1, 4, 5),
+                (5, "Oiseau bleu", 4.8320996, 45.7677702, 100, 1, 4, 2);
+
+
+              INSERT INTO picture
+
+                (id, picture_url, creation_date, is_validated, work_id, user_id)
+              VALUES
+                (1, "https://res.cloudinary.com/dbl4g91fo/image/upload/v1675074416/birdy-kids-2pict3_z8g8n1.jpg", DATE
+              '2022-01-30', 1, 5, 1),
+              (2, "https://res.cloudinary.com/dbl4g91fo/image/upload/v1675074398/birdy-kids-2pict2_vczi4w.jpg", DATE '2022-04-25', 1, 5, 3),
+              (3, "https://res.cloudinary.com/dbl4g91fo/image/upload/v1675074286/birdy-kids-2pict4_aezypu.jpg", DATE '2022-06-15', 1, 5, 2),
+              (4, "https://res.cloudinary.com/dbl4g91fo/image/upload/v1675074069/birdy-kids-2pict1_ccc86f.jpg", DATE '2022-06-15', 1, 5, 5),
+              (5, "https://res.cloudinary.com/dbl4g91fo/image/upload/v1675074265/scr%C3%A9coeur_puqbhl.jpg", DATE '2022-06-28', 1, 2, 4),
+              (6, "https://res.cloudinary.com/dbl4g91fo/image/upload/v1675074201/sacr%C3%A9regard_ohfmdh.jpg", DATE '2022-04-12', 1, 2, 3),
+              (7, "https://res.cloudinary.com/dbl4g91fo/image/upload/v1675074341/bobine_bande_vs4550.jpg", DATE '2022-02-15', 1, 1, 1),
+              (8, "https://res.cloudinary.com/dbl4g91fo/image/upload/v1675074049/2022-09-03_hd8yov.jpg", DATE '2022-11-22', 1, 1, 2),
+              (9, "https://res.cloudinary.com/dbl4g91fo/image/upload/v1675074136/com%C3%A9di2_ahovty.jpg", DATE '2022-03-12', 1, 3, 2),
+              (10, "https://res.cloudinary.com/dbl4g91fo/image/upload/v1675074356/com%C3%A9die_dz3idg.jpg",DATE '2022-06-14', 1, 3, 3),
+              (11, "https://res.cloudinary.com/dbl4g91fo/image/upload/v1675074064/birdy1_fz3jop.jpg",DATE '2022-07-11', 1, 4, 2);
+   

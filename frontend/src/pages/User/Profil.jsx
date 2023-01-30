@@ -9,14 +9,24 @@ import { useCurrentResponsiveContext } from "../../contexts/responsiveContext";
 
 export default function Profil() {
   const backURL = import.meta.env.VITE_BACKEND_URL;
-  const [setAvatar] = useState({});
+  const [avatar, setAvatar] = useState({});
   const { user, setUser, token } = useCurrentUserContext();
   const { isMobile, isTablet, isLittleMobile } = useCurrentResponsiveContext();
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
   const avatarRef = useRef();
   const notifySuccess = () => {
-    toast("Profil modifié avec succès ", {
+    toast("Profil modifié avec succes.", {
+      icon: "👍",
+    });
+  };
+  const SuccessAvatar = () => {
+    toast("Avatar modifié avec succes.", {
+      icon: "👍",
+    });
+  };
+  const ErrorAvatar = () => {
+    toast("Upload Echoué", {
       icon: "👍",
     });
   };
@@ -68,7 +78,7 @@ export default function Profil() {
       myHeader.append("Authorization", `Bearer ${token}`);
 
       const formData = new FormData();
-      formData.append("file", File);
+      formData.append("file", avatar);
 
       const requestOptions = {
         method: "POST",
@@ -83,10 +93,12 @@ export default function Profil() {
           setAvatar(results.avatar);
           console.warn(results);
           setMsg("Upload réussi !");
+          SuccessAvatar();
         })
         .catch((error) => {
           console.error(error);
           setMsg("Upload échoué !");
+          ErrorAvatar();
         });
     } else {
       setMsg("Aucun fichier");
