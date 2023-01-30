@@ -71,10 +71,10 @@ const add = (req, res) => {
 const getUserFavorites = (req, res) => {
   const favorite = req.body;
 
-  favorite.user_id = req.params;
+  favorite.userId = req.params;
 
   models.picture
-    .pictureIsFavorite(favorite.user_id)
+    .pictureIsFavorite(favorite.userId)
     .then(([results]) => {
       res.send(results);
     })
@@ -128,6 +128,33 @@ const putNewPicture = (req, res) => {
     });
 };
 
+const readNonFavoritePicture = (req, res) => {
+  models.picture
+    .findNonFavoritePicture()
+    .then(([results]) => {
+      res.send(results);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
+
+const deleteAllPicturesFromWorkAndNext = (req, res, next) => {
+  const workId = req.params.id;
+
+  models.picture
+    .deletePicturesWithWorkId(workId)
+    .then(([result]) => {
+      if (result.affectedRows === 0) res.sendStatus(404);
+      else next();
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
+
 module.exports = {
   add,
   browse,
@@ -138,4 +165,6 @@ module.exports = {
   workPict,
   verifyIfUserHasPictureOnWork,
   putNewPicture,
+  deleteAllPicturesFromWorkAndNext,
+  readNonFavoritePicture,
 };

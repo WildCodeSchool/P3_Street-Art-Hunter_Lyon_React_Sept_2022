@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import HeaderWithBurger from "../../components/User/Global/HeaderWithBurger";
-import UserCardContainer from "../../components/Global/Cards/UserCardContainer";
+import UserCardContainer from "../../components/Global/Cards/PictureCardContainer";
 import { useCurrentUserContext } from "../../contexts/userContext";
 
 const backURL = import.meta.env.VITE_BACKEND_URL;

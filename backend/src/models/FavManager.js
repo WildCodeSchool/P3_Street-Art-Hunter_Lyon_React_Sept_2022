@@ -17,8 +17,8 @@ class FavManager extends AbstractManager {
 
   insert(userHasFavPicture) {
     return this.connection.query(
-      `insert into ${this.table} (user_id, work_id) values (?, ?)`,
-      [userHasFavPicture.user_id, userHasFavPicture.work_id]
+      `insert into ${this.table} (userId, work_id) values (?, ?)`,
+      [userHasFavPicture.userId, userHasFavPicture.work_id]
     );
   }
 
