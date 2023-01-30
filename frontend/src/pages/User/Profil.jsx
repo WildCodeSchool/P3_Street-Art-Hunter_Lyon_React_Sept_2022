@@ -9,12 +9,11 @@ import { useCurrentResponsiveContext } from "../../contexts/responsiveContext";
 
 export default function Profil() {
   const backURL = import.meta.env.VITE_BACKEND_URL;
-  const [avatar, setAvatar] = useState({});
   const { user, setUser, token } = useCurrentUserContext();
   const { isMobile, isTablet, isLittleMobile } = useCurrentResponsiveContext();
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
-  const avatarRef = useRef();
+  const avatarRef = useRef(null);
   const notifySuccess = () => {
     toast("Profil modifié avec succes.", {
       icon: "👍",
@@ -31,6 +30,7 @@ export default function Profil() {
     });
   };
   const [newUserInfos, setNewUserInfos] = useState({
+    avatar: user.avatar,
     pseudo: user.pseudo,
     email: user.email,
     id: user.id,
@@ -47,8 +47,8 @@ export default function Profil() {
     headers: myHeaders,
     body,
   };
-  const handleForm = (id) => {
-    fetch(`${backURL}/modifyprofil/${id}`, PUTrequestOptions);
+  const handleForm = () => {
+    fetch(`${backURL}/modifyprofil/${user.id}`, PUTrequestOptions);
     setUser({
       ...user,
       pseudo: newUserInfos.pseudo,
@@ -69,6 +69,7 @@ export default function Profil() {
       email: e.target.value,
     });
   };
+  // sending the new avatar to the backend
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -78,20 +79,19 @@ export default function Profil() {
       myHeader.append("Authorization", `Bearer ${token}`);
 
       const formData = new FormData();
-      formData.append("file", avatar);
-
+      formData.append("avatar", avatarRef.current.files[0]);
       const requestOptions = {
-        method: "POST",
+        method: "PUT",
         headers: myHeader,
         body: formData,
       };
       // on appelle le back
-      fetch(`${backURL}/api/avatars`, requestOptions)
+      fetch(`${backURL}/api/avatars/`, requestOptions)
+        .then((response) => response.json())
         .then((results) => {
           // maj avatar
           setUser({ ...user, avatar: results.avatar });
-          setAvatar(results.avatar);
-          console.warn(results);
+          console.warn(results.avatar);
           setMsg("Upload réussi !");
           SuccessAvatar();
         })
@@ -120,10 +120,10 @@ export default function Profil() {
 
             {/* <div className="border-2 border-white w-[20%] bg-graph1 h-[10vh] bg-cover rounded-full " /> */}
             <div className="backdrop-blur-md w-[95%] rounded-3xl pb-8">
-              <form encType="file" onSubmit={handleSubmit}>
+              <form encType="multipart/form-data" onSubmit={handleSubmit}>
                 <div className="flex justify-center">
                   <img
-                    src={user.avatar}
+                    src={`${backURL}/api/avatars/${user.avatar}`}
                     alt="avatar"
                     className="border-2 border-white w-[26%] h-[10vh] rounded-full mt-4"
                   />
@@ -136,7 +136,7 @@ export default function Profil() {
                       type="file"
                       ref={avatarRef}
                       id="file"
-                      onChange={(e) => setAvatar(e.target.files[0])}
+                      // upload de l'image
                     />
                     <button
                       className="bg-gradient-to-tl from-pink to-lightblue rounded-xl font-main-font text-[16px] py-1 px-3 mt-4 mb-2 text-black"
@@ -235,7 +235,7 @@ export default function Profil() {
 
             {/* <div className="border-2 border-white w-[20%] bg-graph1 h-[10vh] bg-cover rounded-full " /> */}
             <div className="backdrop-blur-md w-[95%] rounded-3xl ">
-              <form encType="file" onSubmit={handleSubmit}>
+              <form encType="multipart/form-data" onSubmit={handleSubmit}>
                 <div className="flex justify-center">
                   <img
                     src={user.avatar}
@@ -246,12 +246,9 @@ export default function Profil() {
                 <div className="flex justify-center">
                   <div className="flex flex-col items-center w-[10%]">
                     <input
-                      name="avatar"
                       className="text-black bg-gradient-to-tl from-pink to-lightblue rounded-xl font-main-font text-[13px] py-1 px-2 mt-2"
                       type="file"
                       ref={avatarRef}
-                      id="file"
-                      onChange={(e) => setAvatar(e.target.files[0])}
                     />
                     <button
                       className="bg-gradient-to-tl from-pink to-lightblue rounded-xl font-main-font text-[16px]  px-3 mt-2 mb-1 text-black"
@@ -350,7 +347,7 @@ export default function Profil() {
 
             {/* <div className="border-2 border-white w-[20%] bg-graph1 h-[10vh] bg-cover rounded-full " /> */}
             <div className="backdrop-blur-md w-[95%] rounded-3xl">
-              <form encType="file" onSubmit={handleSubmit}>
+              <form encType="multipart/form-data" onSubmit={handleSubmit}>
                 <div className="flex justify-center">
                   <img
                     src={user.avatar}
@@ -366,7 +363,6 @@ export default function Profil() {
                       type="file"
                       ref={avatarRef}
                       id="file"
-                      onChange={(e) => setAvatar(e.target.files[0])}
                     />
                     <button
                       className="bg-gradient-to-tl from-pink to-lightblue rounded-xl font-main-font text-3xl py-1 px-3 mt-4 mb-5 text-black"

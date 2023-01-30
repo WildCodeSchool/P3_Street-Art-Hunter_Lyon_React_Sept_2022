@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import DeskConnectLandpage from "@components/User/Home/DeskConnectLandpage";
-import TabletConnectLandpage from "@components/User/Home/TabletConnectLandpage";
-import cloud from "@assets/cloud.svg";
+import TabletConnectLandpage from "../../components/User/Home/TabletConnectLandpage";
+import cloud from "../../assets/cloud.svg";
+import DeskConnectLandpage from "../../components/User/Home/DeskConnectLandpage";
 
 import ConnectLandpage from "../../components/User/Home/ConnectLandpage";
 import { useCurrentUserContext } from "../../contexts/userContext";

@@ -1,5 +1,8 @@
 const express = require("express");
 require("dotenv").config();
+const multer = require("multer");
+
+const upload = multer({ dest: process.env.AVATAR_DIRECTORY });
 
 const cloudinary = require("cloudinary").v2;
 
@@ -20,17 +23,18 @@ const cloudinaryUpload = (req, res, next) => {
 
 // Upload avatar
 
-const fsUploadAvatar = (req, res, next) => {
-  const { avatar } = req.body;
-  console.warn(avatar);
-  cloudinary.uploader
-    .upload(avatar, { public_id: req.body.avatar })
-    .then((result) => {
-      req.body.url = result.secure_url;
-      next();
-    })
-    .catch((err) => console.warn(err));
-};
+// const fsUploadAvatar = (req, res, next) => {
+//   const avatar = req.file;
+//   console.warn("avatar", avatar);
+
+//   cloudinary.uploader
+//     .upload(avatar, { public_id: req.body.avatar })
+//     .then((result) => {
+//       req.body.url = result.secure_url;
+//       next();
+//     })
+//     .catch((err) => console.warn(err));
+// };
 
 // service d'authentification
 
@@ -72,13 +76,20 @@ router.post(
   pictureControllers.addAndPassToNext,
   userControllers.pointsOnPictureValidation
 );
-// gestion des avatars
-router.post(
-  "/api/avatars",
+
+router.put(
+  "/api/avatars/",
   verifyToken,
-  fsUploadAvatar,
-  fileControllers.updateAvatar
+
+  upload.single("avatar"),
+  fileControllers.renameAvatar,
+  userControllers.updateAvatar
 );
+
+router.get("/api/avatars/:fileName", fileControllers.sendAvatar);
+
+// gestion des avatars
+// router.put(`/api/avatars/:id`, verifyToken, fileControllers.updateAvatar);
 
 // modify profil
 

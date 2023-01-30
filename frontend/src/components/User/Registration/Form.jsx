@@ -22,6 +22,8 @@ function Form() {
     email: "",
     password: "",
     verifPassword: "",
+    avatar:
+      "https://www.avatarsinpixels.com/Public/images/previews/minipix4.png",
   });
 
   // soumettre le formulaire
@@ -45,6 +47,7 @@ function Form() {
         pseudo: userInfo.pseudo,
         email: userInfo.email,
         password: userInfo.password,
+        avatar: userInfo.avatar,
       });
 
       const requestOptions = {
