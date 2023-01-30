@@ -68,6 +68,13 @@ class PictureManager extends AbstractManager {
       [url, new Date(), pictureId]
     );
   }
+
+  deletePicturesWithWorkId(workId) {
+    return this.connection.query(
+      `delete from ${this.table} where work_id = ?`,
+      [workId]
+    );
+  }
 }
 
 module.exports = PictureManager;

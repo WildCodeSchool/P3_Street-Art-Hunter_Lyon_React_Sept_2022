@@ -154,7 +154,12 @@ router.put(
   workControllers.editAndNext,
   userControllers.pointsOnWorkValidation
 );
-router.delete("/works/:id", verifyToken, workControllers.destroy);
+router.delete(
+  "/works/:id",
+  verifyToken,
+  pictureControllers.deleteAllPicturesFromWorkAndNext,
+  workControllers.destroy
+);
 
 // Gestion des photos
 router.get("/users/:userId/pictures", pictureControllers.myPict);
