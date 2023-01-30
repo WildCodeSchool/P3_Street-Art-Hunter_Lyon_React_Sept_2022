@@ -128,6 +128,21 @@ const putNewPicture = (req, res) => {
     });
 };
 
+const deleteAllPicturesFromWorkAndNext = (req, res, next) => {
+  const workId = req.params.id;
+
+  models.picture
+    .deletePicturesWithWorkId(workId)
+    .then(([result]) => {
+      if (result.affectedRows === 0) res.sendStatus(404);
+      else next();
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
+
 module.exports = {
   add,
   browse,
@@ -138,4 +153,5 @@ module.exports = {
   workPict,
   verifyIfUserHasPictureOnWork,
   putNewPicture,
+  deleteAllPicturesFromWorkAndNext,
 };
