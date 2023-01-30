@@ -1,15 +1,34 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect, useState } from "react";
+import Dialog from "@mui/material/Dialog";
+import Slide from "@mui/material/Slide";
 import HeaderWithBurger from "../../components/User/Global/HeaderWithBurger";
 import FavoriteCard from "../../components/Global/Cards/FavoriteCard";
+
 import { useCurrentUserContext } from "../../contexts/userContext";
-import Menu from "./Menu";
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const backURL = import.meta.env.VITE_BACKEND_URL;
 
 function Favoris() {
-  const { open, token, user } = useCurrentUserContext();
+  const { token, user } = useCurrentUserContext();
 
   const [showFav, setShowFav] = useState([]);
+
+  const [image, setImage] = useState("");
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const myHeaders = new Headers({
     Authorization: `Bearer ${token}`,
@@ -31,21 +50,43 @@ function Favoris() {
 
   return (
     <div>
-      {!open ? (
-        <div className="bg-main-background bg-cover w-full h-screen">
-          <HeaderWithBurger />
-          <div className="h-[3.5rem] pt-3 font-main-font w-screen flex justify-center text-white items-center text-3xl mt-20 mb-4">
-            TES COUPS DE COEUR
-          </div>
-          <div className="flex justify-around flex-wrap overflow-auto h-[70vh]">
-            {showFav.map((picture) => (
-              <FavoriteCard key={picture.id} picture={picture} />
-            ))}
-          </div>
+      <div className="bg-main-background bg-cover w-full h-screen">
+        <HeaderWithBurger />
+        <div className="mt-[6rem] flex justify-around flex-wrap overflow-auto h-[70vh]">
+          {showFav.map((fav) => (
+            <FavoriteCard
+              key={fav.id}
+              fav={fav}
+              handleClickOpen={handleClickOpen}
+              setImage={setImage}
+            />
+          ))}
         </div>
-      ) : (
-        <Menu />
-      )}
+      </div>
+      <Dialog
+        fullScreen
+        open={open}
+        onClose={handleClose}
+        TransitionComponent={Transition}
+      >
+        <div className="h-[100vh] bg-main-background object-cover bg-center">
+          <div className="flex justify-end items-center h-[10vh]">
+            <div
+              aria-hidden="true"
+              onClick={() => {
+                handleClose();
+              }}
+              className="bg-menu-cross w-[12%] h-[4vh] bg-contain bg-no-repeat mt-5 mr-3"
+            />
+          </div>
+
+          <img
+            src={image}
+            className="h-[75vh] shadow-2xl shadow-lightblue mt-10"
+            alt=""
+          />
+        </div>
+      </Dialog>
     </div>
   );
 }

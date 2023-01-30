@@ -13,16 +13,16 @@ class FavoriteManager extends AbstractManager {
   insert(favorite) {
     return this.connection.query(
       `INSERT INTO ${this.table}
-      (user_id,
+      (userId,
       picture_id) VALUES (?, ?)`,
-      [favorite.user_id, favorite.picture_id]
+      [favorite.userId, favorite.picture_id]
     );
   }
 
   deleteFavorite(favorite) {
     return this.connection.query(
-      `delete from ${this.table} where user_id = ? and picture_id = ? `,
-      [favorite.user_id, favorite.picture_id]
+      `delete from ${this.table} where userId = ? and picture_id = ? `,
+      [favorite.userId, favorite.picture_id]
     );
   }
 }

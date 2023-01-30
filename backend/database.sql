@@ -205,10 +205,10 @@ CREATE TABLE artist
 
             CREATE TABLE user_has_fav_picture
             (
-              user_id INT NOT NULL,
+              userId INT NOT NULL,
               picture_id INT NOT NULL,
               FOREIGN KEY
-(user_id) REFERENCES user
+(userId) REFERENCES user
 (id),
               FOREIGN KEY
 (picture_id) REFERENCES picture

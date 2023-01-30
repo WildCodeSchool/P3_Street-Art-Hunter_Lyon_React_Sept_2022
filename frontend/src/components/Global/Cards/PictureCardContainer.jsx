@@ -1,22 +1,31 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable camelcase */
+import React, { useState, useEffect } from "react";
+
 import CardMedia from "@mui/material/CardMedia";
 
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
+
 import { purple } from "@mui/material/colors";
+
 import FavoriteIcon from "@mui/icons-material/Favorite";
+
 import { useCurrentUserContext } from "../../../contexts/userContext";
 
 const backURL = import.meta.env.VITE_BACKEND_URL;
 
-function FavoriteCard({ fav, handleClickOpen, setImage }) {
-  const { token } = useCurrentUserContext();
+function PictureCardContainer({ picture, handleClickOpen, setImage }) {
+  const { token, user } = useCurrentUserContext();
   const [userList, setUserList] = useState([]);
   const [work, setWork] = useState([]);
+  const [picture_id, setPictureID] = useState();
+  const [userId, setUserID] = useState();
+  const [active, setActive] = useState(false);
+  const [color, setColor] = useState("");
 
-  const date = fav.creation_date.slice(0, 10);
+  const date = picture.creation_date.slice(0, 10);
 
-  const hours = fav.creation_date.slice(11, 16);
+  const hours = picture.creation_date.slice(11, 16);
 
   const myHeaders = new Headers({
     Authorization: `Bearer ${token}`,
@@ -27,30 +36,51 @@ function FavoriteCard({ fav, handleClickOpen, setImage }) {
     method: "GET",
     headers: myHeaders,
   };
+
+  const body = JSON.stringify({
+    picture_id,
+    userId,
+  });
+
+  const requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body,
+  };
+  const DELETErequestOptions = {
+    method: "DELETE",
+    headers: myHeaders,
+  };
+
   useEffect(() => {
-    fetch(`${backURL}/users/${fav.user_id}`, GETrequestOptions)
+    fetch(`${backURL}/users/${picture.user_id}`, GETrequestOptions)
       .then((result) => result.json())
       .then((result) => {
         setUserList(result);
       });
 
-    fetch(`${backURL}/works/${fav.work_id}`, GETrequestOptions)
+    fetch(`${backURL}/works/${picture.work_id}`, GETrequestOptions)
       .then((result) => result.json())
       .then((result) => {
         setWork(result);
       });
   }, []);
 
-  const DELETErequestOptions = {
-    method: "DELETE",
-    headers: myHeaders,
-  };
-
   const handleFavorite = () => {
-    fetch(
-      `${backURL}/favorites/${fav.userId}/${fav.picture_id}`,
-      DELETErequestOptions
-    ).catch(console.error);
+    setActive(!active);
+    setPictureID(picture.id);
+    setUserID(user.id);
+
+    if (active) {
+      setColor("secondary");
+      fetch(`${backURL}/favorites`, requestOptions).catch(console.error);
+    } else {
+      setColor("");
+      fetch(
+        `${backURL}/favorites/${userId}/${picture_id}`,
+        DELETErequestOptions
+      ).catch(console.error);
+    }
   };
 
   return (
@@ -61,9 +91,7 @@ function FavoriteCard({ fav, handleClickOpen, setImage }) {
             sx={{ bgcolor: purple[500], height: 30, width: 30 }}
             src={userList.avatar}
           />
-          <span className="text-black text-s font-main-font">
-            {userList.pseudo}
-          </span>
+          <span className="text-black text-s">{userList.pseudo}</span>
         </div>
 
         <span variant="body2" className="text-lg text-black font-main-font">
@@ -72,13 +100,13 @@ function FavoriteCard({ fav, handleClickOpen, setImage }) {
       </div>
       <CardMedia
         component="img"
-        image={fav.picture_url}
+        image={picture.picture_url}
         alt="work"
         sx={{ height: 110 }}
         onClick={() => {
           handleClickOpen();
 
-          setImage(fav.picture_url);
+          setImage(picture.picture_url);
         }}
       />
       <div className="flex flex-col w-full">
@@ -91,14 +119,20 @@ function FavoriteCard({ fav, handleClickOpen, setImage }) {
               {date}
             </span>
           </div>
-
-          <IconButton aria-label="map" onClick={handleFavorite}>
-            <FavoriteIcon color="secondary" />
-          </IconButton>
+          {picture.picture_id === null && (
+            <IconButton aria-label="map" onClick={handleFavorite}>
+              <FavoriteIcon color={color} />
+            </IconButton>
+          )}
+          {picture.picture_id !== null && (
+            <IconButton aria-label="map" onClick={handleFavorite}>
+              <FavoriteIcon color="secondary" />
+            </IconButton>
+          )}
         </div>
       </div>
     </div>
   );
 }
 
-export default FavoriteCard;
+export default PictureCardContainer;
