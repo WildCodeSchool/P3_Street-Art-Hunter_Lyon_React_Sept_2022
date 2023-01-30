@@ -41,7 +41,8 @@ class PictureManager extends AbstractManager {
       creation_date,
       is_validated,
       work_id,
-      user_id) VALUES (?, ?, 1, ?, ?)`,
+      user_id,
+      is_signaled) VALUES (?, ?, 1, ?, ?, 0)`,
       [picture.url, new Date(), picture.workId, picture.userId]
     );
   }

@@ -92,6 +92,14 @@ export default function GalleryLive() {
             className="h-[75vh] shadow-2xl shadow-lightblue mt-10"
             alt=""
           />
+          <div className="w-screen flex justify-center">
+            <button
+              type="button"
+              className="bg-gradient-to-tl from-pink to-lightblue rounded-3xl font-main-font text-[32px] py-1 px-6 w-[50%] mt-3"
+            >
+              Signaler
+            </button>
+          </div>
         </div>
       </Dialog>
     </div>
