@@ -11,6 +11,13 @@ class WorkManager extends AbstractManager {
     ]);
   }
 
+  findIdWithFirstPicture(id) {
+    return this.connection.query(
+      `select work.*, (select picture.picture_url from picture where picture.work_id = work.id order by picture.creation_date Limit 1) as picture_url from work inner join picture on picture.work_id = work.id where work.id = ? group by work.id`,
+      [id]
+    );
+  }
+
   findAll() {
     return this.connection.query(`select * from  ${this.table}`);
   }

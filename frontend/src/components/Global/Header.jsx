@@ -4,7 +4,7 @@ function Header() {
   return (
     <div>
       <div className="flex justify-center">
-        <div className="bg-logo-home w-[40%] h-[17vh] bg-cover bg-no-repeat" />
+        <div className=" bg-center bg-logo-home w-[40%] h-[17vh] bg-cover bg-no-repeat" />
       </div>
     </div>
   );

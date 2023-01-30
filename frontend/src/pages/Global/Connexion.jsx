@@ -4,12 +4,15 @@ import BlocConnexion from "../../components/Global/BlocConnexion";
 
 import Header from "../../components/Global/Header";
 import { useCurrentUserContext } from "../../contexts/userContext";
+import { useCurrentResponsiveContext } from "../../contexts/responsiveContext";
 
 function Connexion() {
   const { user } = useCurrentUserContext();
   const nav = useNavigate();
+
+  const { isMobile, isTablet, isLittleMobile } = useCurrentResponsiveContext();
   useEffect(() => {
-    if (user.id) {
+    if ((isMobile || isTablet || isLittleMobile) && user.id) {
       nav("/camera");
     }
   });

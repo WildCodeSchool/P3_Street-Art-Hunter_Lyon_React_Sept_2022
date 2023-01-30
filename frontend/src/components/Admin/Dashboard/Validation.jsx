@@ -15,7 +15,7 @@ function Validation() {
       });
   }, []);
   return (
-    <div className="bg-white w-[20%] h-[40vh] shadow-2xl shadow-cyan-500/50 flex justify-center items-center m-3 flex-wrap">
+    <div className="bg-white w-[25%] h-[45vh] shadow-2xl shadow-cyan-500/50 flex justify-center items-center m-3 flex-wrap">
       <div className="flex flex-col justify-center items-center">
         <h2 className="text-black font-main-font text-3xl mb-5 text-center">
           Oeuvres en attente de validation

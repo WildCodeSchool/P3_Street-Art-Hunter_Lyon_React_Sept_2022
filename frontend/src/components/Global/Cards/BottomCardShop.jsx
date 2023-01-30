@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { HeartSwitch } from "@anatoliygatt/heart-switch";
 import { useCurrentUserContext } from "../../../contexts/userContext";
 
@@ -8,7 +8,8 @@ const backURL = import.meta.env.VITE_BACKEND_URL;
 function BottomCardShop({ picture }) {
   const { token, user } = useCurrentUserContext();
   const hours = picture.creation_date.slice(0, 10);
-  const [checked, setChecked] = useState(false);
+
+  const [checked, setChecked] = useState(true);
 
   const [picture_id, setPictureID] = useState();
   const [user_id, setUserID] = useState();
@@ -39,20 +40,19 @@ function BottomCardShop({ picture }) {
     setActive(!active);
     setPictureID(picture.id);
     setUserID(user.id);
+  };
 
-    if (active) {
+  useEffect(() => {
+    if (!active) {
+      setChecked(!checked);
       fetch(
         `${backURL}/favorites/${user_id}/${picture_id}`,
         DELETErequestOptions
       ).catch(console.error);
-    } else {
+    } else if (active) {
       fetch(`${backURL}/favorites`, requestOptions).catch(console.error);
     }
-    if (user.id) {
-      setChecked(true);
-    }
-  };
-
+  }, [active]);
   return (
     <div className="flex justify-around items-center m-1">
       <p className="font-main-font m-1 text-sm text-black">Lyon</p>

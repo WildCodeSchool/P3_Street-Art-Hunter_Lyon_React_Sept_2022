@@ -68,7 +68,7 @@ CREATE TABLE artist
   hashedPassword VARCHAR
       (100) NOT NULL,
   avatar VARCHAR
-      (150) NULL DEFAULT NULL,
+      (150) NULL DEFAULT "https://www.avatarsinpixels.com/Public/images/previews/minipix4.png",
   passwordtoken VARCHAR
       (100) NULL DEFAULT NULL
   );
@@ -205,10 +205,10 @@ CREATE TABLE artist
 
             CREATE TABLE user_has_fav_picture
             (
-              user_id INT NOT NULL,
+              userId INT NOT NULL,
               picture_id INT NOT NULL,
               FOREIGN KEY
-(user_id) REFERENCES user
+(userId) REFERENCES user
 (id),
               FOREIGN KEY
 (picture_id) REFERENCES picture
