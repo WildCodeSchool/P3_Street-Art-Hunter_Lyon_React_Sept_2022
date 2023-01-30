@@ -4,7 +4,7 @@ import Form from "../../components/User/Registration/Form";
 
 function Registration() {
   return (
-    <div className="bg-main-background bg-cover w-full h-screen">
+    <div className="bg-main-background bg-cover w-full h-[100vh]">
       <Header />
       <Form />
     </div>

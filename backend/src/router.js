@@ -137,6 +137,7 @@ router.get("/validation", workControllers.showValidation);
 router.get("/works/:id", workControllers.read);
 router.get("/works/value/:id", workControllers.readValuePassItToNext);
 router.get("/workswithpicture", workControllers.getAllWithPicture);
+router.get("/workswithpicture/:id", workControllers.findByID);
 
 router.post("/works", verifyToken, workControllers.add);
 router.post(
@@ -163,7 +164,7 @@ router.delete(
 // Gestion des photos
 router.get("/users/:userId/pictures", pictureControllers.myPict);
 router.get("/:workId/pictures", pictureControllers.workPict);
-router.get("/pictures", pictureControllers.browse);
+router.get("/pictures", pictureControllers.readNonFavoritePicture);
 router.get("/pictures/:id", pictureControllers.read);
 router.post("/pictures", pictureControllers.add);
 router.put(
@@ -175,7 +176,7 @@ router.put(
 // Gestion des favoris
 router.post("/favorites", verifyToken, favoriteControllers.add);
 router.delete(
-  "/favorites/:user_id/:picture_id",
+  "/favorites/:userId/:picture_id",
   verifyToken,
   favoriteControllers.destroy
 );

@@ -10,7 +10,9 @@ function BoardWork() {
       <LateralMenu />
       <div className="flex flex-col w-full">
         <HeaderAdmin nav={nav} />
-        <BoardValidation />
+        <div className="pl-[25rem] w-[96%]">
+          <BoardValidation />
+        </div>
       </div>
     </div>
   );

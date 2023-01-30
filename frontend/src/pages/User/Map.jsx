@@ -6,14 +6,13 @@ import BottomNavMap from "../../components/User/Map/BottomNavMap";
 import HeaderWithBurger from "../../components/User/Global/HeaderWithBurger";
 import AddMarkerShop from "../../components/User/Map/AddMarkerShop";
 import AddMarkerArt from "../../components/User/Map/AddMarkerArt";
-import { useCurrentUserContext } from "../../contexts/userContext";
-import Menu from "./Menu";
+import { useCurrentResponsiveContext } from "../../contexts/responsiveContext";
 
 function Map() {
   const [activeShop, setActiveShop] = useState(false);
   const [activeArt, setActiveArt] = useState(false);
   const [layerGroup] = useState(L.layerGroup());
-  const { open } = useCurrentUserContext();
+  const { isMobile, isTablet, isLittleMobile } = useCurrentResponsiveContext();
 
   const handleActiveShop = () => {
     layerGroup.clearLayers();
@@ -27,7 +26,7 @@ function Map() {
 
   return (
     <div>
-      {!open ? (
+      {(isMobile || isLittleMobile) && (
         <div className="bg-main-background text-white font-main-font bg-cover w-full h-screen">
           <HeaderWithBurger />
 
@@ -63,8 +62,44 @@ function Map() {
             />
           </div>
         </div>
-      ) : (
-        <Menu />
+      )}
+
+      {isTablet && (
+        <div className="bg-main-background text-white font-main-font bg-cover w-full h-screen">
+          <HeaderWithBurger />
+
+          <div className="mt-[10rem]">
+            <MapContainer
+              center={[45.7578137, 4.8320114]}
+              zoom={12}
+              scrollWheelZoom
+              zoomControl={false}
+              className="custom-popup"
+            >
+              <TileLayer
+                attribution='&copy; <a href="https://stadiamaps.com/">Stadia Maps</a> contributors'
+                url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png"
+              />
+              {activeShop && (
+                <AddMarkerShop
+                  handleActiveShop={handleActiveShop}
+                  layerGroup={layerGroup}
+                />
+              )}
+              {activeArt && (
+                <AddMarkerArt
+                  handleActiveArt={handleActiveArt}
+                  layerGroup={layerGroup}
+                />
+              )}
+            </MapContainer>
+
+            <BottomNavMap
+              handleActiveShop={handleActiveShop}
+              handleActiveArt={handleActiveArt}
+            />
+          </div>
+        </div>
       )}
     </div>
   );

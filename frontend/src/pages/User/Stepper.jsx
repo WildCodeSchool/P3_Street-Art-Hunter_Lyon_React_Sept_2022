@@ -8,7 +8,7 @@ function Stepper() {
   const [step, setStep] = useState(1);
   console.warn(step);
   return (
-    <div className="bg-main-background bg-cover w-full h-screen">
+    <div className="bg-center bg-main-background bg-cover w-[100%] h-[100vh]">
       <Header />
       {step === 1 ? <Step1 step={step} setStep={setStep} /> : ""}
       {step === 2 ? <Step2 step={step} setStep={setStep} /> : ""}
