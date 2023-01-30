@@ -31,10 +31,10 @@ const destroy = (req, res) => {
   const favorite = req.body;
 
   favorite.picture_id = req.params;
-  favorite.user_id = req.params;
+  favorite.userId = req.params;
 
   models.user_has_fav_picture
-    .deleteFavorite(favorite.user_id, favorite.picture_id)
+    .deleteFavorite(favorite.userId, favorite.picture_id)
     .then(([result]) => {
       if (result.affectedRows === 0) res.sendStatus(404);
       else res.sendStatus(204);

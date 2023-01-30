@@ -133,6 +133,11 @@
   z-index: 0;
 }
 
+.map-by-work .leaflet-container {
+  width: 100%;
+  height: 80vh;
+}
+
 .flicker-3 {
   -webkit-animation: flicker-3 2.5s linear infinite both;
   animation: flicker-3 2.5s linear infinite both;

@@ -39,6 +39,21 @@ const read = (req, res) => {
     });
 };
 
+const findByID = (req, res) => {
+  const { id } = req.params;
+
+  models.work
+    .findIdWithFirstPicture(id)
+    .then(([results]) => {
+      if (results[0]) res.send(results[0]);
+      else res.sendStatus(404);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
+
 const add = (req, res) => {
   const work = req.body;
   // on verifie les données
@@ -154,4 +169,5 @@ module.exports = {
   getAllWithPicture,
   addAndPassWorkIdToNext,
   editAndNext,
+  findByID,
 };

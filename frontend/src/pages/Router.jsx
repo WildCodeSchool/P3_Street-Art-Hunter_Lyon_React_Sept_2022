@@ -58,7 +58,97 @@ export default function Router() {
               </ProtectedDesk>
             }
           />
+
           <Route path="/connexion-admin" element={<ConnexionAdmin />} />
+
+          <Route
+            path="/Admin-User"
+            element={
+              <ProtectedDesk verifyCondition={user.is_admin}>
+                <AdminUser />
+              </ProtectedDesk>
+            }
+          />
+          <Route
+            path="/Admin-Scores"
+            element={
+              <ProtectedDesk verifyCondition={user.is_admin}>
+                <Dashboard />
+              </ProtectedDesk>
+            }
+          />
+          <Route
+            path="/Admin-Modif-User"
+            element={
+              <ProtectedDesk verifyCondition={user.is_admin}>
+                <ModifUser />
+              </ProtectedDesk>
+            }
+          />
+          <Route
+            path="/Admin-Create-User"
+            element={
+              <ProtectedDesk verifyCondition={user.is_admin}>
+                <CreateUser />
+              </ProtectedDesk>
+            }
+          />
+          <Route
+            path="/Admin-Works"
+            element={
+              <ProtectedDesk verifyCondition={user.is_admin}>
+                <BoardWork />
+              </ProtectedDesk>
+            }
+          />
+          <Route
+            path="/Admin-Validate-Work"
+            element={
+              <ProtectedDesk verifyCondition={user.is_admin}>
+                <AdminValidateWork />
+              </ProtectedDesk>
+            }
+          />
+          <Route
+            path="/Admin-Messages"
+            element={
+              <ProtectedDesk verifyCondition={user.is_admin}>
+                <AdminMessage />
+              </ProtectedDesk>
+            }
+          />
+          <Route
+            path="/Admin-Artist"
+            element={
+              <ProtectedDesk verifyCondition={user.is_admin}>
+                <AdminArtist />
+              </ProtectedDesk>
+            }
+          />
+          <Route
+            path="/Admin-Shop"
+            element={
+              <ProtectedDesk verifyCondition={user.is_admin}>
+                <AdminShop />
+              </ProtectedDesk>
+            }
+          />
+          <Route
+            path="/Admin-Artwork"
+            element={
+              <ProtectedDesk verifyCondition={user.is_admin}>
+                <AdminArtWork />
+              </ProtectedDesk>
+            }
+          />
+          <Route
+            path="/Admin-ArtworkPict"
+            element={
+              <ProtectedDesk verifyCondition={user.is_admin}>
+                <ArtWorkPictures />
+              </ProtectedDesk>
+            }
+          />
         </>
       )}
 

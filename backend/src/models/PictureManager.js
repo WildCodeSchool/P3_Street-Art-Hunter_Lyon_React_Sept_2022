@@ -26,7 +26,12 @@ class PictureManager extends AbstractManager {
   }
 
   findAll() {
-    return this.connection.query(`select * from  ${this.table}`);
+    return this.connection.query(`select * from  ${this.table} `);
+  }
+
+  findNonFavoritePicture() {
+    return this.connection.query(`select * from  ${this.table} as p
+    left join user_has_fav_picture as uhfp on p.id = uhfp.picture_id;`);
   }
 
   insert(picture) {
@@ -45,7 +50,7 @@ class PictureManager extends AbstractManager {
     return this.connection.query(
       `select * from picture as p
   inner join user_has_fav_picture as uhfp on p.id = uhfp.picture_id
-  where uhfp.user_id=?;`,
+  where uhfp.userId=?;`,
       [favorite.user_id]
     );
   }
@@ -61,6 +66,13 @@ class PictureManager extends AbstractManager {
     return this.connection.query(
       `update ${this.table} set picture_url = ?, creation_date = ? where id = ?`,
       [url, new Date(), pictureId]
+    );
+  }
+
+  deletePicturesWithWorkId(workId) {
+    return this.connection.query(
+      `delete from ${this.table} where work_id = ?`,
+      [workId]
     );
   }
 }

@@ -17,8 +17,8 @@ function Home() {
   useEffect(() => {
     if ((isMobile || isTablet || isLittleMobile) && user.id) {
       nav("/camera");
-    } else if (isDesktop) {
-      nav("/");
+    } else if (isDesktop && user.id && user.is_admin) {
+      nav("/admin");
     }
   });
 
