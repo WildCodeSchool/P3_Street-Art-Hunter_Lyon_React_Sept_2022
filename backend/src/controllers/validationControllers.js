@@ -6,8 +6,7 @@ const arePasswordAndMailValid = async (req, res, next) => {
   const passwordRegEx =
     /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
 
-  // eslint-disable-next-line no-useless-escape
-  const mailRegEx = /^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/gm;
+  const mailRegEx = /^[A-Za-z0-9_!#$%&'*+/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/gm;
 
   if (!passwordRegEx.test(password)) {
     res.sendStatus(409);
