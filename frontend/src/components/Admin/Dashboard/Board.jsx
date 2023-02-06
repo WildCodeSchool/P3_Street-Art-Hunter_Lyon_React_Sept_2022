@@ -2,6 +2,7 @@ import React from "react";
 import Validation from "./Validation";
 import Works from "./Works";
 import Users from "./Users";
+import ReportedPictures from "./ReportedPictures";
 
 function Board() {
   return (
@@ -9,6 +10,7 @@ function Board() {
       <Validation />
       <Works />
       <Users />
+      <ReportedPictures />
     </div>
   );
 }

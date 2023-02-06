@@ -1,5 +1,9 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import isConnected from "@services/isConnected";
+import { toast, Toaster } from "react-hot-toast";
+
 import Dialog from "@mui/material/Dialog";
 import Slide from "@mui/material/Slide";
 import Allive from "../../components/User/Gallery/AllLive";
@@ -17,7 +21,15 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 export default function GalleryLive() {
-  const { token } = useCurrentUserContext();
+  const { setUser, token } = useCurrentUserContext();
+
+  const pictureReported = () => {
+    toast("La photo a bien été signalée, une vérification est en route!", {
+      icon: "⚠️",
+    });
+  };
+
+  const navigate = useNavigate();
 
   const [showPicture, setShowPicture] = useState([]);
   const [image, setImage] = useState("");
@@ -42,8 +54,27 @@ export default function GalleryLive() {
     headers: myHeaders,
   };
 
+  const PUTrequestOptions = {
+    method: "PUT",
+    headers: myHeaders,
+  };
+
+  const handleReport = () => {
+    fetch(`${backURL}/pictures/report/${image.id}`, PUTrequestOptions);
+    pictureReported();
+    handleClose();
+  };
+
   useEffect(() => {
     fetch(`${backURL}/pictures`, GETrequestOptions)
+      .then((result) => {
+        if (!isConnected(result)) {
+          localStorage.clear();
+          setUser("");
+          navigate("/");
+        }
+        return result;
+      })
       .then((result) => result.json())
       .then((result) => {
         setShowPicture(result);
@@ -53,6 +84,8 @@ export default function GalleryLive() {
   return (
     <div>
       <div className="bg-center bg-desk-background text-white font-main-font bg-cover h-[200vh]">
+        <Toaster position="top" />
+
         <HeaderWithBurger />
 
         <Allive />
@@ -88,7 +121,7 @@ export default function GalleryLive() {
           </div>
 
           <img
-            src={image}
+            src={image.picture_url}
             className="h-[75vh] shadow-2xl shadow-lightblue mt-10"
             alt=""
           />
@@ -96,6 +129,7 @@ export default function GalleryLive() {
             <button
               type="button"
               className="bg-gradient-to-tl from-pink to-lightblue rounded-3xl font-main-font text-[32px] py-1 px-6 w-[50%] mt-3"
+              onClick={handleReport}
             >
               Signaler
             </button>

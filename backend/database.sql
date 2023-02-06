@@ -1,6 +1,5 @@
 DROP TABLE IF EXISTS artist
 ;
-
 CREATE TABLE artist
 (
   id INT PRIMARY KEY NOT NULL
@@ -8,21 +7,19 @@ CREATE TABLE artist
   artist_name VARCHAR
   (45) NULL DEFAULT NULL
   );
-
   INSERT INTO artist
     (artist_name)
   VALUES
     ('Artiste inconnu'),
-    ('Vincent'),
-    ('Daryl'),
-    ('Younes'),
-    ('Gaelle');
+    ('Wenc'),
+    ('Big Ben'),
+    ('Auburtin'),
+    ('Birdy Kids');
   -- -----------------------------------------------------
   -- Table `street_art_hunter`.`badge`
   -- -----------------------------------------------------
   DROP TABLE IF EXISTS badge
   ;
-
   CREATE TABLE badge
   (
     id INT PRIMARY KEY NOT NULL
@@ -36,7 +33,6 @@ CREATE TABLE artist
   badge_condition VARCHAR
     (200) NOT NULL
   );
-
     INSERT INTO badge
     VALUES
       (1, "Médaille d'Or", "Tu as atteint le sommet", "https://i.imgur.com/RGyBBHB.png", "Atteindre le rang 1"),
@@ -44,13 +40,11 @@ CREATE TABLE artist
       (3, "Médaille de Bronze", "Tu as atteint le podium", "https://i.imgur.com/RGyBBHB.png", "Atteindre le rang 3"),
       (4, "Centenaire", "Tu as obtenu 100Points", "https://i.imgur.com/RGyBBHB.png", "Obtenir 10Points"),
       (5, "Explorateur", "Tu as découvert un terrain inconnu", "https://i.imgur.com/RGyBBHB.png", "Prendre en photo une oeuvre non repertoriée");
-
     -- -----------------------------------------------------
     -- Table `street_art_hunter`.`user`
     -- -----------------------------------------------------
     DROP TABLE IF EXISTS user
     ;
-
     CREATE TABLE user
     (
       id INT PRIMARY KEY NOT NULL
@@ -72,7 +66,6 @@ CREATE TABLE artist
   passwordtoken VARCHAR
       (100) NULL DEFAULT NULL
   );
-
       INSERT INTO user
         (id, firstname, lastname, scorepoint, pseudo, is_admin, email, hashedPassword)
       VALUES
@@ -86,13 +79,11 @@ CREATE TABLE artist
         (8, 'test', '01', 0, 'Test01', 0, 'test@live.fr', '$argon2id$v=19$m=65536,t=5,p=1$/IxoAlrwgixDVKnt6WySZw$XQZ3hNaTsEoye3i5kmIRMtbt+ZxmE0OcnWEObU+FgZ0'),
         (9, 'test', '02', 0, 'Test02', 0, 'toast@live.fr', '$argon2id$v=19$m=65536,t=5,p=1$FjSe7NKP24AgOGHuZQviwA$A8+hy8vJP0pmELqXEoKjBjxDxskKISWlMxoTjbhHBs4'),
         (10, 'Burrito', 'Salsa', 0, 'Taco', 0, 'taco@live.fr', '$argon2id$v=19$m=65536,t=5,p=1$D6WDLZAd3QzAqvC+PNqdjQ$JkcbA54pwnwp1RQoIRj6oZjDG2C+FbUkXDQv6DNd+no');
-
       -- -----------------------------------------------------
       -- Table `street_art_hunter`.`work`
       -- -----------------------------------------------------
       DROP TABLE IF EXISTS work
       ;
-
       CREATE TABLE work
       (
         id INT PRIMARY KEY NOT NULL
@@ -106,24 +97,28 @@ CREATE TABLE artist
   value_point INT NULL DEFAULT NULL,
   is_validated TINYINT NULL DEFAULT NULL,
   artist_id INT NOT NULL,
-
+  INDEX fk_work_artist1_idx
+        (artist_id ASC) VISIBLE,
   CONSTRAINT fk_work_artist1
   FOREIGN KEY
         (artist_id) REFERENCES artist
         (id),
   added_by INT NOT NULL,
-
+  INDEX fk_work_user1_idx
+        (added_by ASC) VISIBLE,
   CONSTRAINT fk_work_user1
   FOREIGN KEY
         (added_by) REFERENCES user
         (id)
   );
+
+
+
         -- -----------------------------------------------------
         -- Table `street_art_hunter`.`picture`
         -- -----------------------------------------------------
         DROP TABLE IF EXISTS picture
         ;
-
         CREATE TABLE picture
         (
           id INT PRIMARY KEY NOT NULL
@@ -134,9 +129,12 @@ CREATE TABLE artist
   is_validated TINYINT NULL DEFAULT NULL,
   work_id INT NOT NULL,
   user_id INT NOT NULL,
-  is_signaled TINYINT NULL DEFAULT NULL,
-
-
+  is_reported TINYINT NULL DEFAULT NULL,
+  
+  INDEX fk_picture_work1_idx
+          (work_id ASC) VISIBLE,
+  INDEX fk_picture_user1_idx
+          (user_id ASC) VISIBLE,
   CONSTRAINT fk_picture_user1
   FOREIGN KEY
           (user_id) REFERENCES user
@@ -151,26 +149,23 @@ CREATE TABLE artist
           -- -----------------------------------------------------
           DROP TABLE IF EXISTS shop
           ;
-
           CREATE TABLE shop
           (
             id INT PRIMARY KEY NOT NULL
             AUTO_INCREMENT,
-  shop_type VARCHAR
+  shop_name VARCHAR
             (45) NULL DEFAULT NULL,
+  url_shop VARCHAR
+            (150) NULL DEFAULT NULL,
   longitude DECIMAL
             (20,18) NULL DEFAULT NULL,
   latitude DECIMAL
-            (20,18) NULL DEFAULT NULL,
-  description VARCHAR
-            (45) NULL DEFAULT NULL
+            (20,18) NULL DEFAULT NULL
   );
-
             -- -----------------------------------------------------
             -- Table `street_art_hunter`.`user_has_badge`
             -- -----------------------------------------------------
             DROP TABLE IF EXISTS user_has_badge;
-
             CREATE TABLE user_has_badge
             (
               badge_id INT NOT NULL,
@@ -180,7 +175,6 @@ CREATE TABLE artist
               CONSTRAINT fk_user_has_badge_user1
   FOREIGN KEY (user_id) REFERENCES user (id)
             );
-
             INSERT INTO user_has_badge
             values
               (1, 1),
@@ -193,32 +187,26 @@ CREATE TABLE artist
               (2, 4),
               (1, 4),
               (4, 4);
-
-
             -- -----------------------------------------------------
             -- Table `street_art_hunter`.`user_has_fav_picture`
             -- -----------------------------------------------------
             DROP TABLE IF EXISTS user_has_fav_picture;
-
             CREATE TABLE user_has_fav_picture
             (
-              userId INT NOT NULL,
+              user_id INT NOT NULL,
               picture_id INT NOT NULL,
               FOREIGN KEY
-(userId) REFERENCES user
+(user_id) REFERENCES user
 (id),
               FOREIGN KEY
 (picture_id) REFERENCES picture
 (id)
             );
-
-
             -- -----------------------------------------------------
             -- Table `street_art_hunter`.`userMessage`
             -- -----------------------------------------------------
             DROP TABLE IF EXISTS userMessage
             ;
-
             CREATE TABLE userMessage
             (
               id INT PRIMARY KEY NOT NULL
@@ -229,11 +217,40 @@ CREATE TABLE artist
               (500) NOT NULL,
  
   user_id INT NOT NULL,
-
-
+  INDEX fk_message_user1_idx
+              (user_id ASC) VISIBLE,
   CONSTRAINT fk_message_user1
   FOREIGN KEY
               (user_id) REFERENCES user
               (id)
 
   );
+
+
+              INSERT INTO work
+
+                (id, work_name, longitude, latitude, value_point, is_validated, artist_id, added_by)
+              VALUES
+                (1, "L'escalier Mermet", 4.833990, 45.770168, 100, 1, 1, 1),
+                (2, "Sacré regard", 4.8298789, 45.7713791, 100, 1, 2, 3),
+                (3, "La muse de la comédie", 4.8341466, 45.7708385, 100, 1, 3, 4),
+                (4, "Tag Birdy Kids", 4.8426674, 45.7567626, 100, 1, 4, 5),
+                (5, "Oiseau bleu", 4.8320996, 45.7677702, 100, 1, 4, 2);
+
+
+              INSERT INTO picture
+
+                (id, picture_url, creation_date, is_validated, work_id, user_id)
+              VALUES
+                (1, "https://res.cloudinary.com/dbl4g91fo/image/upload/v1675074416/birdy-kids-2pict3_z8g8n1.jpg", DATE
+              '2022-01-30', 1, 5, 1),
+              (2, "https://res.cloudinary.com/dbl4g91fo/image/upload/v1675074398/birdy-kids-2pict2_vczi4w.jpg", DATE '2022-04-25', 1, 5, 3),
+              (3, "https://res.cloudinary.com/dbl4g91fo/image/upload/v1675074286/birdy-kids-2pict4_aezypu.jpg", DATE '2022-06-15', 1, 5, 2),
+              (4, "https://res.cloudinary.com/dbl4g91fo/image/upload/v1675074069/birdy-kids-2pict1_ccc86f.jpg", DATE '2022-06-15', 1, 5, 5),
+              (5, "https://res.cloudinary.com/dbl4g91fo/image/upload/v1675074265/scr%C3%A9coeur_puqbhl.jpg", DATE '2022-06-28', 1, 2, 4),
+              (6, "https://res.cloudinary.com/dbl4g91fo/image/upload/v1675074201/sacr%C3%A9regard_ohfmdh.jpg", DATE '2022-04-12', 1, 2, 3),
+              (7, "https://res.cloudinary.com/dbl4g91fo/image/upload/v1675074341/bobine_bande_vs4550.jpg", DATE '2022-02-15', 1, 1, 1),
+              (8, "https://res.cloudinary.com/dbl4g91fo/image/upload/v1675074049/2022-09-03_hd8yov.jpg", DATE '2022-11-22', 1, 1, 2),
+              (9, "https://res.cloudinary.com/dbl4g91fo/image/upload/v1675074136/com%C3%A9di2_ahovty.jpg", DATE '2022-03-12', 1, 3, 2),
+              (10, "https://res.cloudinary.com/dbl4g91fo/image/upload/v1675074356/com%C3%A9die_dz3idg.jpg",DATE '2022-06-14', 1, 3, 3),
+              (11, "https://res.cloudinary.com/dbl4g91fo/image/upload/v1675074064/birdy1_fz3jop.jpg",DATE '2022-07-11', 1, 4, 2);

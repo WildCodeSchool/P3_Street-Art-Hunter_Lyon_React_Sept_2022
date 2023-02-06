@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast, Toaster } from "react-hot-toast";
+
 import InscriptionDone from "./Popupvalidationinscription";
 import { useCurrentResponsiveContext } from "../../../contexts/responsiveContext";
 
@@ -24,6 +26,11 @@ function Form() {
     verifPassword: "",
   });
 
+  const alreadyUsedId = (error) => {
+    toast(error, {
+      icon: "❌",
+    });
+  };
   // soumettre le formulaire
   const handleForm = (e) => {
     if (
@@ -55,12 +62,18 @@ function Form() {
       e.preventDefault();
       // on créé un nouvel utilisateur et on reutilise
       fetch(`${backURL}/inscription`, requestOptions)
-        .then(() => {
+        .then(async (result) => {
+          if (result.status === 409) {
+            const res = await result.json();
+            alreadyUsedId(res.error);
+            return false;
+          }
           setDoneInscr(true);
 
           setTimeout(() => {
             navigate("/connexion");
           }, 3000);
+          return result;
         })
         .catch((err) => {
           console.warn(err);
@@ -79,7 +92,7 @@ function Form() {
   };
 
   const [showPassWord, setshowPassWord] = useState(true);
-  const [showPassWord2, setshowPassWord2] = useState(true);
+  const [showVerifPassWord, setShowVerifPassWord] = useState(true);
 
   return (
     <div>
@@ -200,12 +213,16 @@ function Form() {
                       onChange={(e) =>
                         setUserInfo({ ...userInfo, email: e.target.value })
                       }
-                      type="email"
+                      type="text"
                       name="Adresse-email"
                       id="email"
+                      pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                      minLength="3"
+                      maxLength="100"
+                      title="Saisis une adresse mail valide!"
                       className={`form-control relative block w-full appearance-none bg-transparent rounded-full border border-${
                         redForm.includes("email") ? "red-700" : "white"
-                      } px-3 py-2 text-white placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm`}
+                      }  px-3 py-2 text-white placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm`}
                     />
                   </div>
                   {redForm.includes("email") ? (
@@ -234,34 +251,45 @@ function Form() {
                       type={showPassWord ? "password" : "text"}
                       name="password"
                       id="password"
+                      pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+                      title="Ton mot de passe doit faire 8 caractères minimum et contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial"
                       className={`form-control relative block w-full appearance-none bg-transparent rounded-full border border-${
                         redForm.includes("password") ? "red-700" : "white"
                       } px-3 py-2 text-white placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm`}
                     />
 
                     {showPassWord ? (
-                      <svg
+                      <button
+                        type="button"
                         onClick={() => setshowPassWord(!showPassWord)}
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
                         className="absolute w-6 h-6 mt-2 mr-2"
                       >
-                        <path d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" />
-                      </svg>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" />
+                        </svg>
+                      </button>
                     ) : (
-                      <svg
+                      <button
+                        type="button"
                         onClick={() => setshowPassWord(!showPassWord)}
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
                         className="absolute w-6 h-6 mt-2 mr-2"
                       >
-                        <path d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
-                        <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                      </svg>
+                        <svg
+                          onClick={() => setshowPassWord(!showPassWord)}
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                          <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                      </button>
                     )}
                   </div>
                   {redForm.includes("password") ? (
@@ -290,37 +318,51 @@ function Form() {
                           verifPassword: e.target.value,
                         })
                       }
-                      type={showPassWord ? "password" : "text"}
+                      type={showVerifPassWord ? "password" : "text"}
                       name="password"
                       id="password"
+                      pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+                      title="Ton mot de passe doit faire 8 caractères minimum et contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial"
                       className={`form-control relative block w-full appearance-none bg-transparent rounded-full border border-${
                         redForm.includes("verifPassword") ? "red-700" : "white"
                       } px-3 py-2 text-white placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm`}
                     />
 
-                    {showPassWord2 ? (
-                      <svg
-                        onClick={() => setshowPassWord2(!showPassWord2)}
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        className="absolute w-6 h-6 mt-2 mr-2"
+                    {showVerifPassWord ? (
+                      <button
+                        type="button"
+                        className="absolute w-6 h-6 mt-2 mr-2 z-20"
+                        onClick={() => setShowVerifPassWord(!showVerifPassWord)}
                       >
-                        <path d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" />
-                      </svg>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" />
+                        </svg>
+                      </button>
                     ) : (
-                      <svg
-                        onClick={() => setshowPassWord2(!showPassWord2)}
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        className="absolute w-6 h-6 mt-2 mr-2"
+                      <button
+                        type="button"
+                        className="absolute w-6 h-6 mt-2 mr-2 z-20"
+                        onClick={() => setShowVerifPassWord(!showVerifPassWord)}
                       >
-                        <path d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
-                        <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                      </svg>
+                        {" "}
+                        <svg
+                          onClick={() =>
+                            setShowVerifPassWord(!showVerifPassWord)
+                          }
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                          <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>{" "}
+                      </button>
                     )}
                   </div>
                   {redForm.includes("pseudo") ? (
@@ -331,6 +373,7 @@ function Form() {
                     ""
                   )}
                 </label>
+                <Toaster position="top-center" reverseOrder />
 
                 <button
                   type="submit"
@@ -463,9 +506,13 @@ function Form() {
                       onChange={(e) =>
                         setUserInfo({ ...userInfo, email: e.target.value })
                       }
-                      type="email"
+                      type="text"
                       name="Adresse-email"
                       id="email"
+                      pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                      minLength="3"
+                      maxLength="100"
+                      title="Saisis une adresse mail valide!"
                       className={`form-control relative block w-full appearance-none bg-transparent rounded-full border border-${
                         redForm.includes("email") ? "red-700" : "white"
                       } px-2 py-1 text-white placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm`}
@@ -497,34 +544,44 @@ function Form() {
                       type={showPassWord ? "password" : "text"}
                       name="password"
                       id="password"
+                      pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+                      title="Ton mot de passe doit faire 8 caractères minimum et contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial"
                       className={`form-control relative block w-full appearance-none bg-transparent rounded-full border border-${
                         redForm.includes("password") ? "red-700" : "white"
-                      } px-2 py-1 text-white placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm`}
+                      } w-[80%] px-2 py-1 text-white placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm`}
                     />
-
                     {showPassWord ? (
-                      <svg
+                      <button
+                        type="button"
                         onClick={() => setshowPassWord(!showPassWord)}
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        className="absolute w-6 h-6 mt-2 mr-2"
+                        className="absolute w-6 h-6 mt-2 mr-2 z-20"
                       >
-                        <path d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" />
-                      </svg>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" />
+                        </svg>
+                      </button>
                     ) : (
-                      <svg
+                      <button
+                        type="button"
                         onClick={() => setshowPassWord(!showPassWord)}
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
                         className="absolute w-6 h-6 mt-2 mr-2"
                       >
-                        <path d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
-                        <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                      </svg>
+                        <svg
+                          onClick={() => setshowPassWord(!showPassWord)}
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                          <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                      </button>
                     )}
                   </div>
                   {redForm.includes("password") ? (
@@ -553,37 +610,51 @@ function Form() {
                           verifPassword: e.target.value,
                         })
                       }
-                      type={showPassWord ? "password" : "text"}
+                      type={showVerifPassWord ? "password" : "text"}
                       name="password"
                       id="password"
+                      pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+                      title="Ton mot de passe doit faire 8 caractères minimum et contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial"
                       className={`form-control relative block w-full appearance-none bg-transparent rounded-full border border-${
                         redForm.includes("verifPassword") ? "red-700" : "white"
                       } px-2 py-1 text-white placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm`}
                     />
 
-                    {showPassWord2 ? (
-                      <svg
-                        onClick={() => setshowPassWord2(!showPassWord2)}
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        className="absolute w-6 h-6 mt-2 mr-2"
+                    {showVerifPassWord ? (
+                      <button
+                        type="button"
+                        className="absolute w-6 h-6 mt-2 mr-2 z-20"
+                        onClick={() => setShowVerifPassWord(!showVerifPassWord)}
                       >
-                        <path d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" />
-                      </svg>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" />
+                        </svg>
+                      </button>
                     ) : (
-                      <svg
-                        onClick={() => setshowPassWord2(!showPassWord2)}
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        className="absolute w-6 h-6 mt-2 mr-2"
+                      <button
+                        type="button"
+                        className="absolute w-6 h-6 mt-2 mr-2 z-20"
+                        onClick={() => setShowVerifPassWord(!showVerifPassWord)}
                       >
-                        <path d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
-                        <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                      </svg>
+                        {" "}
+                        <svg
+                          onClick={() =>
+                            setShowVerifPassWord(!showVerifPassWord)
+                          }
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                          <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>{" "}
+                      </button>
                     )}
                   </div>
                   {redForm.includes("pseudo") ? (
@@ -594,6 +665,7 @@ function Form() {
                     ""
                   )}
                 </label>
+                <Toaster position="top-center" reverseOrder />
 
                 <button
                   type="submit"
@@ -730,9 +802,13 @@ function Form() {
                         onChange={(e) =>
                           setUserInfo({ ...userInfo, email: e.target.value })
                         }
-                        type="email"
+                        type="text"
                         name="Adresse-email"
                         id="email"
+                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                        minLength="3"
+                        maxLength="100"
+                        title="Saisis une adresse mail valide!"
                         className={`form-control relative block w-full appearance-none bg-transparent rounded-full border border-${
                           redForm.includes("email") ? "red-700" : "white"
                         } px-3 py-2 text-white placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm`}
@@ -764,34 +840,45 @@ function Form() {
                         type={showPassWord ? "password" : "text"}
                         name="password"
                         id="password"
+                        pattern="/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/"
+                        title="Ton mot de passe doit faire 8 caractères minimum et contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial"
                         className={`form-control relative block w-full appearance-none bg-transparent rounded-full border border-${
                           redForm.includes("password") ? "red-700" : "white"
                         } px-3 py-2 text-white placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm`}
                       />
 
                       {showPassWord ? (
-                        <svg
+                        <button
+                          type="button"
                           onClick={() => setshowPassWord(!showPassWord)}
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
                           className="absolute w-6 h-6 mt-2 mr-2"
                         >
-                          <path d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" />
-                        </svg>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" />
+                          </svg>
+                        </button>
                       ) : (
-                        <svg
+                        <button
+                          type="button"
                           onClick={() => setshowPassWord(!showPassWord)}
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
                           className="absolute w-6 h-6 mt-2 mr-2"
                         >
-                          <path d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
-                          <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                        </svg>
+                          <svg
+                            onClick={() => setshowPassWord(!showPassWord)}
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                            <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                          </svg>
+                        </button>
                       )}
                     </div>
                     {redForm.includes("password") ? (
@@ -820,9 +907,11 @@ function Form() {
                             verifPassword: e.target.value,
                           })
                         }
-                        type={showPassWord ? "password" : "text"}
+                        type={showVerifPassWord ? "password" : "text"}
                         name="password"
                         id="password"
+                        pattern="/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/"
+                        title="Ton mot de passe doit faire 8 caractères minimum et contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial"
                         className={`form-control relative block w-full appearance-none bg-transparent rounded-full border border-${
                           redForm.includes("verifPassword")
                             ? "red-700"
@@ -830,29 +919,45 @@ function Form() {
                         } px-3 py-2 text-white placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm`}
                       />
 
-                      {showPassWord2 ? (
-                        <svg
-                          onClick={() => setshowPassWord2(!showPassWord2)}
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          className="absolute w-6 h-6 mt-2 mr-2"
+                      {showVerifPassWord ? (
+                        <button
+                          type="button"
+                          className="absolute w-6 h-6 mt-2 mr-2 z-20"
+                          onClick={() =>
+                            setShowVerifPassWord(!showVerifPassWord)
+                          }
                         >
-                          <path d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" />
-                        </svg>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" />
+                          </svg>
+                        </button>
                       ) : (
-                        <svg
-                          onClick={() => setshowPassWord2(!showPassWord2)}
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          className="absolute w-6 h-6 mt-2 mr-2"
+                        <button
+                          type="button"
+                          className="absolute w-6 h-6 mt-2 mr-2 z-20"
+                          onClick={() =>
+                            setShowVerifPassWord(!showVerifPassWord)
+                          }
                         >
-                          <path d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
-                          <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                        </svg>
+                          {" "}
+                          <svg
+                            onClick={() =>
+                              setShowVerifPassWord(!showVerifPassWord)
+                            }
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                            <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                          </svg>{" "}
+                        </button>
                       )}
                     </div>
                     {redForm.includes("pseudo") ? (
@@ -863,6 +968,7 @@ function Form() {
                       ""
                     )}
                   </label>
+                  <Toaster position="top-center" reverseOrder />
 
                   <button
                     type="submit"

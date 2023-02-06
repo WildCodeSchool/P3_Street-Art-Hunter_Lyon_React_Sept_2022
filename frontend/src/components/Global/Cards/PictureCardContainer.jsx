@@ -106,7 +106,7 @@ function PictureCardContainer({ picture, handleClickOpen, setImage }) {
         onClick={() => {
           handleClickOpen();
 
-          setImage(picture.picture_url);
+          setImage(picture);
         }}
       />
       <div className="flex flex-col w-full">

@@ -42,7 +42,7 @@ class PictureManager extends AbstractManager {
       is_validated,
       work_id,
       user_id,
-      is_signaled) VALUES (?, ?, 1, ?, ?, 0)`,
+      is_reported) VALUES (?, ?, 1, ?, ?, 0)`,
       [picture.url, new Date(), picture.workId, picture.userId]
     );
   }
@@ -51,7 +51,7 @@ class PictureManager extends AbstractManager {
     return this.connection.query(
       `select * from picture as p
   inner join user_has_fav_picture as uhfp on p.id = uhfp.picture_id
-  where uhfp.userId=?;`,
+  where uhfp.user_id=?;`,
       [favorite.user_id]
     );
   }
@@ -74,6 +74,26 @@ class PictureManager extends AbstractManager {
     return this.connection.query(
       `delete from ${this.table} where work_id = ?`,
       [workId]
+    );
+  }
+
+  report(id) {
+    return this.connection.query(
+      `update ${this.table} set is_reported = 1 where id = ?`,
+      [id]
+    );
+  }
+
+  unreport(id) {
+    return this.connection.query(
+      `update ${this.table} set is_reported = 0 where id = ?`,
+      [id]
+    );
+  }
+
+  getReportedPicture() {
+    return this.connection.query(
+      `select * from ${this.table} where is_reported = 1`
     );
   }
 }

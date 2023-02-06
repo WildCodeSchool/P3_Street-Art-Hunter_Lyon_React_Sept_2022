@@ -38,6 +38,8 @@ import PictByWork from "./User/PictByWork";
 import ProtectedDesk from "./ProtectedDesk";
 import ConnexionAdmin from "./Admin/ConnexionAdmin";
 import { useCurrentResponsiveContext } from "../contexts/responsiveContext";
+import BoardReported from "./Admin/BoardReported";
+import AdminReportPicture from "./Admin/AdminReportPicture";
 
 export default function Router() {
   const { user } = useCurrentUserContext();
@@ -146,6 +148,22 @@ export default function Router() {
             element={
               <ProtectedDesk verifyCondition={user.is_admin}>
                 <ArtWorkPictures />
+              </ProtectedDesk>
+            }
+          />
+          <Route
+            path="/Admin-Reported"
+            element={
+              <ProtectedDesk verifyCondition={user.is_admin}>
+                <BoardReported />
+              </ProtectedDesk>
+            }
+          />
+          <Route
+            path="/Admin-Report-Picture"
+            element={
+              <ProtectedDesk verifyCondition={user.is_admin}>
+                <AdminReportPicture />
               </ProtectedDesk>
             }
           />
@@ -314,6 +332,7 @@ export default function Router() {
               <Route path="/Admin-Modif-User" element={<ModifUser />} />
               <Route path="/Admin-Create-User" element={<CreateUser />} />
               <Route path="/Admin-Works" element={<BoardWork />} />
+
               <Route
                 path="/Admin-Validate-Work"
                 element={<AdminValidateWork />}
