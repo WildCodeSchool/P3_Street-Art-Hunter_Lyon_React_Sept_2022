@@ -27,7 +27,6 @@ const {
   verifyToken,
 } = require("./services/auth");
 
-const { verifyEmail } = require("./services/verifyEmail");
 const { validateRegister } = require("./middlewares/validatorRegister");
 const authControllers = require("./controllers/authControllers");
 const userControllers = require("./controllers/userControllers");
@@ -49,7 +48,6 @@ const {
 router.post(
   "/inscription",
   verifyMailAndPasswordAvailablity,
-  verifyEmail,
   validateRegister,
   hashPassword,
   userControllers.add

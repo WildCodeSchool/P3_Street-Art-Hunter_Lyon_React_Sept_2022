@@ -24,7 +24,9 @@ const verifyMailAndPasswordAvailablity = async (req, res, next) => {
   const checkEmail = await models.user.findAccountWithEmail(email);
   const checkPseudo = await models.user.findAccountWithPseudo(pseudo);
   if (checkEmail[0].length > 0 && checkPseudo[0].length > 0) {
-    res.status(409).json({ error: "Cet email et ce pseudo sont déja utilisé" });
+    res
+      .status(409)
+      .json({ error: "Cet email et ce pseudo sont déja utilisés" });
 
     return false;
   }
