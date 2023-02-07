@@ -1,5 +1,8 @@
 const express = require("express");
 require("dotenv").config();
+const multer = require("multer");
+
+const upload = multer({ dest: process.env.AVATAR_DIRECTORY });
 
 const cloudinary = require("cloudinary").v2;
 
@@ -18,27 +21,14 @@ const cloudinaryUpload = (req, res, next) => {
     .catch((err) => console.warn(err));
 };
 
-// Upload avatar
-
-const fsUploadAvatar = (req, res, next) => {
-  const { avatar } = req.body;
-  console.warn(avatar);
-  cloudinary.uploader
-    .upload(avatar, { public_id: req.body.avatar })
-    .then((result) => {
-      req.body.url = result.secure_url;
-      next();
-    })
-    .catch((err) => console.warn(err));
-};
-
-// service d'authentification
-
 const {
   hashPassword,
   verifyPassword,
   verifyToken,
 } = require("./services/auth");
+
+const { verifyEmail } = require("./services/verifyEmail");
+const { validateRegister } = require("./middlewares/validatorRegister");
 const authControllers = require("./controllers/authControllers");
 const userControllers = require("./controllers/userControllers");
 const badgeControllers = require("./controllers/badgeControllers");
@@ -49,8 +39,26 @@ const mailControllers = require("./controllers/mailControllers");
 const passwordControllers = require("./controllers/passwordControllers");
 const userMessageControllers = require("./controllers/userMessageControllers");
 const fileControllers = require("./controllers/fileControllers");
-const valdationControllers = require("./controllers/validationControllers");
 const favoriteControllers = require("./controllers/favoriteControllers");
+
+const {
+  verifyMailAndPasswordAvailablity,
+} = require("./controllers/validationControllers");
+
+// Auth
+router.post(
+  "/inscription",
+  verifyMailAndPasswordAvailablity,
+  verifyEmail,
+  validateRegister,
+  hashPassword,
+  userControllers.add
+);
+router.post(
+  "/connexion",
+  authControllers.getUserByEmailWithPasswordAndPassToNext,
+  verifyPassword
+);
 
 router.post(
   "/forgottenpassword",
@@ -73,33 +81,28 @@ router.post(
   pictureControllers.addAndPassToNext,
   userControllers.pointsOnPictureValidation
 );
-// gestion des avatars
-router.post(
-  "/api/avatars",
+
+router.put(
+  "/api/avatars/",
   verifyToken,
-  fsUploadAvatar,
-  fileControllers.updateAvatar
+
+  upload.single("avatar"),
+  fileControllers.renameAvatar,
+  userControllers.updateAvatar
 );
+
+router.get("/api/avatars/:fileName", fileControllers.sendAvatar);
+
+// gestion des avatars
+// router.put(`/api/avatars/:id`, verifyToken, fileControllers.updateAvatar);
 
 // modify profil
 
 router.put("/modifyprofil/:id", verifyToken, userControllers.modifyProfil);
 
-// Auth
-router.post(
-  "/inscription",
-  valdationControllers.arePasswordAndMailValid,
-  valdationControllers.verifyMailAndPasswordAvailablity,
-  hashPassword,
-  userControllers.add
-);
-router.post(
-  "/connexion",
-  authControllers.getUserByEmailWithPasswordAndPassToNext,
-  verifyPassword
-);
-
 // Gestion des users
+
+const { validatorProfile } = require("./middlewares/validatorModifyProfil");
 
 router.get("/users", verifyToken, userControllers.browse);
 router.get("/users/:id", verifyToken, userControllers.read);
@@ -113,7 +116,7 @@ router.put(
 );
 
 router.post("/users", hashPassword, verifyToken, userControllers.add);
-router.put("/users/:id", verifyToken, userControllers.modif);
+router.put("/users/:id", validatorProfile, verifyToken, userControllers.modif);
 router.delete("/users/:id", verifyToken, userControllers.destroy);
 
 router.post("/addUsers", hashPassword, verifyToken, userControllers.add);

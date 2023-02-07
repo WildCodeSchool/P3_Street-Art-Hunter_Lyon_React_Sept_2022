@@ -1,3 +1,46 @@
+ -- -----------------------------------------------------
+    -- Table `street_art_hunter`.`user`
+    -- -----------------------------------------------------
+    DROP TABLE IF EXISTS user
+    ;
+
+    CREATE TABLE user
+    (
+      id INT PRIMARY KEY NOT NULL
+      AUTO_INCREMENT,
+  firstname VARCHAR
+      (45) NOT NULL,
+  lastname VARCHAR
+      (45) NOT NULL,
+  scorepoint INT NULL DEFAULT '0',
+  pseudo VARCHAR
+      (45) NOT NULL,
+  is_admin TINYINT NULL DEFAULT '0',
+  email VARCHAR
+      (100) NOT NULL,
+  hashedPassword VARCHAR
+      (100) NOT NULL,
+  avatar VARCHAR
+      (150) NULL DEFAULT NULL,
+  passwordtoken VARCHAR
+      (100) NULL DEFAULT NULL
+  );
+
+      INSERT INTO user
+        (id, firstname, lastname, scorepoint, pseudo, is_admin, email, hashedPassword)
+      VALUES
+        (1, 'Vincent', 'Chabosson', 1800, 'Gakchabla', 0, 'chabosson@live.fr', '$argon2id$v=19$m=65536,t=5,p=1$+VCtMnhwkGfgDOodFzoG7g$QaC4BxNuJqXzmRMzem8AVgHHssxGLBqx/Vo4MwMaDI0'),
+        (2, 'Daryl', 'Chaise', 3000, 'Darylou', 0, '258@joe.fr', '$argon2id$v=19$m=65536,t=5,p=1$vhAxhurqo/BU2H1lKpe7Gg$T30whlZrvP29WtN9IMTSzzo0eynyty53t/7orN3NyZI'),
+        (3, 'Younes', 'Ouasmi', 2500, 'Younz', 0, 'youyou@you.fr', '$argon2id$v=19$m=65536,t=5,p=1$tjIg61g9LJKjuQeK/ABv5A$U/CrlfFbcJUWQ+3OTzLz3zxxvoaZEN8mju82ZFxybDU'),
+        (4, 'Gaelle', 'Goyon', 1800, 'gaellz', 0, 'Gaelle@live.fr', '$argon2id$v=19$m=65536,t=5,p=1$+JPlAZnXYXplWEv3p3QPvA$1g+4sW0NdJSwdBm0qfc1EsElwhqtKWQsRP6KeSA9wNg'),
+        (5, 'Java', 'Script', 1000, 'JS', 0, 'Js@dev.fr', '$argon2id$v=19$m=65536,t=5,p=1$DkEOWlToH4JRh/kR+DT+Og$WKH0QiY5w9JK0cLMzq/AZW/8lFTcPXZtuKSLDz6kIuU'),
+        (6, 'PH', 'P', 2, 'PHP', 0, 'php@dev.fr', '$argon2id$v=19$m=65536,t=5,p=1$aSOTZx466EYnYACZWa0Bug$rFRpJqvOsh4rY2PnIlyeE8/mAddR3Ia9ettG+xarhSg'),
+        (7, 'Admin', 'Admin', 0, 'Admin', 1, 'admin@live.fr', '$argon2id$v=19$m=65536,t=5,p=1$RWt6DIUTyWrrc0ylG/Rlsg$hL3U6FjAW+ctL9s6DOYxXV7N1DJjkcxTbVjMcwpGE04'),
+        (8, 'test', '01', 0, 'Test01', 0, 'test@live.fr', '$argon2id$v=19$m=65536,t=5,p=1$/IxoAlrwgixDVKnt6WySZw$XQZ3hNaTsEoye3i5kmIRMtbt+ZxmE0OcnWEObU+FgZ0'),
+        (9, 'test', '02', 0, 'Test02', 0, 'toast@live.fr', '$argon2id$v=19$m=65536,t=5,p=1$FjSe7NKP24AgOGHuZQviwA$A8+hy8vJP0pmELqXEoKjBjxDxskKISWlMxoTjbhHBs4'),
+        (10, 'Burrito', 'Salsa', 0, 'Taco', 0, 'taco@live.fr', '$argon2id$v=19$m=65536,t=5,p=1$D6WDLZAd3QzAqvC+PNqdjQ$JkcbA54pwnwp1RQoIRj6oZjDG2C+FbUkXDQv6DNd+no');
+
+
 DROP TABLE IF EXISTS artist
 ;
 CREATE TABLE artist

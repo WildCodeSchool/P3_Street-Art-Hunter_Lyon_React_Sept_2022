@@ -21,7 +21,6 @@ const arePasswordAndMailValid = async (req, res, next) => {
 
 const verifyMailAndPasswordAvailablity = async (req, res, next) => {
   const { pseudo, email } = req.body;
-
   const checkEmail = await models.user.findAccountWithEmail(email);
   const checkPseudo = await models.user.findAccountWithPseudo(pseudo);
   if (checkEmail[0].length > 0 && checkPseudo[0].length > 0) {

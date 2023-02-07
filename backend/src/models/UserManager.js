@@ -171,10 +171,17 @@ class UserManager extends AbstractManager {
   }
 
   // update avatar user
-  modifyAvatar(user) {
+  modifyAvatar(id, avatar) {
     return this.connection.query(
       `update ${this.table} set avatar = ? where id = ?`,
-      [user.url, user.id]
+      [avatar, id]
+    );
+  }
+
+  selectEmail(email) {
+    return this.connection.query(
+      `select * from ${this.table} where email = ?`,
+      [email]
     );
   }
 }

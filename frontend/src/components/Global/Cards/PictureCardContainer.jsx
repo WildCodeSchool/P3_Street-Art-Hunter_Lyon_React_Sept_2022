@@ -66,24 +66,19 @@ function PictureCardContainer({ picture, handleClickOpen, setImage }) {
       });
   }, []);
 
-  const handleHeart = () => {
+  const handleFavorite = async () => {
     setActive(!active);
     setPictureID(picture.id);
     setUserID(user.id);
-  };
-
-  const handleFavorite = async () => {
-    handleHeart().then(() => {
-      if (active) {
-        setColor("secondary");
-        fetch(`${backURL}/favorites`, requestOptions).catch(console.error);
-      } else {
-        setColor("");
-        fetch(`${backURL}/favorites/${picture.id}`, DELETErequestOptions).catch(
-          console.error
-        );
-      }
-    });
+    if (active) {
+      setColor("secondary");
+      fetch(`${backURL}/favorites`, requestOptions).catch(console.error);
+    } else {
+      setColor("");
+      fetch(`${backURL}/favorites/${picture.id}`, DELETErequestOptions).catch(
+        console.error
+      );
+    }
   };
 
   return (

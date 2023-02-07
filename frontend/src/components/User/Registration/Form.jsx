@@ -52,6 +52,7 @@ function Form() {
         pseudo: userInfo.pseudo,
         email: userInfo.email,
         password: userInfo.password,
+        avatar: userInfo.avatar,
       });
 
       const requestOptions = {
