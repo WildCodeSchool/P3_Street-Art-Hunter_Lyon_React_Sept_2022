@@ -163,6 +163,13 @@ class UserManager extends AbstractManager {
       [avatar, id]
     );
   }
+
+  selectEmail(email) {
+    return this.connection.query(
+      `select * from ${this.table} where email = ?`,
+      [email]
+    );
+  }
 }
 
 module.exports = UserManager;

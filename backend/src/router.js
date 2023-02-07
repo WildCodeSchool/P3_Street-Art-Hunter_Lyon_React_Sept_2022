@@ -21,28 +21,14 @@ const cloudinaryUpload = (req, res, next) => {
     .catch((err) => console.warn(err));
 };
 
-// Upload avatar
-
-// const fsUploadAvatar = (req, res, next) => {
-//   const avatar = req.file;
-//   console.warn("avatar", avatar);
-
-//   cloudinary.uploader
-//     .upload(avatar, { public_id: req.body.avatar })
-//     .then((result) => {
-//       req.body.url = result.secure_url;
-//       next();
-//     })
-//     .catch((err) => console.warn(err));
-// };
-
-// service d'authentification
-
 const {
   hashPassword,
   verifyPassword,
   verifyToken,
 } = require("./services/auth");
+
+const { verifyEmail } = require("./services/verifyEmail");
+const { validateRegister } = require("./middlewares/validatorRegister");
 const authControllers = require("./controllers/authControllers");
 const userControllers = require("./controllers/userControllers");
 const badgeControllers = require("./controllers/badgeControllers");
@@ -53,6 +39,20 @@ const mailControllers = require("./controllers/mailControllers");
 const passwordControllers = require("./controllers/passwordControllers");
 const userMessageControllers = require("./controllers/userMessageControllers");
 const fileControllers = require("./controllers/fileControllers");
+
+// Auth
+router.post(
+  "/inscription",
+  verifyEmail,
+  validateRegister,
+  hashPassword,
+  userControllers.add
+);
+router.post(
+  "/connexion",
+  authControllers.getUserByEmailWithPasswordAndPassToNext,
+  verifyPassword
+);
 
 router.post(
   "/forgottenpassword",
@@ -95,15 +95,9 @@ router.get("/api/avatars/:fileName", fileControllers.sendAvatar);
 
 router.put("/modifyprofil/:id", verifyToken, userControllers.modifyProfil);
 
-// Auth
-router.post("/inscription", hashPassword, userControllers.add);
-router.post(
-  "/connexion",
-  authControllers.getUserByEmailWithPasswordAndPassToNext,
-  verifyPassword
-);
-
 // Gestion des users
+
+const { validatorProfile } = require("./middlewares/validatorModifyProfil");
 
 router.get("/users", userControllers.browse);
 router.get("/users/:id", userControllers.read);
@@ -113,7 +107,7 @@ router.get("/rank/:id", userControllers.getRanks);
 router.put("/users/:id/score", userControllers.pointsOnPictureValidation);
 
 router.post("/users", hashPassword, verifyToken, userControllers.add);
-router.put("/users/:id", verifyToken, userControllers.modif);
+router.put("/users/:id", validatorProfile, verifyToken, userControllers.modif);
 router.delete("/users/:id", verifyToken, userControllers.destroy);
 
 router.post("/addUsers", hashPassword, verifyToken, userControllers.add);
