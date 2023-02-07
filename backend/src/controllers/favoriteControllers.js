@@ -27,14 +27,24 @@ const add = (req, res) => {
     });
 };
 
-const destroy = (req, res) => {
-  const favorite = req.body;
+const deleteByIdAndNext = (req, res, next) => {
+  const { id } = req.params;
 
-  favorite.picture_id = req.params;
-  favorite.userId = req.params;
+  models.favorite
+    .deleteByPictureId(id)
+    .then(next())
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
+
+const destroy = (req, res) => {
+  const { picture_id } = req.params;
+  const userId = req.payloads.sub;
 
   models.user_has_fav_picture
-    .deleteFavorite(favorite.userId, favorite.picture_id)
+    .deleteFavorite(userId, picture_id)
     .then(([result]) => {
       if (result.affectedRows === 0) res.sendStatus(404);
       else res.sendStatus(204);
@@ -49,4 +59,5 @@ module.exports = {
   browse,
   add,
   destroy,
+  deleteByIdAndNext,
 };

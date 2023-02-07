@@ -50,6 +50,7 @@ const passwordControllers = require("./controllers/passwordControllers");
 const userMessageControllers = require("./controllers/userMessageControllers");
 const fileControllers = require("./controllers/fileControllers");
 const valdationControllers = require("./controllers/validationControllers");
+const favoriteControllers = require("./controllers/favoriteControllers");
 
 router.post(
   "/forgottenpassword",
@@ -63,7 +64,6 @@ router.post(
   hashPassword,
   passwordControllers.resetPassword
 );
-const favoriteControllers = require("./controllers/favoriteControllers");
 
 router.post(
   "/photo",
@@ -202,20 +202,21 @@ router.put(
 router.put(
   "/pictures/unreport/:id",
   verifyToken,
-  pictureControllers.reportPicture
+  pictureControllers.unReportPicture
 );
 
 router.delete(
   "/pictures/:id",
   verifyToken,
   authControllers.isUserAdmin,
+  favoriteControllers.deleteByIdAndNext,
   pictureControllers.deletePicture
 );
 
 // Gestion des favoris
 router.post("/favorites", verifyToken, favoriteControllers.add);
 router.delete(
-  "/favorites/:userId/:picture_id",
+  "/favorites/:picture_id",
   verifyToken,
   favoriteControllers.destroy
 );

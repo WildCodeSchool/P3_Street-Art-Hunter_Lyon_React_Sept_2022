@@ -13,7 +13,7 @@ class FavoriteManager extends AbstractManager {
   insert(favorite) {
     return this.connection.query(
       `INSERT INTO ${this.table}
-      (userId,
+      (user_id,
       picture_id) VALUES (?, ?)`,
       [favorite.userId, favorite.picture_id]
     );
@@ -25,5 +25,13 @@ class FavoriteManager extends AbstractManager {
       [favorite.userId, favorite.picture_id]
     );
   }
+
+  deleteByPictureId(pictureId) {
+    return this.connection.query(
+      `delete from ${this.table} where picture_id = ?`,
+      [pictureId]
+    );
+  }
 }
+
 module.exports = FavoriteManager;

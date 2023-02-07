@@ -76,10 +76,9 @@ function PictureCardContainer({ picture, handleClickOpen, setImage }) {
       fetch(`${backURL}/favorites`, requestOptions).catch(console.error);
     } else {
       setColor("");
-      fetch(
-        `${backURL}/favorites/${userId}/${picture_id}`,
-        DELETErequestOptions
-      ).catch(console.error);
+      fetch(`${backURL}/favorites/${picture_id}`, DELETErequestOptions).catch(
+        console.error
+      );
     }
   };
 
