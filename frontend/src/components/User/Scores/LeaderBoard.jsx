@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useCurrentUserContext } from "../../../contexts/userContext";
 import { useCurrentResponsiveContext } from "../../../contexts/responsiveContext";
 
 const backURL = import.meta.env.VITE_BACKEND_URL;
@@ -7,8 +8,14 @@ export default function LeaderBoard() {
   const [leaders, setLeaders] = useState([]);
   const { isMobile, isTablet, isLittleMobile } = useCurrentResponsiveContext();
 
+  const { token } = useCurrentUserContext();
+
+  const myHeaders = new Headers({
+    Authorization: `Bearer ${token}`,
+  });
+
   useEffect(() => {
-    fetch(`${backURL}/leader`)
+    fetch(`${backURL}/leader`, { headers: myHeaders })
       .then((result) => result.json())
       .then((result) => {
         setLeaders(result);
@@ -38,7 +45,6 @@ export default function LeaderBoard() {
                   </td>
                   <td className="w-[35vw]">{user.pseudo}</td>
                   <td className="w-[20vw]">{user.scorepoint}</td>
-                  <td className="w-[20vw]">{user.badges}</td>
                 </tr>
               ))}
             </tbody>
@@ -67,7 +73,6 @@ export default function LeaderBoard() {
                   </td>
                   <td className="w-[35vw]">{user.pseudo}</td>
                   <td className="w-[20vw]">{user.scorepoint}</td>
-                  <td className="w-[20vw]">{user.badges}</td>
                 </tr>
               ))}
             </tbody>
@@ -99,9 +104,6 @@ export default function LeaderBoard() {
                   </td>
                   <td className="w-[20vw] text-3xl text-center">
                     {user.scorepoint}
-                  </td>
-                  <td className="w-[20vw] text-3xl text-center">
-                    {user.badges}
                   </td>
                 </tr>
               ))}

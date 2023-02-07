@@ -1,9 +1,29 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast, Toaster } from "react-hot-toast";
 import { useCurrentUserContext } from "../../contexts/userContext";
 import { useCurrentResponsiveContext } from "../../contexts/responsiveContext";
 
 const backURL = import.meta.env.VITE_BACKEND_URL;
+
+function validatePassword(password) {
+  const passwordPattern =
+    /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  return passwordPattern.test(password);
+}
+const GoodPassword = () => {
+  toast("Le mot de passe est correct", {
+    icon: "👍",
+  });
+};
+const WrongPassword = () => {
+  toast(
+    "Le mot de passe doit contenir 8 caractère une majuscule un chiffre et un caratere spécial",
+    {
+      icon: "👎",
+    }
+  );
+};
 
 export default function BlocConnexion() {
   const navigate = useNavigate();
@@ -43,6 +63,12 @@ export default function BlocConnexion() {
           navigate("/camera");
         })
         .catch(console.error);
+      const isValid = validatePassword(password);
+      if (isValid) {
+        GoodPassword();
+      } else {
+        WrongPassword();
+      }
     } else {
       console.warn("Please specify email or pseudo and password");
     }
@@ -84,6 +110,9 @@ export default function BlocConnexion() {
 
   return (
     <div>
+      <div>
+        <Toaster position="bottom-center" reverseOrder />
+      </div>
       {isMobile && (
         <div className="p-5">
           <div className="p-0 flex min-h-full items-center justify-center ">

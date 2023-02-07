@@ -154,6 +154,59 @@ const deleteAllPicturesFromWorkAndNext = (req, res, next) => {
       res.sendStatus(500);
     });
 };
+const reportPicture = (req, res) => {
+  const { id } = req.params;
+  models.picture
+    .report(id)
+    .then(([result]) => {
+      if (result.affectedRows === 0) res.sendStatus(404);
+      else res.sendStatus(204);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
+
+const unReportPicture = (req, res) => {
+  const { id } = req.params;
+  models.picture
+    .unreport(id)
+    .then(([result]) => {
+      if (result.affectedRows === 0) res.sendStatus(404);
+      else res.sendStatus(204);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
+
+const getReportedPictures = (req, res) => {
+  models.picture
+    .getReportedPicture()
+    .then(([results]) => {
+      res.send(results);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
+
+const deletePicture = (req, res) => {
+  const { id } = req.params;
+
+  models.picture
+    .delete(id)
+    .then(([result]) => {
+      if (result.affectedRows === 0) res.sendStatus(404);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
 
 module.exports = {
   add,
@@ -167,4 +220,8 @@ module.exports = {
   putNewPicture,
   deleteAllPicturesFromWorkAndNext,
   readNonFavoritePicture,
+  reportPicture,
+  getReportedPictures,
+  deletePicture,
+  unReportPicture,
 };

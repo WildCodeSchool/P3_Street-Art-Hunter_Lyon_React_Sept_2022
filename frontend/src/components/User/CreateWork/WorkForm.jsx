@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { toast, Toaster } from "react-hot-toast";
+
 import { useCurrentPhotoContext } from "../../../contexts/photoContext";
 
 import { useCurrentUserContext } from "../../../contexts/userContext";
@@ -16,6 +18,15 @@ function WorkForm({ markerLatitude, markerLongitude }) {
   const validated = 0;
 
   const navigate = useNavigate();
+
+  const workCreated = () => {
+    toast(
+      "L'oeuvre à été créee, tu recevras les points quand elle sera validée",
+      {
+        icon: "👍",
+      }
+    );
+  };
 
   useEffect(() => {
     fetch(`${backURL}/artists`)
@@ -48,16 +59,21 @@ function WorkForm({ markerLatitude, markerLongitude }) {
       headers: myHeaders,
       body,
     };
-    navigate("/galerie/all");
+    workCreated();
     e.preventDefault();
-    // on créé un nouvel utilisateur et on reutilise
     fetch(`${backURL}/workandpicture`, requestOptions).catch((err) => {
       console.warn(err);
     });
+    setTimeout(() => {
+      navigate("/galerie/all");
+    }, 2500);
   };
 
   return (
     <div>
+      <div>
+        <Toaster position="bottom" reverseOrder />
+      </div>
       <form
         onSubmit={handleForm}
         className="flex flex-col justify-center items-center mb-4"

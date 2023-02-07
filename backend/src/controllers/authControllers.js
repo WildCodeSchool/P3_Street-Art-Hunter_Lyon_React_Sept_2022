@@ -22,8 +22,9 @@ const isUserAdmin = (req, res, next) => {
   models.user
     .isUserAdmin(id)
     .then(([isAdmin]) => {
-      if (isAdmin[0].is_admin) next();
-      else res.sendStatus(401);
+      if (isAdmin[0].is_admin) {
+        next();
+      } else res.sendStatus(401);
     })
     .catch((error) => {
       console.error(error);

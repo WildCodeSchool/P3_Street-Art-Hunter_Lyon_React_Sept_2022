@@ -61,9 +61,7 @@ function EnhancedTableToolbar(props) {
           id="tableTitle"
           component="div"
         >
-          <p className="font-main-font text-[2rem]">
-            Oeuvres en attente de validation
-          </p>
+          <p className="font-main-font text-[2rem]">Photo signalée</p>
         </Typography>
       )}
 
@@ -109,34 +107,28 @@ function getComparator(order, orderBy) {
 
 const headCells = [
   {
-    id: "work_name",
+    id: "picture_url",
     numeric: false,
     disablePadding: true,
-    label: "Nom de l'oeuvre",
+    label: "Photo",
   },
   {
-    id: "longitude",
+    id: "picture_id",
     numeric: true,
     disablePadding: false,
-    label: "Longitude",
+    label: "Id",
   },
   {
-    id: "latitude",
+    id: "user_id",
     numeric: true,
     disablePadding: false,
-    label: "Latitude",
+    label: "Utilisateur",
   },
   {
-    id: "value_point",
+    id: "work_id",
     numeric: true,
     disablePadding: false,
-    label: "Valeur",
-  },
-  {
-    id: "artist_id",
-    numeric: true,
-    disablePadding: false,
-    label: "Artiste",
+    label: "Oeuvre",
   },
 ];
 
@@ -183,7 +175,7 @@ EnhancedTableHead.propTypes = {
 
 const backURL = import.meta.env.VITE_BACKEND_URL;
 
-function BoardValidation() {
+function BoardReport() {
   const { token, setId, setUser } = useCurrentUserContext();
   const navigate = useNavigate();
 
@@ -195,7 +187,7 @@ function BoardValidation() {
   myHeaders.append("Content-Type", "application/json");
 
   useEffect(() => {
-    fetch(`${backURL}/works`, { headers: myHeaders })
+    fetch(`${backURL}/pictures/reported`, { headers: myHeaders })
       .then((result) => {
         if (!isConnected(result)) {
           localStorage.clear();
@@ -275,14 +267,14 @@ function BoardValidation() {
                       selected={isItemSelected}
                       className="cursor-pointer"
                     >
-                      {row.is_validated === 0 && (
+                      {row.is_reported === 1 && (
                         <TableCell
                           component="th"
                           id={labelId}
                           scope="row"
                           padding="2"
                           onClick={() => {
-                            navigate("/Admin-Validate-Work");
+                            navigate("/Admin-Report-Picture");
                             setId(row.id);
                           }}
                         >
@@ -292,54 +284,46 @@ function BoardValidation() {
                               src={Vincent}
                               className="mr-4"
                             />
-                            {row.work_name}
+                            <img
+                              src={row.picture_url}
+                              alt={`Reported pic from ${row.user_id}`}
+                              className="h-20"
+                            />
                           </div>
                         </TableCell>
                       )}
 
-                      {row.is_validated === 0 && (
+                      {row.is_reported === 1 && (
                         <TableCell
                           align="right"
                           onClick={() => {
-                            navigate("/Admin-Validate-Work");
+                            navigate("/Admin-Report-Picture");
                             setId(row.id);
                           }}
                         >
-                          {row.longitude}
+                          {row.id}
                         </TableCell>
                       )}
-                      {row.is_validated === 0 && (
+                      {row.is_reported === 1 && (
                         <TableCell
                           align="right"
                           onClick={() => {
-                            navigate("/Admin-Validate-Work");
+                            navigate("/Admin-Report-Picture");
                             setId(row.id);
                           }}
                         >
-                          {row.latitude}
+                          {row.user_id}
                         </TableCell>
                       )}
-                      {row.is_validated === 0 && (
+                      {row.is_reported === 1 && (
                         <TableCell
                           align="right"
                           onClick={() => {
-                            navigate("/Admin-Validate-Work");
+                            navigate("/Admin-Report-Picture");
                             setId(row.id);
                           }}
                         >
-                          {row.value_point}
-                        </TableCell>
-                      )}
-
-                      {row.is_validated === 0 && (
-                        <TableCell
-                          align="right"
-                          onClick={() => {
-                            navigate("/Admin-Validate-Work");
-                            setId(row.id);
-                          }}
-                        >
-                          {row.artist_id}
+                          {row.work_id}
                         </TableCell>
                       )}
                     </TableRow>
@@ -372,4 +356,4 @@ function BoardValidation() {
   );
 }
 
-export default BoardValidation;
+export default BoardReport;
