@@ -47,10 +47,9 @@ function FavoriteCard({ fav, handleClickOpen, setImage }) {
   };
 
   const handleFavorite = () => {
-    fetch(
-      `${backURL}/favorites/${fav.userId}/${fav.picture_id}`,
-      DELETErequestOptions
-    ).catch(console.error);
+    fetch(`${backURL}/favorites/${fav.picture_id}`, DELETErequestOptions).catch(
+      console.error
+    );
   };
 
   return (

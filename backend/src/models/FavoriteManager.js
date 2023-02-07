@@ -19,10 +19,10 @@ class FavoriteManager extends AbstractManager {
     );
   }
 
-  deleteFavorite(favorite) {
+  deleteFavorite(userId, picture_id) {
     return this.connection.query(
       `delete from ${this.table} where user_id = ? and picture_id = ? `,
-      [favorite.userId, favorite.picture_id]
+      [userId, picture_id]
     );
   }
 

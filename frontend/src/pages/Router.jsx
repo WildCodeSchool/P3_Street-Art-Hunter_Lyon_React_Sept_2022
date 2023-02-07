@@ -9,7 +9,6 @@ import Registration from "./Global/ Registration";
 import Connexion from "./Global/Connexion";
 import Error from "./Global/Error";
 import Protected from "./Protected";
-import Badges from "./User/Badges";
 import Camera from "./User/Camera";
 import Contact from "./User/Contact";
 import CreateWork from "./User/CreateWork";
@@ -240,14 +239,6 @@ export default function Router() {
             element={
               <Protected verifyCondition={user.id}>
                 <MyGallery />
-              </Protected>
-            }
-          />
-          <Route
-            path="/badges"
-            element={
-              <Protected verifyCondition={user.id}>
-                <Badges />
               </Protected>
             }
           />

@@ -66,20 +66,24 @@ function PictureCardContainer({ picture, handleClickOpen, setImage }) {
       });
   }, []);
 
-  const handleFavorite = () => {
+  const handleHeart = () => {
     setActive(!active);
     setPictureID(picture.id);
     setUserID(user.id);
+  };
 
-    if (active) {
-      setColor("secondary");
-      fetch(`${backURL}/favorites`, requestOptions).catch(console.error);
-    } else {
-      setColor("");
-      fetch(`${backURL}/favorites/${picture_id}`, DELETErequestOptions).catch(
-        console.error
-      );
-    }
+  const handleFavorite = async () => {
+    handleHeart().then(() => {
+      if (active) {
+        setColor("secondary");
+        fetch(`${backURL}/favorites`, requestOptions).catch(console.error);
+      } else {
+        setColor("");
+        fetch(`${backURL}/favorites/${picture.id}`, DELETErequestOptions).catch(
+          console.error
+        );
+      }
+    });
   };
 
   return (

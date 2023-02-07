@@ -8,6 +8,7 @@ import { useCurrentResponsiveContext } from "../../contexts/responsiveContext";
 
 function Scores() {
   const { isMobile, isTablet, isLittleMobile } = useCurrentResponsiveContext();
+
   return (
     <div>
       {isMobile && (
@@ -19,7 +20,6 @@ function Scores() {
                 <td className="w-[25vw]" />
                 <td className="w-[35vw]">PSEUDO</td>
                 <td className="w-[20vw]">POINTS</td>
-                <td className="w-[20vw]">BADGES</td>
               </tr>
             </thead>
           </table>
