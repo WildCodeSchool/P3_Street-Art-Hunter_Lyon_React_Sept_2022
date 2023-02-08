@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import isConnected from "@services/isConnected";
 import Pierre from "../../../assets/Pierre.png";
 import { useCurrentUserContext } from "../../../contexts/userContext";
 import { useCurrentResponsiveContext } from "../../../contexts/responsiveContext";
@@ -8,13 +10,23 @@ const backURL = import.meta.env.VITE_BACKEND_URL;
 export default function MyScore() {
   const [userScoreData, setUserScoreData] = useState([]);
   const { isMobile, isTablet, isLittleMobile } = useCurrentResponsiveContext();
-  const { user, token } = useCurrentUserContext();
+  const { user, token, setUser } = useCurrentUserContext();
+
+  const navigate = useNavigate();
 
   const myHeaders = new Headers({
     Authorization: `Bearer ${token}`,
   });
   useEffect(() => {
     fetch(`${backURL}/score/${user.id}`, { headers: myHeaders })
+      .then((result) => {
+        if (!isConnected(result)) {
+          localStorage.clear();
+          setUser("");
+          navigate("/");
+        }
+        return result;
+      })
       .then((result) => result.json())
       .then((results) => {
         setUserScoreData(results[0]);

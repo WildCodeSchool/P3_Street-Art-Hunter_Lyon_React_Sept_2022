@@ -3,6 +3,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { toast, Toaster } from "react-hot-toast";
 import IconButton from "@mui/material/IconButton";
+import isConnected from "@services/isConnected";
 
 import Button from "@mui/material/Button";
 import SaveIcon from "@mui/icons-material/Save";
@@ -137,6 +138,15 @@ function UserModif() {
 
   useEffect(() => {
     fetch(`${backURL}/users/${id}`, GETrequestOptions)
+      .then((result) => {
+        if (!isConnected(result)) {
+          localStorage.clear();
+          navigate("/");
+          setUser("");
+          navigate("/");
+        }
+        return result;
+      })
       .then((result) => result.json())
       .then((result) => {
         setUser(result);

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import CardMedia from "@mui/material/CardMedia";
+import isConnected from "@services/isConnected";
+import { useNavigate } from "react-router-dom";
 
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
@@ -10,9 +12,11 @@ import { useCurrentUserContext } from "../../../contexts/userContext";
 const backURL = import.meta.env.VITE_BACKEND_URL;
 
 function FavoriteCard({ fav, handleClickOpen, setImage }) {
-  const { token } = useCurrentUserContext();
+  const { token, setUser } = useCurrentUserContext();
   const [userList, setUserList] = useState([]);
   const [work, setWork] = useState([]);
+
+  const navigate = useNavigate();
 
   const date = fav.creation_date.slice(0, 10);
 
@@ -29,6 +33,14 @@ function FavoriteCard({ fav, handleClickOpen, setImage }) {
   };
   useEffect(() => {
     fetch(`${backURL}/users/${fav.user_id}`, GETrequestOptions)
+      .then((result) => {
+        if (!isConnected(result)) {
+          localStorage.clear();
+          setUser("");
+          navigate("/");
+        }
+        return result;
+      })
       .then((result) => result.json())
       .then((result) => {
         setUserList(result);

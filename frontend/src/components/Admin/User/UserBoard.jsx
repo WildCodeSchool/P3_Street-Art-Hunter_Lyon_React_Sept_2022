@@ -13,6 +13,7 @@ import TableSortLabel from "@mui/material/TableSortLabel";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
+import isConnected from "@services/isConnected";
 
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
@@ -200,7 +201,7 @@ EnhancedTableHead.propTypes = {
 const backURL = import.meta.env.VITE_BACKEND_URL;
 
 export default function UserBoard() {
-  const { token, setId } = useCurrentUserContext();
+  const { token, setId, setUser } = useCurrentUserContext();
   const navigate = useNavigate();
 
   const [rows, setRows] = useState([]);
@@ -217,6 +218,15 @@ export default function UserBoard() {
 
   useEffect(() => {
     fetch(`${backURL}/users`, GETrequestOptions)
+      .then((result) => {
+        if (!isConnected(result)) {
+          localStorage.clear();
+          navigate("/");
+          setUser("");
+          navigate("/");
+        }
+        return result;
+      })
       .then((result) => result.json())
       .then((result) => {
         setRows(result);

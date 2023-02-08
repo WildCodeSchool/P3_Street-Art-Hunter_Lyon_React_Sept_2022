@@ -1,6 +1,8 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import isConnected from "@services/isConnected";
+
+import { useNavigate, useParams } from "react-router-dom";
 import Dialog from "@mui/material/Dialog";
 import Slide from "@mui/material/Slide";
 import PictureCardContainer from "../../components/Global/Cards/PictureCardContainer";
@@ -18,11 +20,11 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 function PictByWork() {
-  const { token } = useCurrentUserContext();
+  const { token, setUser } = useCurrentUserContext();
   const [work, setWork] = useState([]);
   const [showPictureWork, setShowPictureWork] = useState([]);
   const { workId } = useParams();
-
+  const navigate = useNavigate();
   const [image, setImage] = useState("");
 
   const [open, setOpen] = React.useState(false);
@@ -47,6 +49,14 @@ function PictByWork() {
 
   useEffect(() => {
     fetch(`${backURL}/${workId}/pictures`, GETrequestOptions)
+      .then((result) => {
+        if (!isConnected(result)) {
+          localStorage.clear();
+          setUser("");
+          navigate("/");
+        }
+        return result;
+      })
       .then((result) => result.json())
       .then((result) => {
         setShowPictureWork(result);

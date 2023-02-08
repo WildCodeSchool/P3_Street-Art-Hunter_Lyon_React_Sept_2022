@@ -19,6 +19,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useNavigate } from "react-router-dom";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import isConnected from "../../../services/isConnected";
 import { useCurrentUserContext } from "../../../contexts/userContext";
 
 let theme = createTheme({
@@ -43,7 +44,7 @@ theme = createTheme(theme, {
 const backURL = import.meta.env.VITE_BACKEND_URL;
 
 function WorkModif() {
-  const { token, id } = useCurrentUserContext();
+  const { token, id, setUser } = useCurrentUserContext();
 
   const [openDelete, setOpenDelete] = React.useState(false);
   const [openConfirm, setOpenConfirm] = React.useState(false);
@@ -119,6 +120,15 @@ function WorkModif() {
 
   useEffect(() => {
     fetch(`${backURL}/works/${id}`, GETrequestOptions)
+      .then((result) => {
+        if (!isConnected(result)) {
+          localStorage.clear();
+          navigate("/");
+          setUser("");
+          navigate("/");
+        }
+        return result;
+      })
       .then((result) => result.json())
       .then((result) => {
         setShowWork(result);
