@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { toast, Toaster } from "react-hot-toast";
+import isConnected from "@services/isConnected";
 
 import { useCurrentPhotoContext } from "../../../contexts/photoContext";
 
@@ -9,7 +10,7 @@ import { useCurrentUserContext } from "../../../contexts/userContext";
 const backURL = import.meta.env.VITE_BACKEND_URL;
 
 function WorkForm({ markerLatitude, markerLongitude }) {
-  const { token, user } = useCurrentUserContext();
+  const { token, user, setUser } = useCurrentUserContext();
   const { contextPhoto } = useCurrentPhotoContext();
 
   const [name, setName] = useState("Nom Inconnu");
@@ -33,6 +34,15 @@ function WorkForm({ markerLatitude, markerLongitude }) {
   });
   useEffect(() => {
     fetch(`${backURL}/artists`, { headers: myHeaders })
+      .then((result) => {
+        if (!isConnected(result)) {
+          localStorage.clear();
+          navigate("/");
+          setUser("");
+          navigate("/");
+        }
+        return result;
+      })
       .then((result) => result.json())
       .then((result) => {
         setArtistList(result);

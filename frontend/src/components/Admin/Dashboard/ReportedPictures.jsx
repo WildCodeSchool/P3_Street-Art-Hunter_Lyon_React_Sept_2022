@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import isConnected from "@services/isConnected";
+
 import { useCurrentUserContext } from "../../../contexts/userContext";
 import art from "../../../assets/art.svg";
 
 const backURL = import.meta.env.VITE_BACKEND_URL;
 
 function ReportedPictures() {
-  const { token } = useCurrentUserContext();
+  const { token, setUser } = useCurrentUserContext();
 
   const navigate = useNavigate();
   const [allReported, setAllReported] = useState([]);
@@ -17,6 +19,15 @@ function ReportedPictures() {
 
   useEffect(() => {
     fetch(`${backURL}/pictures/reported`, { headers: myHeaders })
+      .then((result) => {
+        if (!isConnected(result)) {
+          localStorage.clear();
+          navigate("/");
+          setUser("");
+          navigate("/");
+        }
+        return result;
+      })
       .then((result) => result.json())
       .then((result) => {
         setAllReported(result);

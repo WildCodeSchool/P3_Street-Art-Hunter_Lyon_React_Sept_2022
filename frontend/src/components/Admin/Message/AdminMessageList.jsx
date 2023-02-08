@@ -1,4 +1,7 @@
+import isConnected from "@services/isConnected";
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useCurrentUserContext } from "../../../contexts/userContext";
 
 import ModalMessage from "./ModalMessage";
 
@@ -7,10 +10,25 @@ const backURL = import.meta.env.VITE_BACKEND_URL;
 export default function MessageList() {
   const [show, setShow] = useState(true);
 
+  const { setUser, token } = useCurrentUserContext();
+  const myHeaders = new Headers({
+    Authorization: `Bearer ${token}`,
+  });
+  const navigate = useNavigate();
+
   const [mess, setMess] = useState([]);
 
   useEffect(() => {
-    fetch(`${backURL}/userMessage`)
+    fetch(`${backURL}/userMessage`, { headers: myHeaders })
+      .then((result) => {
+        if (!isConnected(result)) {
+          localStorage.clear();
+          navigate("/");
+          setUser("");
+          navigate("/");
+        }
+        return result;
+      })
       .then((results) => results.json())
       .then((datas) => {
         setMess(datas);

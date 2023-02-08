@@ -1,5 +1,7 @@
+import isConnected from "@services/isConnected";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useCurrentUserContext } from "../../../contexts/userContext";
 import art from "../../../assets/art.svg";
 
 const backURL = import.meta.env.VITE_BACKEND_URL;
@@ -7,8 +9,23 @@ const backURL = import.meta.env.VITE_BACKEND_URL;
 function Validation() {
   const navigate = useNavigate();
   const [allWorks, setAllWorks] = useState([]);
+  const { setUser, token } = useCurrentUserContext();
+
+  const myHeaders = new Headers({
+    Authorization: `Bearer ${token}`,
+  });
+
   useEffect(() => {
-    fetch(`${backURL}/works`)
+    fetch(`${backURL}/works`, { headers: myHeaders })
+      .then((result) => {
+        if (!isConnected(result)) {
+          localStorage.clear();
+          navigate("/");
+          setUser("");
+          navigate("/");
+        }
+        return result;
+      })
       .then((result) => result.json())
       .then((result) => {
         setAllWorks(result);

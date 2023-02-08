@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect, useState } from "react";
-
+import isConnected from "@services/isConnected";
+import { useNavigate } from "react-router-dom";
 import Dialog from "@mui/material/Dialog";
 
 import Slide from "@mui/material/Slide";
@@ -20,7 +21,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 function GalleryAll() {
-  const { token } = useCurrentUserContext();
+  const { token, setUser } = useCurrentUserContext();
 
   const [showWork, setShowWork] = useState([]);
   const [image, setImage] = useState("");
@@ -28,6 +29,8 @@ function GalleryAll() {
 
   const [open, setOpen] = React.useState(false);
   const [openMap, setOpenMap] = React.useState(false);
+
+  const navigate = useNavigate();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -57,6 +60,14 @@ function GalleryAll() {
 
   useEffect(() => {
     fetch(`${backURL}/workswithpicture`, GETrequestOptions)
+      .then((result) => {
+        if (!isConnected(result)) {
+          localStorage.clear();
+          setUser("");
+          navigate("/");
+        }
+        return result;
+      })
       .then((result) => result.json())
       .then((result) => {
         setShowWork(result);
