@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import CardMedia from "@mui/material/CardMedia";
 
@@ -20,7 +20,7 @@ function PictureCardContainer({ picture, handleClickOpen, setImage }) {
   const [work, setWork] = useState([]);
   const [picture_id, setPictureID] = useState();
   const [userId, setUserID] = useState();
-  const [active, setActive] = useState(false);
+  const [active, setActive] = useState(picture.picture_id !== null);
   const [color, setColor] = useState("");
 
   const date = picture.creation_date.slice(0, 10);
@@ -53,6 +53,11 @@ function PictureCardContainer({ picture, handleClickOpen, setImage }) {
   };
 
   useEffect(() => {
+    if (active) setColor("secondary");
+    else {
+      setColor("");
+    }
+
     fetch(`${backURL}/users/${picture.user_id}`, GETrequestOptions)
       .then((result) => result.json())
       .then((result) => {
@@ -66,11 +71,11 @@ function PictureCardContainer({ picture, handleClickOpen, setImage }) {
       });
   }, []);
 
-  const handleFavorite = async () => {
-    setActive(!active);
-    setPictureID(picture.id);
-    setUserID(user.id);
-    if (active) {
+  const isInitialMount = useRef(true);
+  useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+    } else if (active) {
       setColor("secondary");
       fetch(`${backURL}/favorites`, requestOptions).catch(console.error);
     } else {
@@ -79,6 +84,12 @@ function PictureCardContainer({ picture, handleClickOpen, setImage }) {
         console.error
       );
     }
+  }, [active]);
+
+  const handleFavorite = () => {
+    setActive(!active);
+    setPictureID(picture.id);
+    setUserID(user.id);
   };
 
   return (
@@ -124,7 +135,7 @@ function PictureCardContainer({ picture, handleClickOpen, setImage }) {
           )}
           {picture.picture_id !== null && (
             <IconButton aria-label="map" onClick={handleFavorite}>
-              <FavoriteIcon color="secondary" />
+              <FavoriteIcon color={color} />
             </IconButton>
           )}
         </div>

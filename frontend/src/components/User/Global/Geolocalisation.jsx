@@ -13,7 +13,6 @@ function Geolocalisation() {
         (position) => {
           const { latitude, longitude } = position.coords;
           contextPhotoCoord.current = [latitude, longitude];
-          console.warn(latitude, longitude);
         },
         (err) => {
           console.error(err);
