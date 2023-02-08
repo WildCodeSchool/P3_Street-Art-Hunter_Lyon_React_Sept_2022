@@ -51,19 +51,19 @@ export default function MessageList() {
                   <tr>
                     <th
                       scope="col"
-                      className="py-3.5 pl-4 pr-3 text-left text-sm font-main-font text-gray-900 sm:pl-6"
+                      className="py-3.5 pl-4 pr-3 text-left text-xl font-main-font text-gray-900 sm:pl-6"
                     >
                       User
                     </th>
                     <th
                       scope="col"
-                      className="px-3 py-3.5 text-left text-sm font-main-font text-gray-900"
+                      className="px-3 py-3.5 text-left text-xl font-main-font text-gray-900"
                     >
                       object
                     </th>
                     <th
                       scope="col"
-                      className="px-3 py-3.5 text-left text-sm font-main-font text-gray-900"
+                      className="px-3 py-3.5 text-left text-xl font-main-font text-gray-900"
                     >
                       message
                     </th>
