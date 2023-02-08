@@ -19,7 +19,6 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useNavigate } from "react-router-dom";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import graph1 from "../../../assets/graph1.jpg";
 import { useCurrentUserContext } from "../../../contexts/userContext";
 
 let theme = createTheme({
@@ -50,6 +49,7 @@ function WorkModif() {
   const [openConfirm, setOpenConfirm] = React.useState(false);
   const [showWork, setShowWork] = React.useState([]);
   const [is_validated, setIs_Validated] = React.useState(false);
+  const [picture, setPicture] = React.useState();
 
   const navigate = useNavigate();
 
@@ -97,6 +97,15 @@ function WorkModif() {
     body,
   };
 
+  useEffect(() => {
+    fetch(`${backURL}/${id}/pictures`, GETrequestOptions)
+      .then((result) => result.json())
+      .then((result) => {
+        console.warn("result", `${backURL}/${id}/pictures`);
+        setPicture(result);
+      });
+  }, []);
+
   const handleValidation = () => {
     setIs_Validated(true);
 
@@ -116,7 +125,8 @@ function WorkModif() {
   const handleDelete = () => {
     fetch(`${backURL}/works/${id}`, DELETErequestOptions);
   };
-
+  console.warn(showWork);
+  console.warn("picture", picture);
   return (
     <ThemeProvider theme={theme}>
       <div className="pt-[12rem] w-full">
@@ -125,7 +135,7 @@ function WorkModif() {
             <div className="w-full mr-[3rem] flex flex-col justify-center items-center mb-4">
               <img
                 alt="avatar"
-                src={graph1}
+                src=""
                 className="w-[40%] h-[30vh] mb-4 rounded"
               />
             </div>

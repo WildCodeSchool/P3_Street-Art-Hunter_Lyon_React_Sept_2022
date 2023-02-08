@@ -173,11 +173,6 @@ CREATE TABLE artist
   work_id INT NOT NULL,
   user_id INT NOT NULL,
   is_reported TINYINT NULL DEFAULT NULL,
-  
-  INDEX fk_picture_work1_idx
-          (work_id ASC) VISIBLE,
-  INDEX fk_picture_user1_idx
-          (user_id ASC) VISIBLE,
   CONSTRAINT fk_picture_user1
   FOREIGN KEY
           (user_id) REFERENCES user

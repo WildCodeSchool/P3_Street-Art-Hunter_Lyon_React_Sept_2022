@@ -35,7 +35,7 @@ function WorkForm({ markerLatitude, markerLongitude }) {
         setArtistList(result);
       });
   }, []);
-
+  console.warn(artistList);
   // soumettre le formulaire
   const handleForm = (e) => {
     e.preventDefault();
