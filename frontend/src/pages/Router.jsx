@@ -37,6 +37,7 @@ import ArtWorkPictures from "./Admin/AdminArtWorkPictures";
 import PictByWork from "./User/PictByWork";
 import ProtectedDesk from "./ProtectedDesk";
 import ConnexionAdmin from "./Admin/ConnexionAdmin";
+import CreateShop from "./Admin/CreateShop";
 import { useCurrentResponsiveContext } from "../contexts/responsiveContext";
 
 export default function Router() {
@@ -130,6 +131,14 @@ export default function Router() {
             element={
               <ProtectedDesk verifyCondition={user.is_admin}>
                 <AdminShop />
+              </ProtectedDesk>
+            }
+          />
+          <Route
+            path="/Admin-Create-Shop"
+            element={
+              <ProtectedDesk verifyCondition={user.is_admin}>
+                <CreateShop />
               </ProtectedDesk>
             }
           />

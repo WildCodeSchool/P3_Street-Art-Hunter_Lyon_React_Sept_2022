@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { alpha } from "@mui/material/styles";
 import Box from "@mui/material/Box";
@@ -18,26 +18,10 @@ import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
+
 import { visuallyHidden } from "@mui/utils";
-
-function createData(pseudo, firstname, name, email, score, badge, droit) {
-  return {
-    pseudo,
-    firstname,
-    name,
-    email,
-    score,
-    badge,
-    droit,
-  };
-}
-
-const rows = [
-  createData("ladresse", 20.51611, 5.321351, "blablab"),
-  createData("the shop of shop", 20.51611, 5.321351, "blablabla"),
-  createData("Shop shop", 20.51611, 5.321351, "blablabla"),
-  createData("Shop shop", 20.51611, 5.321351, "blablabla"),
-];
+import { useNavigate } from "react-router-dom";
+import { useCurrentUserContext } from "../../../contexts/userContext";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -71,6 +55,12 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
+    id: "PictureUrl",
+    numeric: false,
+    disablePadding: true,
+    label: "Picture",
+  },
+  {
     id: "Name/Type",
     numeric: false,
     disablePadding: true,
@@ -87,12 +77,6 @@ const headCells = [
     numeric: true,
     disablePadding: false,
     label: "Latitude",
-  },
-  {
-    id: "Description",
-    numeric: false,
-    disablePadding: false,
-    label: "Description",
   },
 ];
 
@@ -160,6 +144,7 @@ EnhancedTableHead.propTypes = {
 
 function EnhancedTableToolbar(props) {
   const { numSelected } = props;
+  const navigate = useNavigate();
 
   return (
     <Toolbar
@@ -202,7 +187,11 @@ function EnhancedTableToolbar(props) {
           </IconButton>
         </Tooltip>
       ) : (
-        <IconButton>
+        <IconButton
+          onClick={() => {
+            navigate("/Admin-Create-Shop");
+          }}
+        >
           <AddIcon />
           <p className="pl-1 text-[14px]">Ajouter</p>
         </IconButton>
@@ -211,17 +200,41 @@ function EnhancedTableToolbar(props) {
   );
 }
 
+const backURL = import.meta.env.VITE_BACKEND_URL;
+
 EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
 export default function AdminShopList() {
-  const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState("email");
-  const [selected, setSelected] = React.useState([]);
-  const [page, setPage] = React.useState(0);
-  const [dense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(11);
+  const { token } = useCurrentUserContext();
+
+  const [rows, setRows] = useState([]);
+
+  const myHeaders = new Headers({
+    Authorization: `Bearer ${token}`,
+  });
+  myHeaders.append("Content-Type", "application/json");
+
+  const GETrequestOptions = {
+    method: "GET",
+    headers: myHeaders,
+  };
+
+  useEffect(() => {
+    fetch(`${backURL}/shop`, GETrequestOptions)
+      .then((result) => result.json())
+      .then((result) => {
+        setRows(result);
+      });
+  }, []);
+
+  const [order, setOrder] = useState("asc");
+  const [orderBy, setOrderBy] = useState("email");
+  const [selected, setSelected] = useState([]);
+  const [page, setPage] = useState(0);
+  const [dense] = useState(false);
+  const [rowsPerPage, setRowsPerPage] = useState(11);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -238,12 +251,12 @@ export default function AdminShopList() {
     setSelected([]);
   };
 
-  const handleClick = (event, pseudo) => {
-    const selectedIndex = selected.indexOf(pseudo);
+  const handleClick = (event, shopName) => {
+    const selectedIndex = selected.indexOf(shopName);
     let newSelected = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, pseudo);
+      newSelected = newSelected.concat(selected, shopName);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -267,7 +280,7 @@ export default function AdminShopList() {
     setPage(0);
   };
 
-  const isSelected = (pseudo) => selected.indexOf(pseudo) !== -1;
+  const isSelected = (shopName) => selected.indexOf(shopName) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -297,17 +310,17 @@ export default function AdminShopList() {
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.pseudo);
+                  const isItemSelected = isSelected(row.shopName);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.pseudo)}
+                      onClick={(event) => handleClick(event, row.shopName)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.pseudo}
+                      key={row.shopName}
                       selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
@@ -325,14 +338,11 @@ export default function AdminShopList() {
                         scope="row"
                         padding="none"
                       >
-                        {row.pseudo}
+                        <img src={row.url_shop} alt="Shoppicture" />
                       </TableCell>
-                      <TableCell align="right">{row.firstname}</TableCell>
-                      <TableCell align="right">{row.name}</TableCell>
-                      <TableCell align="right">{row.email}</TableCell>
-                      <TableCell align="right">{row.score}</TableCell>
-                      <TableCell align="right">{row.badge}</TableCell>
-                      <TableCell align="right">{row.droit}</TableCell>
+                      <TableCell align="right">{row.shopName}</TableCell>
+                      <TableCell align="right">{row.longitude}</TableCell>
+                      <TableCell align="right">{row.latitude}</TableCell>
                     </TableRow>
                   );
                 })}

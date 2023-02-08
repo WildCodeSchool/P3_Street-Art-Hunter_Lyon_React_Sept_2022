@@ -49,6 +49,7 @@ const mailControllers = require("./controllers/mailControllers");
 const passwordControllers = require("./controllers/passwordControllers");
 const userMessageControllers = require("./controllers/userMessageControllers");
 const fileControllers = require("./controllers/fileControllers");
+const shopContrellers = require("./controllers/shopControllers");
 
 router.post(
   "/forgottenpassword",
@@ -181,5 +182,35 @@ router.delete(
   favoriteControllers.destroy
 );
 router.get("/user/favoris/:user_id", pictureControllers.getUserFavorites);
+
+// Gestion des shop
+
+router.get(
+  "/shop",
+  verifyToken,
+  authControllers.isUserAdmin,
+  shopContrellers.browse
+);
+
+router.post(
+  "/shop",
+  verifyToken,
+  authControllers.isUserAdmin,
+  shopContrellers.add
+);
+
+router.put(
+  "/shop/:id",
+  verifyToken,
+  authControllers.isUserAdmin,
+  shopContrellers.modif
+);
+
+router.delete(
+  "/shop/:id",
+  verifyToken,
+  authControllers.isUserAdmin,
+  shopContrellers.destroy
+);
 
 module.exports = router;
