@@ -1,21 +1,19 @@
 import React from "react";
 import LateralMenu from "../../components/Admin/Global/LateralMenu";
 import HeaderAdmin from "../../components/Admin/Global/HeaderAdmin";
-import AdminShopList from "../../components/Admin/Shop/AdminShopList";
+import AddShop from "../../components/Admin/Shop/AddShop";
 
-function AdminShop() {
-  const nav = "/Admin-Shop";
+function CreateShop() {
+  const nav = "/ Utilisateurs / Création de l'utilisateur";
   return (
     <div className="flex h-screen w-full">
       <LateralMenu />
       <div className="flex flex-col w-full">
         <HeaderAdmin nav={nav} />
-        <div className="mt-40 pl-[25rem] w-[96%]">
-          <AdminShopList />
-        </div>
+        <AddShop />
       </div>
     </div>
   );
 }
 
-export default AdminShop;
+export default CreateShop;

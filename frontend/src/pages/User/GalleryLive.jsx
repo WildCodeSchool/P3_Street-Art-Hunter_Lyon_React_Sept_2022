@@ -90,7 +90,7 @@ export default function GalleryLive() {
 
         <Allive />
 
-        <div className=" flex justify-around flex-wrap overflow-auto">
+        <div className=" flex justify-around flex-wrap-reverse overflow-auto">
           {showPicture.map((picture) => (
             <PictureCardContainer
               key={picture.id}

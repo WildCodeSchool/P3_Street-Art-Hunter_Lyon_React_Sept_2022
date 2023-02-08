@@ -36,7 +36,7 @@ export default function MessageList() {
   }, []);
 
   return (
-    <div className="relative px-4 sm:px-6 lg:px-8 w-full mt-28">
+    <div className=" px-4 sm:px-6 lg:px-8  mt-[10rem] ml-[20rem]">
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
           <h1 className="text-xl font-main-font text-gray-900">Message reçu</h1>

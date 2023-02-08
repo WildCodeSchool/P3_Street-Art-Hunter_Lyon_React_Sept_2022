@@ -105,7 +105,7 @@ function PictureCardContainer({ picture, handleClickOpen, setImage }) {
   };
 
   return (
-    <div className="pt-2 bg-white w-[43%] h-[28vh] shadow-2xl shadow-lightblue flex justify-center items-center m-3 flex-wrap rounded-xl">
+    <div className="bg-white w-[43%] h-[28vh] shadow-2xl shadow-lightblue flex justify-center items-center m-3 flex-wrap rounded-xl">
       <div className="flex justify-bewteen items-center w-full pr-3 pl-3">
         <div className="flex flex-col justify-center items-start w-full">
           <Avatar
@@ -115,7 +115,7 @@ function PictureCardContainer({ picture, handleClickOpen, setImage }) {
           <span className="text-black text-s">{userList.pseudo}</span>
         </div>
 
-        <span variant="body2" className="text-lg text-black font-main-font">
+        <span variant="body2" className="text-lg text-black font-main-font ">
           {work.work_name}
         </span>
       </div>
