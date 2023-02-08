@@ -10,12 +10,12 @@ class FavoriteManager extends AbstractManager {
     return this.connection.query(`select * from  ${this.table}`);
   }
 
-  insert(favorite) {
+  insert(picture_id, user_id) {
     return this.connection.query(
       `INSERT INTO ${this.table}
       (user_id,
       picture_id) VALUES (?, ?)`,
-      [favorite.userId, favorite.picture_id]
+      [user_id, picture_id]
     );
   }
 
