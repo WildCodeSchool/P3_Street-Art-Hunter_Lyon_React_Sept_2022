@@ -20,7 +20,7 @@ function LateralMenu() {
       <div>
         <div
           aria-hidden="true"
-          onClick={() => navigate("/Dashboard")}
+          onClick={() => navigate("/admin")}
           className="flex justify-start items-center hover:backdrop-blur-sm hover:bg-white/10 pl-8 "
         >
           <img src={dashboard} className="w-6 h-6" alt="" />

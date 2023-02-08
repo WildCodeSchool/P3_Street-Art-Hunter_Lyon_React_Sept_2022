@@ -240,6 +240,22 @@ const putNewAvatar = (req, res) => {
       res.sendStatus(500);
     });
 };
+const updateAvatar = (req, res) => {
+  const id = req.payloads.sub;
+  const { avatar } = req;
+
+  models.user
+    .modifyAvatar(id, avatar)
+    .then(([result]) => {
+      if (result.affectedRows === 0) res.sendStatus(404);
+      else res.status(202).send({ avatar });
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
+
 module.exports = {
   browse,
   read,
@@ -257,4 +273,5 @@ module.exports = {
   addAvatar,
   pointsOnWorkValidation,
   putNewAvatar,
+  updateAvatar,
 };

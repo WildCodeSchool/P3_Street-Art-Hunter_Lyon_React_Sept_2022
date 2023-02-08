@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-lone-blocks */
-import React, { useEffect, useState } from "react";
-
+import React, { useEffect, useState, useRef } from "react";
+import { toast, Toaster } from "react-hot-toast";
 import IconButton from "@mui/material/IconButton";
 
 import Button from "@mui/material/Button";
@@ -20,7 +20,6 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useNavigate } from "react-router-dom";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import Vincent from "../../../assets/Vincent.png";
 import { useCurrentUserContext } from "../../../contexts/userContext";
 
 let theme = createTheme({
@@ -51,6 +50,7 @@ function UserModif() {
   const [openDelete, setOpenDelete] = React.useState(false);
   const [openConfirm, setOpenConfirm] = React.useState(false);
   const navigate = useNavigate();
+  const avatarRef = useRef(null);
 
   const [pseudo, setPseudo] = useState(user.pseudo);
   const [firstname, setFirstName] = useState(user.firstname);
@@ -60,6 +60,17 @@ function UserModif() {
   const [email, setEmail] = useState(user.email);
 
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
+
+  const SuccessAvatar = () => {
+    toast("Avatar modifié avec succes.", {
+      icon: "👍",
+    });
+  };
+  const ErrorAvatar = () => {
+    toast("Upload Echoué", {
+      icon: "👍",
+    });
+  };
 
   const handleClickOpenDelete = () => {
     setOpenDelete(true);
@@ -135,19 +146,51 @@ function UserModif() {
   const handleDelete = () => {
     fetch(`${backURL}/users/${id}`, DELETErequestOptions);
   };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (avatarRef.current.files[0]) {
+      // recupération des articles.
+      const myHeader = new Headers();
+      myHeader.append("Authorization", `Bearer ${token}`);
+
+      const formData = new FormData();
+      formData.append("avatar", avatarRef.current.files[0]);
+      const requestOptions = {
+        method: "PUT",
+        headers: myHeader,
+        body: formData,
+      };
+      // on appelle le back
+      fetch(`${backURL}/api/avatars/`, requestOptions)
+        .then((response) => response.json())
+        .then((results) => {
+          // maj avatar
+          setUser({ ...user, avatar: results.avatar });
+          console.warn(results.avatar);
+          SuccessAvatar();
+        })
+        .catch((error) => {
+          console.error(error);
+          ErrorAvatar();
+        });
+    }
+  };
 
   return (
     <ThemeProvider theme={theme}>
       <div className="pt-[1rem] w-full ">
+        <div>
+          <Toaster position="bottom-center" reverseOrder />
+        </div>
         <form
           className="w-full flex justify-center items-center"
-          onSubmit={handleForm}
+          onSubmit={handleSubmit}
         >
           <div className="flex flex-col justify-center items-center">
             <div className="w-full mr-[3rem] flex flex-col justify-center items-center mb-2">
               <img
                 alt="avatar"
-                src={Vincent}
+                src={`${backURL}/api/avatars/${user.avatar}`}
                 className="bg-black p-1 w-[15%] h-[12vh] rounded-full mb-2 "
               />
               <div className="flex items-center justify-center mb-2 w-full">
@@ -156,14 +199,39 @@ function UserModif() {
                   aria-label="upload picture"
                   component="label"
                 >
-                  <input hidden accept="image/*" type="file" />
+                  <input
+                    hidden
+                    name="avatar"
+                    type="file"
+                    ref={avatarRef}
+                    id="file"
+                  />
+
                   <EditIcon />
                 </IconButton>
                 <IconButton aria-label="delete" color="secondary">
                   <DeleteIcon />
                 </IconButton>
               </div>
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                startIcon={<DoneIcon />}
+                autoFocus
+              >
+                Upload Avatar
+              </Button>
             </div>
+          </div>
+        </form>
+      </div>
+      <div className="pt-[1rem] w-full ">
+        <form
+          className="w-full flex justify-center items-center"
+          onSubmit={handleForm}
+        >
+          <div className="flex flex-col justify-center items-center">
             <div className="flex flex-col justify-center items-start mb-4">
               <label className="font-main-font text-2xl" htmlFor="pseudo">
                 Pseudo

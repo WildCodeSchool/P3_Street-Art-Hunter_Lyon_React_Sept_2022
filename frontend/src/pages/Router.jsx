@@ -9,7 +9,6 @@ import Registration from "./Global/ Registration";
 import Connexion from "./Global/Connexion";
 import Error from "./Global/Error";
 import Protected from "./Protected";
-import Badges from "./User/Badges";
 import Camera from "./User/Camera";
 import Contact from "./User/Contact";
 import CreateWork from "./User/CreateWork";
@@ -39,6 +38,8 @@ import ProtectedDesk from "./ProtectedDesk";
 import ConnexionAdmin from "./Admin/ConnexionAdmin";
 import CreateShop from "./Admin/CreateShop";
 import { useCurrentResponsiveContext } from "../contexts/responsiveContext";
+import BoardReported from "./Admin/BoardReported";
+import AdminReportPicture from "./Admin/AdminReportPicture";
 
 export default function Router() {
   const { user } = useCurrentUserContext();
@@ -158,6 +159,22 @@ export default function Router() {
               </ProtectedDesk>
             }
           />
+          <Route
+            path="/Admin-Reported"
+            element={
+              <ProtectedDesk verifyCondition={user.is_admin}>
+                <BoardReported />
+              </ProtectedDesk>
+            }
+          />
+          <Route
+            path="/Admin-Report-Picture"
+            element={
+              <ProtectedDesk verifyCondition={user.is_admin}>
+                <AdminReportPicture />
+              </ProtectedDesk>
+            }
+          />
         </>
       )}
 
@@ -231,14 +248,6 @@ export default function Router() {
             element={
               <Protected verifyCondition={user.id}>
                 <MyGallery />
-              </Protected>
-            }
-          />
-          <Route
-            path="/badges"
-            element={
-              <Protected verifyCondition={user.id}>
-                <Badges />
               </Protected>
             }
           />
@@ -323,6 +332,7 @@ export default function Router() {
               <Route path="/Admin-Modif-User" element={<ModifUser />} />
               <Route path="/Admin-Create-User" element={<CreateUser />} />
               <Route path="/Admin-Works" element={<BoardWork />} />
+
               <Route
                 path="/Admin-Validate-Work"
                 element={<AdminValidateWork />}

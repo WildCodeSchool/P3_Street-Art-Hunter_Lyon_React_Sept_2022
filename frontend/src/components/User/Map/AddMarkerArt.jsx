@@ -39,16 +39,18 @@ function AddMarkerArt({ layerGroup }) {
   const map = useMap();
   useEffect(() => {
     showWork.forEach((element) => {
-      const coordinate = [element.latitude, element.longitude];
-      const [lat, lng] = coordinate;
-      L.marker([lat, lng], { icon })
-        .bindPopup(
-          ReactDOMServer.renderToString(
-            <CustomReactPopup showWork={showWork} />
+      if (element.is_validated) {
+        const coordinate = [element.latitude, element.longitude];
+        const [lat, lng] = coordinate;
+        L.marker([lat, lng], { icon })
+          .bindPopup(
+            ReactDOMServer.renderToString(
+              <CustomReactPopup showWork={showWork} />
+            )
           )
-        )
-        .openPopup()
-        .addTo(layerGroup);
+          .openPopup()
+          .addTo(layerGroup);
+      }
     });
 
     map.addLayer(layerGroup);

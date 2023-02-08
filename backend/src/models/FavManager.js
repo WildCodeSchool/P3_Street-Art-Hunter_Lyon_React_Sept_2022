@@ -27,6 +27,13 @@ class FavManager extends AbstractManager {
       id,
     ]);
   }
+
+  deleteByPictureId(pictureId) {
+    return this.connection.query(
+      `delete from ${this.table} where picture_id = ?`,
+      [pictureId]
+    );
+  }
 }
 
 module.exports = FavManager;

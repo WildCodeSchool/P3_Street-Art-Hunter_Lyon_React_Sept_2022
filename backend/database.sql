@@ -62,7 +62,7 @@ CREATE TABLE artist
   hashedPassword VARCHAR
       (100) NOT NULL,
   avatar VARCHAR
-      (150) NULL DEFAULT "https://www.avatarsinpixels.com/Public/images/previews/minipix4.png",
+      (150) NULL DEFAULT NULL,
   passwordtoken VARCHAR
       (100) NULL DEFAULT NULL
   );

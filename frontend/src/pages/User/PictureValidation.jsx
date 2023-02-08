@@ -144,7 +144,9 @@ function PictureValidation() {
             className="custom-popup"
           >
             {allWorks
-              .filter((work) => work.latitude && work.longitude)
+              .filter(
+                (work) => work.latitude && work.longitude && work.is_validated
+              )
               .map((work) => (
                 <Marker
                   key={work.id}

@@ -19,6 +19,20 @@ class UserManager extends AbstractManager {
     );
   }
 
+  findAccountWithEmail(email) {
+    return this.connection.query(
+      `select id from  ${this.table} where email = ?`,
+      [email]
+    );
+  }
+
+  findAccountWithPseudo(pseudo) {
+    return this.connection.query(
+      `select id from  ${this.table} where pseudo = ?`,
+      [pseudo]
+    );
+  }
+
   findAll() {
     return this.connection.query(
       `select id, firstname, lastname, scorepoint, pseudo, is_admin, email, avatar from  ${this.table}`
@@ -157,10 +171,17 @@ class UserManager extends AbstractManager {
   }
 
   // update avatar user
-  modifyAvatar(user) {
+  modifyAvatar(id, avatar) {
     return this.connection.query(
       `update ${this.table} set avatar = ? where id = ?`,
-      [user.url, user.id]
+      [avatar, id]
+    );
+  }
+
+  selectEmail(email) {
+    return this.connection.query(
+      `select * from ${this.table} where email = ?`,
+      [email]
     );
   }
 }

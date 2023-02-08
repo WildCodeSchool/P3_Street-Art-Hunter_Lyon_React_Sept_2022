@@ -8,14 +8,18 @@ const backURL = import.meta.env.VITE_BACKEND_URL;
 export default function MyScore() {
   const [userScoreData, setUserScoreData] = useState([]);
   const { isMobile, isTablet, isLittleMobile } = useCurrentResponsiveContext();
-  const { user } = useCurrentUserContext();
+  const { user, token } = useCurrentUserContext();
+
+  const myHeaders = new Headers({
+    Authorization: `Bearer ${token}`,
+  });
   useEffect(() => {
-    fetch(`${backURL}/score/${user.id}`)
+    fetch(`${backURL}/score/${user.id}`, { headers: myHeaders })
       .then((result) => result.json())
       .then((results) => {
         setUserScoreData(results[0]);
       });
-    fetch(`${backURL}/rank/${user.id}`)
+    fetch(`${backURL}/rank/${user.id}`, { headers: myHeaders })
       .then((result) => result.json())
       .then((data) => {
         setUserScoreData(data[0]);

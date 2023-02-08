@@ -66,20 +66,18 @@ function PictureCardContainer({ picture, handleClickOpen, setImage }) {
       });
   }, []);
 
-  const handleFavorite = () => {
+  const handleFavorite = async () => {
     setActive(!active);
     setPictureID(picture.id);
     setUserID(user.id);
-
     if (active) {
       setColor("secondary");
       fetch(`${backURL}/favorites`, requestOptions).catch(console.error);
     } else {
       setColor("");
-      fetch(
-        `${backURL}/favorites/${userId}/${picture_id}`,
-        DELETErequestOptions
-      ).catch(console.error);
+      fetch(`${backURL}/favorites/${picture.id}`, DELETErequestOptions).catch(
+        console.error
+      );
     }
   };
 
@@ -106,7 +104,7 @@ function PictureCardContainer({ picture, handleClickOpen, setImage }) {
         onClick={() => {
           handleClickOpen();
 
-          setImage(picture.picture_url);
+          setImage(picture);
         }}
       />
       <div className="flex flex-col w-full">
