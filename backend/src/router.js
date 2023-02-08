@@ -57,6 +57,7 @@ router.post(
   authControllers.getUserByEmailWithPasswordAndPassToNext,
   verifyPassword
 );
+const shopContrellers = require("./controllers/shopControllers");
 
 router.post(
   "/forgottenpassword",
@@ -225,6 +226,36 @@ router.get(
   "/user/favoris/:user_id",
   verifyToken,
   pictureControllers.getUserFavorites
+);
+
+// Gestion des shop
+
+router.get(
+  "/shop",
+  verifyToken,
+  authControllers.isUserAdmin,
+  shopContrellers.browse
+);
+
+router.post(
+  "/shop",
+  verifyToken,
+  authControllers.isUserAdmin,
+  shopContrellers.add
+);
+
+router.put(
+  "/shop/:id",
+  verifyToken,
+  authControllers.isUserAdmin,
+  shopContrellers.modif
+);
+
+router.delete(
+  "/shop/:id",
+  verifyToken,
+  authControllers.isUserAdmin,
+  shopContrellers.destroy
 );
 
 module.exports = router;

@@ -25,7 +25,7 @@ function Home() {
   return (
     <div>
       {isDesktop && (
-        <div className="bg-center bg-desk-background bg-cover bg-no-repeat w-[100%] h-[100vh] flex justify-center items-center">
+        <div className="bg-center bg-desk-background bg-cover bg-no-repeat w-[100%] h-[100vh] max-h-screen flex justify-center items-center">
           <img
             src={cloud}
             alt=""
@@ -66,16 +66,16 @@ function Home() {
       )}
       {isMobile && (
         <div className="bg-center bg-home-image bg-cover w-full h-auto min-h-screen">
-          <div className="flex justify-center items-start pt-[16rem] pb-3">
-            <div className=" bg-center bg-logo-home bg-contain bg-no-repeat w-full h-[50vh] flicker-3" />
+          <div className="flex justify-center items-start pt-[14rem] pb-3">
+            <div className=" bg-center bg-logo-home bg-contain bg-no-repeat w-full h-[45vh] flicker-3" />
           </div>
           <ConnectLandpage />
         </div>
       )}
       {isLittleMobile && (
-        <div className="bg-center bg-home-image bg-cover w-full h-screen">
-          <div className="flex justify-center items-start pt-[10rem] pb-3">
-            <div className=" bg-center bg-logo-home bg-contain bg-no-repeat w-full h-[50vh] flicker-3" />
+        <div className="bg-center bg-home-image bg-cover w-full h-auto min-h-screen">
+          <div className="flex justify-center items-start pt-[14rem] pb-3">
+            <div className=" bg-center bg-logo-home bg-contain bg-no-repeat w-full h-[45vh] flicker-3" />
           </div>
           <ConnectLandpage />
         </div>

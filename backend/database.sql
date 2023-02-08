@@ -62,7 +62,7 @@ CREATE TABLE artist
   hashedPassword VARCHAR
       (100) NOT NULL,
   avatar VARCHAR
-      (150) NULL DEFAULT "https://www.avatarsinpixels.com/Public/images/previews/minipix4.png",
+      (150) NULL DEFAULT NULL,
   passwordtoken VARCHAR
       (100) NULL DEFAULT NULL
   );
@@ -244,3 +244,13 @@ CREATE TABLE artist
               (9, "https://res.cloudinary.com/dbl4g91fo/image/upload/v1675074136/com%C3%A9di2_ahovty.jpg", DATE '2022-03-12', 1, 3, 2),
               (10, "https://res.cloudinary.com/dbl4g91fo/image/upload/v1675074356/com%C3%A9die_dz3idg.jpg",DATE '2022-06-14', 1, 3, 3),
               (11, "https://res.cloudinary.com/dbl4g91fo/image/upload/v1675074064/birdy1_fz3jop.jpg",DATE '2022-07-11', 1, 4, 2);
+
+
+
+              INSERT INTO shop
+
+                (id, shop_name, url_shop, longitude, latitude)
+              VALUES
+                (1, "Monsieur Spray", "https://res.cloudinary.com/dbl4g91fo/image/upload/v1675091104/t%C3%A9l%C3%A9chargement_xcndrj.jpg", 4.854767, 45.753135),
+                (2, "Naturelles Substances ", "https://res.cloudinary.com/dbl4g91fo/image/upload/v1675091281/shop2_xbfomx.jpg", 4.832208, 45.752384),
+                (3, "Farrow & Ball", "https://res.cloudinary.com/dbl4g91fo/image/upload/v1675091656/shop3_bavnou.jpg", 4.842250, 45.760380);
