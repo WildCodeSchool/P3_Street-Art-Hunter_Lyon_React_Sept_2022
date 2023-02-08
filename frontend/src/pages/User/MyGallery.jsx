@@ -45,6 +45,11 @@ function MyGallery() {
     <div className="fixed bg-main-background bg-cover w-full h-screen">
       <HeaderWithBurger />
       <div className="flex flex-wrap justify-around mt-[6rem]">
+        {showPictureGal.length === 0 && (
+          <div className="text-white font-main-font text-4xl mb-5 mt-[14rem] mx-8 text-center">
+            Capture des Photos pour les voir apparaitres ici !{" "}
+          </div>
+        )}
         {showPictureGal.map((picture) => (
           <UserCardContainer key={picture.id} picture={picture} />
         ))}
