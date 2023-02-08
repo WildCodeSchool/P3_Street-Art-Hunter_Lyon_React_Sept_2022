@@ -234,7 +234,7 @@ router.delete(
 );
 
 // Gestion des favoris
-router.post("/favorites", verifyToken, favoriteControllers.add);
+router.post("/favorites/:picture_id", verifyToken, favoriteControllers.add);
 router.delete(
   "/favorites/:picture_id",
   verifyToken,
