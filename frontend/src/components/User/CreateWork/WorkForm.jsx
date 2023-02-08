@@ -28,8 +28,11 @@ function WorkForm({ markerLatitude, markerLongitude }) {
     );
   };
 
+  const myHeaders = new Headers({
+    Authorization: `Bearer ${token}`,
+  });
   useEffect(() => {
-    fetch(`${backURL}/artists`)
+    fetch(`${backURL}/artists`, { headers: myHeaders })
       .then((result) => result.json())
       .then((result) => {
         setArtistList(result);
@@ -40,9 +43,7 @@ function WorkForm({ markerLatitude, markerLongitude }) {
   const handleForm = (e) => {
     e.preventDefault();
     if (name === "") setName("Nom Inconnu");
-    const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
-    myHeaders.append("authorization", `Bearer ${token}`);
     const body = JSON.stringify({
       name,
       artistId,

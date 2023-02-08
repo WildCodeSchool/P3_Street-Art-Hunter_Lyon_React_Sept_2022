@@ -97,15 +97,11 @@ CREATE TABLE artist
   value_point INT NULL DEFAULT NULL,
   is_validated TINYINT NULL DEFAULT NULL,
   artist_id INT NOT NULL,
-  INDEX fk_work_artist1_idx
-        (artist_id ASC) VISIBLE,
   CONSTRAINT fk_work_artist1
   FOREIGN KEY
         (artist_id) REFERENCES artist
         (id),
   added_by INT NOT NULL,
-  INDEX fk_work_user1_idx
-        (added_by ASC) VISIBLE,
   CONSTRAINT fk_work_user1
   FOREIGN KEY
         (added_by) REFERENCES user
@@ -129,10 +125,7 @@ CREATE TABLE artist
   is_validated TINYINT NULL DEFAULT NULL,
   work_id INT NOT NULL,
   user_id INT NOT NULL,
-  INDEX fk_picture_work1_idx
-          (work_id ASC) VISIBLE,
-  INDEX fk_picture_user1_idx
-          (user_id ASC) VISIBLE,
+  is_reported INT NOT NULL DEFAULT 0,
   CONSTRAINT fk_picture_user1
   FOREIGN KEY
           (user_id) REFERENCES user
@@ -215,8 +208,7 @@ CREATE TABLE artist
               (500) NOT NULL,
  
   user_id INT NOT NULL,
-  INDEX fk_message_user1_idx
-              (user_id ASC) VISIBLE,
+
   CONSTRAINT fk_message_user1
   FOREIGN KEY
               (user_id) REFERENCES user
