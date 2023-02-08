@@ -11,7 +11,7 @@ import { useCurrentUserContext } from "../../../contexts/userContext";
 
 const backURL = import.meta.env.VITE_BACKEND_URL;
 
-function FavoriteCard({ fav, handleClickOpen, setImage }) {
+function FavoriteCard({ fav, handleClickOpen, setImage, setDeletedFavorite }) {
   const { token, setUser } = useCurrentUserContext();
   const [userList, setUserList] = useState([]);
   const [work, setWork] = useState([]);
@@ -62,10 +62,11 @@ function FavoriteCard({ fav, handleClickOpen, setImage }) {
     fetch(`${backURL}/favorites/${fav.picture_id}`, DELETErequestOptions).catch(
       console.error
     );
+    setDeletedFavorite(fav);
   };
 
   return (
-    <div className="pt-2 bg-white w-[43%] h-[28vh] shadow-2xl shadow-lightblue flex justify-center items-center m-3 flex-wrap rounded-xl">
+    <div className="pt-2 bg-white w-[43%] h-[28vh] min-h-[15rem] shadow-2xl shadow-lightblue flex justify-center items-center m-3 flex-wrap rounded-xl">
       <div className="flex justify-bewteen items-center w-full pr-3 pl-3">
         <div className="flex flex-col justify-center items-start w-full">
           <Avatar

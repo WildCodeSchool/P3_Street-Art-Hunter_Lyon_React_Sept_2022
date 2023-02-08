@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect, useState } from "react";
 import isConnected from "@services/isConnected";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import Dialog from "@mui/material/Dialog";
 import Slide from "@mui/material/Slide";
 import HeaderWithBurger from "../../components/User/Global/HeaderWithBurger";
@@ -26,6 +26,8 @@ function Favoris() {
 
   const [open, setOpen] = React.useState(false);
 
+  const [deletedFavorite, setDeletedFavorite] = useState(false);
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -43,6 +45,10 @@ function Favoris() {
     method: "GET",
     headers: myHeaders,
   };
+
+  useEffect(() => {
+    setShowFav(showFav.filter((fav) => fav.id !== deletedFavorite.id));
+  }, [deletedFavorite]);
 
   useEffect(() => {
     fetch(`${backURL}/user/favoris/${user.id}`, GETrequestOptions)
@@ -71,8 +77,20 @@ function Favoris() {
               fav={fav}
               handleClickOpen={handleClickOpen}
               setImage={setImage}
+              deletedFavorite={deletedFavorite}
+              setDeletedFavorite={setDeletedFavorite}
             />
           ))}
+        </div>
+        <div className="w-full flex justify-center">
+          <NavLink to="/camera">
+            <button
+              type="button"
+              className="bg-gradient-to-tl from-pink to-lightblue rounded-3xl font-main-font text-[32px] py-1 px-6  mt-5 w-[40%] min-w-fit"
+            >
+              RETOUR
+            </button>
+          </NavLink>
         </div>
       </div>
       <Dialog
