@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import CardMedia from "@mui/material/CardMedia";
@@ -61,20 +61,21 @@ function PictureCardContainer({ picture, handleClickOpen, setImage }) {
     else {
       setColor("");
     }
-
-    fetch(`${backURL}/users/${picture.user_id}`, GETrequestOptions)
-      .then((result) => {
-        if (!isConnected(result)) {
-          localStorage.clear();
-          setUser("");
-          navigate("/");
-        }
-        return result;
-      })
-      .then((result) => result.json())
-      .then((result) => {
-        setUserList(result);
-      });
+    if (picture.userId) {
+      fetch(`${backURL}/users/${picture.user_id}`, GETrequestOptions)
+        .then((result) => {
+          if (!isConnected(result)) {
+            localStorage.clear();
+            setUser("");
+            navigate("/");
+          }
+          return result;
+        })
+        .then((result) => result.json())
+        .then((result) => {
+          setUserList(result);
+        });
+    }
 
     fetch(`${backURL}/works/${picture.work_id}`, GETrequestOptions)
       .then((result) => result.json())
@@ -83,25 +84,24 @@ function PictureCardContainer({ picture, handleClickOpen, setImage }) {
       });
   }, []);
 
-  const isInitialMount = useRef(true);
-  useEffect(() => {
-    if (isInitialMount.current) {
-      isInitialMount.current = false;
-    } else if (active) {
+  const handleFavorite = () => {
+    if (!active) {
       setColor("secondary");
-      fetch(`${backURL}/favorites`, requestOptions).catch(console.error);
+      fetch(`${backURL}/favorites/${picture.id}`, requestOptions)
+        .then(() => {
+          setActive(true);
+          setPictureID(picture.id);
+          setUserID(user.id);
+        })
+        .catch(console.error);
     } else {
       setColor("");
-      fetch(`${backURL}/favorites/${picture.id}`, DELETErequestOptions).catch(
-        console.error
-      );
+      fetch(`${backURL}/favorites/${picture.id}`, DELETErequestOptions)
+        .then(() => {
+          setActive(false);
+        })
+        .catch(console.error);
     }
-  }, [active]);
-
-  const handleFavorite = () => {
-    setActive(!active);
-    setPictureID(picture.id);
-    setUserID(user.id);
   };
 
   return (
@@ -115,7 +115,10 @@ function PictureCardContainer({ picture, handleClickOpen, setImage }) {
           <span className="text-black text-s">{userList.pseudo}</span>
         </div>
 
-        <span variant="body2" className="text-lg text-black font-main-font">
+        <span
+          variant="body2"
+          className="text-lg text-black font-main-font w-40"
+        >
           {work.work_name}
         </span>
       </div>

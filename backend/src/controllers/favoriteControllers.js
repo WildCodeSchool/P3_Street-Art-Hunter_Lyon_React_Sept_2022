@@ -14,10 +14,11 @@ const browse = (req, res) => {
 };
 
 const add = (req, res) => {
-  const favorite = req.body;
+  const { picture_id } = req.params;
+  const user_id = req.payloads.sub;
 
   models.user_has_fav_picture
-    .insert(favorite)
+    .insert(picture_id, user_id)
     .then(([result]) => {
       res.location(`/favorites/${result.insertId}`).sendStatus(201);
     })
