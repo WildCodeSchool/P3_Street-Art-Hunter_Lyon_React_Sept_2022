@@ -62,6 +62,10 @@ function Favoris() {
       });
   }, []);
 
+  useEffect(() => {
+    setShowFav(showFav.filter((fav) => fav.id !== deletedFavorite.id));
+  }, [deletedFavorite]);
+
   return (
     <div>
       <div className="bg-main-background bg-cover w-full h-screen">
