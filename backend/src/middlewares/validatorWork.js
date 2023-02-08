@@ -1,6 +1,7 @@
 const Joi = require("joi");
 
 const profileSchema = Joi.object({
+  image: Joi.string().required(),
   name: Joi.string().min(3).max(100).required(),
   artistId: Joi.number().max(100).required(),
   latitude: Joi.number().max(100).required(),
@@ -11,11 +12,20 @@ const profileSchema = Joi.object({
 });
 
 const validatorWork = (req, res, next) => {
-  const { name, artistId, latitude, longitude, validated, value, userId } =
-    req.body;
+  const {
+    image,
+    name,
+    artistId,
+    latitude,
+    longitude,
+    validated,
+    value,
+    userId,
+  } = req.body;
 
   const { error } = profileSchema.validate(
     {
+      image,
       name,
       artistId,
       latitude,

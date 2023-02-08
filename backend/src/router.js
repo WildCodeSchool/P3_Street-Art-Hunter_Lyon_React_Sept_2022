@@ -143,9 +143,21 @@ router.put(
   badgeControllers.edit
 );
 
+const { validatorUserMessage } = require("./middlewares/validatorUserMessage");
+
 // Gestion message
-router.post("/userMessage", verifyToken, userMessageControllers.add);
-router.get("/userMessage", verifyToken, userMessageControllers.getMessage);
+router.post(
+  "/userMessage",
+  verifyToken,
+  validatorUserMessage,
+  userMessageControllers.add
+);
+router.get(
+  "/userMessage",
+  verifyToken,
+  validatorUserMessage,
+  userMessageControllers.getMessage
+);
 
 // Gestion des artistes
 router.get("/artists", verifyToken, artistControllers.browse);
@@ -177,6 +189,7 @@ router.post(
 router.put(
   "/works/:id",
   verifyToken,
+  validatorWork,
   workControllers.editAndNext,
   userControllers.pointsOnWorkValidation
 );

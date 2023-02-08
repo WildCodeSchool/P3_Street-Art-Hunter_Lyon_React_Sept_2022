@@ -7,6 +7,7 @@ const backURL = import.meta.env.VITE_BACKEND_URL;
 function Validation() {
   const navigate = useNavigate();
   const [allWorks, setAllWorks] = useState([]);
+
   useEffect(() => {
     fetch(`${backURL}/works`)
       .then((result) => result.json())

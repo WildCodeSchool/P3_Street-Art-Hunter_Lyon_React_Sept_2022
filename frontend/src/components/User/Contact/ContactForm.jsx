@@ -34,7 +34,7 @@ function ContactForm() {
         body,
       };
       e.preventDefault();
-      // on créé un nouvel utilisateur et on reutilise
+      // on envoi le message dans le back
       fetch(`${backURL}/userMessage`, requestOptions)
         .then(() => {
           setDoneMessage(true);
