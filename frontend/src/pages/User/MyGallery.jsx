@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import isConnected from "@services/isConnected";
+import { useNavigate } from "react-router-dom";
 
 import HeaderWithBurger from "../../components/User/Global/HeaderWithBurger";
 import UserCardContainer from "../../components/Global/Cards/PictureCardContainer";
@@ -7,9 +9,11 @@ import { useCurrentUserContext } from "../../contexts/userContext";
 const backURL = import.meta.env.VITE_BACKEND_URL;
 
 function MyGallery() {
-  const { user, token } = useCurrentUserContext();
+  const { user, token, setUser } = useCurrentUserContext();
 
   const [showPictureGal, setShowPictureGal] = useState([]);
+
+  const navigate = useNavigate();
 
   const myHeaders = new Headers({
     Authorization: `Bearer ${token}`,
@@ -23,6 +27,14 @@ function MyGallery() {
 
   useEffect(() => {
     fetch(`${backURL}/users/${user.id}/pictures`, GETrequestOptions)
+      .then((result) => {
+        if (!isConnected(result)) {
+          localStorage.clear();
+          setUser("");
+          navigate("/");
+        }
+        return result;
+      })
       .then((result) => result.json())
       .then((result) => {
         setShowPictureGal(result);

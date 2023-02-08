@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import isConnected from "@services/isConnected";
+
 import { useNavigate } from "react-router-dom";
 import MessageSend from "./PopUpMessageSend";
 
@@ -13,13 +15,15 @@ function ContactForm() {
   const [userMessage, setuserMessage] = useState("");
   const [doneMessage, setDoneMessage] = useState(false);
 
-  const { user } = useCurrentUserContext();
+  const { user, setUser, token } = useCurrentUserContext();
 
   const [redForm, setRedForm] = useState([]);
 
   const sendForm = (e) => {
     if (objet !== "" && pseudo !== "" && userMessage !== "") {
-      const myHeaders = new Headers();
+      const myHeaders = new Headers({
+        Authorization: `Bearer ${token}`,
+      });
       myHeaders.append("Content-Type", "application/json");
 
       const body = JSON.stringify({
@@ -36,6 +40,14 @@ function ContactForm() {
       e.preventDefault();
       // on créé un nouvel utilisateur et on reutilise
       fetch(`${backURL}/userMessage`, requestOptions)
+        .then((result) => {
+          if (!isConnected(result)) {
+            localStorage.clear();
+            setUser("");
+            navigate("/");
+          }
+          return result;
+        })
         .then(() => {
           setDoneMessage(true);
 

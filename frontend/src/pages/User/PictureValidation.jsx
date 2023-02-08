@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import { toast, Toaster } from "react-hot-toast";
+
 import AddScore from "../../components/User/Scores/AddScore";
 import Header from "../../components/Global/Header";
 
@@ -23,6 +25,21 @@ function PictureValidation() {
   const myHeaders = new Headers({
     Authorization: `Bearer ${token}`,
   });
+
+  const noPhoto = () => {
+    toast("Prends une photo d'abord!", {
+      icon: "🚫",
+    });
+  };
+
+  const noWork = () => {
+    toast(
+      "Sélectionne une oeuvre, si tu ne la trouves pas sur la carte, crée la!",
+      {
+        icon: "🚫",
+      }
+    );
+  };
 
   // fonction qui upload une photo sur cloudinary, vérifie si le user à déja une photo pour cette oeuvre puis la met dans la db et attribue les points
   const handleSendPhoto = () => {
@@ -58,16 +75,14 @@ function PictureValidation() {
 
       // on met les infos de la photo dans la table picture de la bdd
     } else if (contextPhoto.current === "") {
-      console.warn("Prends une photo d'abord!");
+      noPhoto();
     } else if (idWork === "") {
-      console.warn(
-        "Sélectionne une oeuvre, si tu ne la trouves pas sur la carte, crée la!"
-      );
+      noWork();
     }
   };
 
   useEffect(() => {
-    fetch(`${backURL}/works`, { headers: myHeaders })
+    fetch(`${backURL}/workswithpicture`, { headers: myHeaders })
       .then((result) => result.json())
       .then((result) => {
         setAllWorks(result);
@@ -91,6 +106,8 @@ function PictureValidation() {
 
   return (
     <div className="bg-main-background bg-cover w-auto h-screen ">
+      <Toaster position="top-center" reverseOrder />
+
       {showModal ? (
         <div className="w-screen h-screen absolute z-20 bg-black/50 flex justify-center items-center">
           <div
@@ -156,12 +173,18 @@ function PictureValidation() {
                   key={work.id}
                   position={[work.latitude, work.longitude]}
                 >
-                  <Popup>
-                    {work.work_name} <br />
-                    <button type="button" onClick={() => setIdWork(work.id)}>
-                      Choisir cette oeuvre
-                    </button>
-                  </Popup>
+                  <button type="button" onClick={() => setIdWork(work.id)}>
+                    <Popup>
+                      <div className="flex flex-wrap justify-center">
+                        <img
+                          className="h-20 w-20 object-contain"
+                          src={work.picture_url}
+                          alt={work.work_name}
+                        />
+                        {work.work_name} <br />
+                      </div>
+                    </Popup>
+                  </button>
                 </Marker>
               ))}
             <TileLayer
@@ -179,9 +202,6 @@ function PictureValidation() {
               Créer la!
             </h3>
           </NavLink>
-          <h3 className="text-pink  font-main-font text-2xl ml-2 underline">
-            Revoir ta photo
-          </h3>
         </div>
 
         <div className="flex justify-around w-full">

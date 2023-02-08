@@ -2,6 +2,7 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-lone-blocks */
 import React, { useEffect } from "react";
+import isConnected from "@services/isConnected";
 
 import Button from "@mui/material/Button";
 
@@ -43,7 +44,7 @@ theme = createTheme(theme, {
 const backURL = import.meta.env.VITE_BACKEND_URL;
 
 function WorkModif() {
-  const { token, id } = useCurrentUserContext();
+  const { token, id, setUser } = useCurrentUserContext();
 
   const [openDelete, setOpenDelete] = React.useState(false);
   const [openConfirm, setOpenConfirm] = React.useState(false);
@@ -119,6 +120,15 @@ function WorkModif() {
 
   useEffect(() => {
     fetch(`${backURL}/works/${id}`, GETrequestOptions)
+      .then((result) => {
+        if (!isConnected(result)) {
+          localStorage.clear();
+          navigate("/");
+          setUser("");
+          navigate("/");
+        }
+        return result;
+      })
       .then((result) => result.json())
       .then((result) => {
         setShowWork(result);

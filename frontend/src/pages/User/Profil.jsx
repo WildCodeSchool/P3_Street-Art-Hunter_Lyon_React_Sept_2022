@@ -1,6 +1,8 @@
 import React, { useState, useRef } from "react";
 import { toast, Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import isConnected from "@services/isConnected";
+
 import HeaderWithBurger from "../../components/User/Global/HeaderWithBurger";
 import modif from "../../assets/modif.svg";
 
@@ -48,7 +50,16 @@ export default function Profil() {
     body,
   };
   const handleForm = () => {
-    fetch(`${backURL}/modifyprofil/${user.id}`, PUTrequestOptions);
+    fetch(`${backURL}/modifyprofil/${user.id}`, PUTrequestOptions).then(
+      (result) => {
+        if (!isConnected(result)) {
+          localStorage.clear();
+          setUser("");
+          navigate("/");
+        }
+        return result;
+      }
+    );
     setUser({
       ...user,
       pseudo: newUserInfos.pseudo,

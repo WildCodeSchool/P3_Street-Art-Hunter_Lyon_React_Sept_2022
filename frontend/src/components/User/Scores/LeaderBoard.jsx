@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import isConnected from "@services/isConnected";
+import { useNavigate } from "react-router-dom";
 import { useCurrentUserContext } from "../../../contexts/userContext";
 import { useCurrentResponsiveContext } from "../../../contexts/responsiveContext";
 
@@ -8,8 +10,8 @@ export default function LeaderBoard() {
   const [leaders, setLeaders] = useState([]);
   const { isMobile, isTablet, isLittleMobile } = useCurrentResponsiveContext();
 
-  const { token } = useCurrentUserContext();
-
+  const { token, setUser } = useCurrentUserContext();
+  const navigate = useNavigate();
   const myHeaders = new Headers({
     Authorization: `Bearer ${token}`,
   });
@@ -17,6 +19,14 @@ export default function LeaderBoard() {
   useEffect(() => {
     fetch(`${backURL}/leader`, { headers: myHeaders })
       .then((result) => result.json())
+      .then((result) => {
+        if (!isConnected(result)) {
+          localStorage.clear();
+          setUser("");
+          navigate("/");
+        }
+        return result;
+      })
       .then((result) => {
         setLeaders(result);
       });

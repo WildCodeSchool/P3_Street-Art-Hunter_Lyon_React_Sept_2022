@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import isConnected from "@services/isConnected";
+import { useNavigate } from "react-router-dom";
 import ReactDOMServer from "react-dom/server";
 import L from "leaflet";
 import { useMap } from "react-leaflet";
@@ -16,8 +18,10 @@ const icon = L.icon({
 });
 
 function AddMarkerArt({ layerGroup }) {
-  const { token } = useCurrentUserContext();
+  const { token, setUser } = useCurrentUserContext();
   const [showWork, setShowWork] = useState([]);
+
+  const navigate = useNavigate();
 
   const myHeaders = new Headers({
     Authorization: `Bearer ${token}`,
@@ -31,6 +35,14 @@ function AddMarkerArt({ layerGroup }) {
 
   useEffect(() => {
     fetch(`${backURL}/works`, GETrequestOptions)
+      .then((result) => {
+        if (!isConnected(result)) {
+          localStorage.clear();
+          setUser("");
+          navigate("/");
+        }
+        return result;
+      })
       .then((result) => result.json())
       .then((result) => {
         setShowWork(result);
