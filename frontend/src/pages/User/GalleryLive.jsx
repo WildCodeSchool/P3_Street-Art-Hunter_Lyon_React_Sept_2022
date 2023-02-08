@@ -126,7 +126,7 @@ export default function GalleryLive() {
 
           <img
             src={image.picture_url}
-            className="h-[75vh] shadow-2xl shadow-lightblue mt-10"
+            className="h-[75vh] shadow-2xl shadow-lightblue mt-10 object-contain"
             alt=""
           />
           <div className="w-screen flex justify-center">
