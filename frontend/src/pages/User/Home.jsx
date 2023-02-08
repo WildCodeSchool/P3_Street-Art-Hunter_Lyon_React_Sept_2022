@@ -65,7 +65,7 @@ function Home() {
         </div>
       )}
       {isMobile && (
-        <div className="bg-center bg-home-image bg-cover w-full h-screen">
+        <div className="bg-center bg-home-image bg-cover w-full h-auto min-h-screen">
           <div className="flex justify-center items-start pt-[16rem] pb-3">
             <div className=" bg-center bg-logo-home bg-contain bg-no-repeat w-full h-[50vh] flicker-3" />
           </div>

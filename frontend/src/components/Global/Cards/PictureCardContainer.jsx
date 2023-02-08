@@ -1,7 +1,9 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 import CardMedia from "@mui/material/CardMedia";
+import isConnected from "@services/isConnected";
 
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
@@ -15,7 +17,7 @@ import { useCurrentUserContext } from "../../../contexts/userContext";
 const backURL = import.meta.env.VITE_BACKEND_URL;
 
 function PictureCardContainer({ picture, handleClickOpen, setImage }) {
-  const { token, user } = useCurrentUserContext();
+  const { token, user, setUser } = useCurrentUserContext();
   const [userList, setUserList] = useState([]);
   const [work, setWork] = useState([]);
   const [picture_id, setPictureID] = useState();
@@ -24,6 +26,8 @@ function PictureCardContainer({ picture, handleClickOpen, setImage }) {
   const [color, setColor] = useState("");
 
   const date = picture.creation_date.slice(0, 10);
+
+  const navigate = useNavigate();
 
   const hours = picture.creation_date.slice(11, 16);
 
@@ -59,6 +63,14 @@ function PictureCardContainer({ picture, handleClickOpen, setImage }) {
     }
 
     fetch(`${backURL}/users/${picture.user_id}`, GETrequestOptions)
+      .then((result) => {
+        if (!isConnected(result)) {
+          localStorage.clear();
+          setUser("");
+          navigate("/");
+        }
+        return result;
+      })
       .then((result) => result.json())
       .then((result) => {
         setUserList(result);
@@ -93,7 +105,7 @@ function PictureCardContainer({ picture, handleClickOpen, setImage }) {
   };
 
   return (
-    <div className="pt-2 bg-white w-[43%] h-[28vh] shadow-2xl shadow-lightblue flex justify-center items-center m-3 flex-wrap rounded-xl">
+    <div className="pt-2 bg-white w-[43%] h-[28vh] min-h-[15rem] shadow-2xl shadow-lightblue flex justify-center items-center m-3 flex-wrap rounded-xl">
       <div className="flex justify-bewteen items-center w-full pr-3 pl-3">
         <div className="flex flex-col justify-center items-start w-full">
           <Avatar

@@ -10,6 +10,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import DoneIcon from "@mui/icons-material/Done";
 
 import DeleteIcon from "@mui/icons-material/Delete";
+import isConnected from "@services/isConnected";
 
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Dialog from "@mui/material/Dialog";
@@ -43,7 +44,7 @@ theme = createTheme(theme, {
 const backURL = import.meta.env.VITE_BACKEND_URL;
 
 function PictureModif() {
-  const { token, id } = useCurrentUserContext();
+  const { token, id, setUser } = useCurrentUserContext();
 
   const [openDelete, setOpenDelete] = React.useState(false);
   const [openConfirm, setOpenConfirm] = React.useState(false);
@@ -108,6 +109,15 @@ function PictureModif() {
 
   useEffect(() => {
     fetch(`${backURL}/pictures/${id}`, GETrequestOptions)
+      .then((result) => {
+        if (!isConnected(result)) {
+          localStorage.clear();
+          navigate("/");
+          setUser("");
+          navigate("/");
+        }
+        return result;
+      })
       .then((result) => result.json())
       .then((result) => {
         setShowWork(result);
