@@ -1,6 +1,6 @@
-import isConnected from "@services/isConnected";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import isConnected from "../../../services/isConnected";
 import { useCurrentUserContext } from "../../../contexts/userContext";
 
 import ModalMessage from "./ModalMessage";

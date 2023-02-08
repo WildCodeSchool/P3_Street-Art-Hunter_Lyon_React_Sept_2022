@@ -152,12 +152,7 @@ router.post(
   validatorUserMessage,
   userMessageControllers.add
 );
-router.get(
-  "/userMessage",
-  verifyToken,
-  validatorUserMessage,
-  userMessageControllers.getMessage
-);
+router.get("/userMessage", verifyToken, userMessageControllers.getMessage);
 
 // Gestion des artistes
 router.get("/artists", verifyToken, artistControllers.browse);

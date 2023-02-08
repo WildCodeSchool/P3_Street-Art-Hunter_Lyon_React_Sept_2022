@@ -4,7 +4,7 @@ const Joi = require("joi");
 const messageSchema = Joi.object({
   objet: Joi.string().min(3).max(150).required(),
   userMessage: Joi.string().min(3).max(500).required(),
-  user_id: Joi.string().min(1).max(100).required(),
+  user_id: Joi.number().min(1).max(100).required(),
 });
 
 const validatorUserMessage = (req, res, next) => {
