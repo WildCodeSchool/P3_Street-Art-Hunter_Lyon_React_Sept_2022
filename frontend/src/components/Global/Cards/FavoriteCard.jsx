@@ -78,7 +78,10 @@ function FavoriteCard({ fav, handleClickOpen, setImage, setDeletedFavorite }) {
           </span>
         </div>
 
-        <span variant="body2" className="text-lg text-black font-main-font">
+        <span
+          variant="body2"
+          className="text-lg text-black font-main-font w-40"
+        >
           {work.work_name}
         </span>
       </div>

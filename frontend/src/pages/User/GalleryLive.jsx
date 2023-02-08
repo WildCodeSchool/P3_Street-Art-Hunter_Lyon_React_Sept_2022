@@ -90,15 +90,19 @@ export default function GalleryLive() {
 
         <Allive />
 
-        <div className=" flex justify-around flex-wrap-reverse overflow-auto">
-          {showPicture.map((picture) => (
-            <PictureCardContainer
-              key={picture.id}
-              picture={picture}
-              handleClickOpen={handleClickOpen}
-              setImage={setImage}
-            />
-          ))}
+        <div className=" flex justify-around flex-wrap overflow-auto">
+          {showPicture
+            .sort((elem) => {
+              return new Date() - new Date(elem.creation_date.slice(0, 10));
+            })
+            .map((picture) => (
+              <PictureCardContainer
+                key={picture.id}
+                picture={picture}
+                handleClickOpen={handleClickOpen}
+                setImage={setImage}
+              />
+            ))}
         </div>
 
         <BottomNav />
@@ -122,7 +126,7 @@ export default function GalleryLive() {
 
           <img
             src={image.picture_url}
-            className="h-[75vh] shadow-2xl shadow-lightblue mt-10"
+            className="h-[75vh] shadow-2xl shadow-lightblue mt-10 object-contain"
             alt=""
           />
           <div className="w-screen flex justify-center">

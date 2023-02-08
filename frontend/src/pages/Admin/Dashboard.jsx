@@ -8,9 +8,9 @@ function Dashboard() {
   return (
     <div className="flex h-screen w-full">
       <LateralMenu />
-      <div className="flex flex-col w-full">
+      <div className="flex flex-col w-full ">
         <HeaderAdmin nav={nav} />
-        <div className="pl-[25rem] w-[96%]">
+        <div className="pl-[20rem] w-[96%]">
           <Board />
         </div>
       </div>

@@ -14,13 +14,13 @@ function TakePicture() {
   const videoConstraints = {
     width: 450,
     height: 700,
-    facingMode: { exact: "environment" },
+    facingMode: "user",
   };
 
   const videoConstraintsTablet = {
     width: 650,
     height: 700,
-    facingMode: { exact: "environment" },
+    facingMode: "user",
   };
 
   const webcamRef = React.useRef(null);

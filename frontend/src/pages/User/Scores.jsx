@@ -28,6 +28,7 @@ function Scores() {
             YOUR SCORE :
           </div>
           <MyScore />
+          <div className="h-[177px]" />
 
           <BottomNav />
         </div>
@@ -51,6 +52,7 @@ function Scores() {
             YOUR SCORE :
           </div>
           <MyScore />
+          <div className="h-[177px]" />
 
           <BottomNav />
         </div>
@@ -74,7 +76,7 @@ function Scores() {
             YOUR SCORE :
           </div>
           <MyScore />
-
+          <div className="h-[177px]" />
           <BottomNav />
         </div>
       )}

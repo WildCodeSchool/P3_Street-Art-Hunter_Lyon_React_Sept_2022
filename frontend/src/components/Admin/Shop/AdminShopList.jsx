@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { alpha } from "@mui/material/styles";
@@ -251,12 +252,12 @@ export default function AdminShopList() {
     setSelected([]);
   };
 
-  const handleClick = (event, shopName) => {
-    const selectedIndex = selected.indexOf(shopName);
+  const handleClick = (event, shop_name) => {
+    const selectedIndex = selected.indexOf(shop_name);
     let newSelected = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, shopName);
+      newSelected = newSelected.concat(selected, shop_name);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -280,7 +281,7 @@ export default function AdminShopList() {
     setPage(0);
   };
 
-  const isSelected = (shopName) => selected.indexOf(shopName) !== -1;
+  const isSelected = (shop_name) => selected.indexOf(shop_name) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -310,17 +311,17 @@ export default function AdminShopList() {
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.shopName);
+                  const isItemSelected = isSelected(row.shop_name);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.shopName)}
+                      onClick={(event) => handleClick(event, row.shop_name)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.shopName}
+                      key={row.shop_name}
                       selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
@@ -338,9 +339,13 @@ export default function AdminShopList() {
                         scope="row"
                         padding="none"
                       >
-                        <img src={row.url_shop} alt="Shoppicture" />
+                        <img
+                          className="w-40 h-40 object-contain"
+                          src={row.url_shop}
+                          alt="Shoppicture"
+                        />
                       </TableCell>
-                      <TableCell align="right">{row.shopName}</TableCell>
+                      <TableCell align="right">{row.shop_name}</TableCell>
                       <TableCell align="right">{row.longitude}</TableCell>
                       <TableCell align="right">{row.latitude}</TableCell>
                     </TableRow>
