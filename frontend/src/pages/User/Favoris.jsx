@@ -24,7 +24,7 @@ function Favoris() {
 
   const [image, setImage] = useState("");
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const [deletedFavorite, setDeletedFavorite] = useState(false);
 
@@ -47,10 +47,6 @@ function Favoris() {
   };
 
   useEffect(() => {
-    setShowFav(showFav.filter((fav) => fav.id !== deletedFavorite.id));
-  }, [deletedFavorite]);
-
-  useEffect(() => {
     fetch(`${backURL}/user/favoris/${user.id}`, GETrequestOptions)
       .then((result) => {
         if (!isConnected(result)) {
@@ -60,9 +56,9 @@ function Favoris() {
         }
         return result;
       })
-      .then((result) => result.json())
-      .then((result) => {
-        setShowFav(result);
+      .then((fav) => fav.json())
+      .then((favor) => {
+        setShowFav(favor);
       });
   }, []);
 
@@ -71,6 +67,12 @@ function Favoris() {
       <div className="bg-main-background bg-cover w-full h-screen">
         <HeaderWithBurger />
         <div className="mt-[6rem] flex justify-around flex-wrap overflow-auto h-[70vh]">
+          {showFav.length === 0 && (
+            <div className="text-white font-main-font text-4xl mb-5 mt-[14rem] mx-8 text-center">
+              Ajoute des favoris pour les voir apparaitres ici !{" "}
+            </div>
+          )}
+
           {showFav.map((fav) => (
             <FavoriteCard
               key={fav.id}
