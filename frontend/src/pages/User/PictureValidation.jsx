@@ -20,6 +20,10 @@ function PictureValidation() {
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
+  const myHeaders = new Headers({
+    Authorization: `Bearer ${token}`,
+  });
+
   // fonction qui upload une photo sur cloudinary, vérifie si le user à déja une photo pour cette oeuvre puis la met dans la db et attribue les points
   const handleSendPhoto = () => {
     // on vérifie qu'on à toutes les datas
@@ -63,7 +67,7 @@ function PictureValidation() {
   };
 
   useEffect(() => {
-    fetch(`${backURL}/works`)
+    fetch(`${backURL}/works`, { headers: myHeaders })
       .then((result) => result.json())
       .then((result) => {
         setAllWorks(result);

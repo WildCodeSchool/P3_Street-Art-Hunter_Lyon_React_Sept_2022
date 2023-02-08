@@ -98,12 +98,15 @@ function WorkModif() {
   };
 
   useEffect(() => {
-    fetch(`${backURL}/${id}/pictures`, GETrequestOptions)
-      .then((result) => result.json())
-      .then((result) => {
-        console.warn("result", `${backURL}/${id}/pictures`);
-        setPicture(result);
-      });
+    const fetchImage = async () => {
+      const fetchedImg = await fetch(
+        `${backURL}/${id}/pictures`,
+        GETrequestOptions
+      ).then((result) => result.json());
+
+      setPicture(fetchedImg[0]);
+    };
+    fetchImage();
   }, []);
 
   const handleValidation = () => {
@@ -134,8 +137,8 @@ function WorkModif() {
           <div className="flex flex-col justify-center items-center">
             <div className="w-full mr-[3rem] flex flex-col justify-center items-center mb-4">
               <img
+                src={picture.picture_url}
                 alt="avatar"
-                src=""
                 className="w-[40%] h-[30vh] mb-4 rounded"
               />
             </div>

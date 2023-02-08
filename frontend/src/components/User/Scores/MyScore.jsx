@@ -45,7 +45,6 @@ export default function MyScore() {
               </td>
               <td className="w-[35vw]">{userScoreData.pseudo}</td>
               <td className="w-[20vw]">{userScoreData.scorepoint}</td>
-              <td className="w-[20vw]">{userScoreData.badges}</td>
             </tr>
           </tbody>
         </table>

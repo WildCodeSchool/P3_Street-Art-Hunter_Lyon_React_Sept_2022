@@ -27,15 +27,13 @@ const add = (req, res) => {
     });
 };
 
-const deleteByIdAndNext = (req, res, next) => {
+const deleteByIdAndNext = async (req, res, next) => {
   const { id } = req.params;
-  models.user_has_fav_picture
-    .deleteByPictureId(id)
-    .then(next())
-    .catch((error) => {
-      console.error(error);
-      res.sendStatus(500);
-    });
+  await models.user_has_fav_picture.deleteByPictureId(id).catch((error) => {
+    console.error(error);
+    res.sendStatus(500);
+  });
+  next();
 };
 
 const destroy = (req, res) => {
