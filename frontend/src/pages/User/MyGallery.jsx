@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import isConnected from "@services/isConnected";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 import HeaderWithBurger from "../../components/User/Global/HeaderWithBurger";
 import UserCardContainer from "../../components/Global/Cards/PictureCardContainer";
@@ -48,6 +48,16 @@ function MyGallery() {
         {showPictureGal.map((picture) => (
           <UserCardContainer key={picture.id} picture={picture} />
         ))}
+      </div>
+      <div className="w-full flex justify-center">
+        <NavLink to="/camera">
+          <button
+            type="button"
+            className="bg-gradient-to-tl from-pink to-lightblue rounded-3xl font-main-font text-[32px] py-1 px-6  mt-5 w-[40%] min-w-fit"
+          >
+            RETOUR
+          </button>
+        </NavLink>
       </div>
     </div>
   );

@@ -91,14 +91,18 @@ export default function GalleryLive() {
         <Allive />
 
         <div className=" flex justify-around flex-wrap overflow-auto">
-          {showPicture.map((picture) => (
-            <PictureCardContainer
-              key={picture.id}
-              picture={picture}
-              handleClickOpen={handleClickOpen}
-              setImage={setImage}
-            />
-          ))}
+          {showPicture
+            .sort((elem) => {
+              return new Date() - new Date(elem.creation_date.slice(0, 10));
+            })
+            .map((picture) => (
+              <PictureCardContainer
+                key={picture.id}
+                picture={picture}
+                handleClickOpen={handleClickOpen}
+                setImage={setImage}
+              />
+            ))}
         </div>
 
         <BottomNav />
