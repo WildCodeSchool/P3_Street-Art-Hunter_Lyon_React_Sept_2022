@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import CardMedia from "@mui/material/CardMedia";
-import isConnected from "@services/isConnected";
 import { useNavigate } from "react-router-dom";
 
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import { purple } from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import isConnected from "../../../services/isConnected";
 import { useCurrentUserContext } from "../../../contexts/userContext";
 
 const backURL = import.meta.env.VITE_BACKEND_URL;
@@ -78,10 +78,7 @@ function FavoriteCard({ fav, handleClickOpen, setImage, setDeletedFavorite }) {
           </span>
         </div>
 
-        <span
-          variant="body2"
-          className="text-lg text-black font-main-font w-40"
-        >
+        <span variant="body2" className="text-lg text-black font-main-font">
           {work.work_name}
         </span>
       </div>

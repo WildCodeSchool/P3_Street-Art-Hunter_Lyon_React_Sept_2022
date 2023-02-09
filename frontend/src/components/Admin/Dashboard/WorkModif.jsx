@@ -50,7 +50,7 @@ function WorkModif() {
   const [openConfirm, setOpenConfirm] = React.useState(false);
   const [showWork, setShowWork] = React.useState([]);
   const [is_validated, setIs_Validated] = React.useState(false);
-  const [picture, setPicture] = React.useState();
+  const [picture, setPicture] = React.useState("");
 
   const navigate = useNavigate();
 
@@ -138,8 +138,7 @@ function WorkModif() {
   const handleDelete = () => {
     fetch(`${backURL}/works/${id}`, DELETErequestOptions);
   };
-  console.warn(showWork);
-  console.warn("picture", picture);
+
   return (
     <ThemeProvider theme={theme}>
       <div className="pt-[12rem] w-full">

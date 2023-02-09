@@ -72,12 +72,10 @@ router.post(
   passwordControllers.resetPassword
 );
 
-const { validatorPicture } = require("./middlewares/validatorPicture");
-
 router.post(
   "/photo",
   verifyToken,
-  validatorPicture,
+
   pictureControllers.verifyIfUserHasPictureOnWork,
   cloudinaryUpload,
   pictureControllers.addAndPassToNext,
