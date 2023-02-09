@@ -61,8 +61,8 @@ CREATE TABLE artist
       (100) NOT NULL,
   hashedPassword VARCHAR
       (100) NOT NULL,
-  avatar VARCHAR
-      (150) NULL DEFAULT NULL,
+  avatar VARCHAR  
+      (150) NULL DEFAULT 'https://www.avatarsinpixels.com/Public/images/previews/minipix4.png',
   passwordtoken VARCHAR
       (100) NULL DEFAULT NULL
   );
@@ -125,7 +125,7 @@ CREATE TABLE artist
   is_validated TINYINT NULL DEFAULT NULL,
   work_id INT NOT NULL,
   user_id INT NOT NULL,
-  is_reported INT NOT NULL DEFAULT 0,
+  is_reported TINYINT NULL DEFAULT NULL,
   CONSTRAINT fk_picture_user1
   FOREIGN KEY
           (user_id) REFERENCES user

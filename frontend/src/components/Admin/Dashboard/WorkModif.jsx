@@ -2,7 +2,6 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-lone-blocks */
 import React, { useEffect } from "react";
-import isConnected from "@services/isConnected";
 
 import Button from "@mui/material/Button";
 
@@ -20,6 +19,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useNavigate } from "react-router-dom";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import isConnected from "../../../services/isConnected";
 import { useCurrentUserContext } from "../../../contexts/userContext";
 
 let theme = createTheme({

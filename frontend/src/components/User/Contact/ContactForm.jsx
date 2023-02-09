@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import isConnected from "@services/isConnected";
-
 import { useNavigate } from "react-router-dom";
+import isConnected from "../../../services/isConnected";
+
 import MessageSend from "./PopUpMessageSend";
 
 import { useCurrentUserContext } from "../../../contexts/userContext";
@@ -11,7 +11,6 @@ const backURL = import.meta.env.VITE_BACKEND_URL;
 function ContactForm() {
   const navigate = useNavigate();
   const [objet, setobjet] = useState("");
-  const [pseudo, setPseudo] = useState("");
   const [userMessage, setuserMessage] = useState("");
   const [doneMessage, setDoneMessage] = useState(false);
 
@@ -20,7 +19,7 @@ function ContactForm() {
   const [redForm, setRedForm] = useState([]);
 
   const sendForm = (e) => {
-    if (objet !== "" && pseudo !== "" && userMessage !== "") {
+    if (objet !== "" && userMessage !== "") {
       const myHeaders = new Headers({
         Authorization: `Bearer ${token}`,
       });
@@ -38,7 +37,7 @@ function ContactForm() {
         body,
       };
       e.preventDefault();
-      // on créé un nouvel utilisateur et on reutilise
+      // on envoi le message dans le back
       fetch(`${backURL}/userMessage`, requestOptions)
         .then((result) => {
           if (!isConnected(result)) {
@@ -62,7 +61,6 @@ function ContactForm() {
       e.preventDefault();
       const emptyFields = [];
       if (objet === "") emptyFields.push("object");
-      if (pseudo === "") emptyFields.push("pseudo");
       if (userMessage === "") emptyFields.push("userMessage");
 
       setRedForm(emptyFields);
@@ -82,25 +80,12 @@ function ContactForm() {
             onSubmit={sendForm}
             className="flex flex-col justify-center items-center space-y-5 mb-4"
           >
-            <label className="flex flex-col justify-center text-white">
-              Pseudo
-              <div
-                className={`flex flex-row-reverse border rounded-[3rem] border-${
-                  redForm.includes("pseudo") ? "red-700" : "white"
-                } h-[90%]`}
-              >
-                <input
-                  onChange={(e) => setPseudo(e.target.value)}
-                  type="text"
-                  name="Pseudo"
-                  id="Pseudo"
-                  className="form-control relative block w-full appearance-none bg-transparent rounded-full border border-gray-300 px-3 py-2 text-white placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                />
-              </div>
+            <label className="flex flex-col justify-center text-white text-2xl">
+              Bonjour {user.pseudo},
             </label>
 
             <label className="flex flex-col justify-center text-white">
-              Object
+              Objet :
               <div
                 className={`flex flex-row-reverse border rounded-[3rem] border-${
                   redForm.includes("object") ? "red-700" : "white"
@@ -116,7 +101,7 @@ function ContactForm() {
               </div>
             </label>
             <label className="flex flex-col justify-center text-white h-[10rem]">
-              Ton message
+              Ton message :
               <div
                 className={`flex flex-row-reverse align-baseline border rounded-[1.75rem] border-${
                   redForm.includes("userMessage") ? "red-700" : "white"

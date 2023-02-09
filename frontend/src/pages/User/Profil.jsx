@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { toast, Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import isConnected from "@services/isConnected";
+import isConnected from "../../services/isConnected";
 
 import HeaderWithBurger from "../../components/User/Global/HeaderWithBurger";
 import modif from "../../assets/modif.svg";
@@ -13,7 +13,7 @@ export default function Profil() {
   const backURL = import.meta.env.VITE_BACKEND_URL;
   const { user, setUser, token } = useCurrentUserContext();
   const { isMobile, isTablet, isLittleMobile } = useCurrentResponsiveContext();
-  const [msg, setMsg] = useState("");
+  const [msg, setMsg] = useState();
   const navigate = useNavigate();
   const avatarRef = useRef(null);
   const notifySuccess = () => {
@@ -49,7 +49,8 @@ export default function Profil() {
     headers: myHeaders,
     body,
   };
-  const handleForm = () => {
+  const handleForm = (e) => {
+    e.preventDefault();
     fetch(`${backURL}/modifyprofil/${user.id}`, PUTrequestOptions).then(
       (result) => {
         if (!isConnected(result)) {
@@ -418,7 +419,6 @@ export default function Profil() {
                           type="text"
                           name="email"
                           placeholder={user.email}
-                          // onChange={(e) => setEmail(e.target.value)}
                           onChange={(e) => newUseremail(e)}
                         />
                         <img

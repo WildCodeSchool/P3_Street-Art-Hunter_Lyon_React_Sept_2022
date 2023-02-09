@@ -1,6 +1,6 @@
-import isConnected from "@services/isConnected";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import isConnected from "../../../services/isConnected";
 import { useCurrentUserContext } from "../../../contexts/userContext";
 import art from "../../../assets/art.svg";
 
@@ -44,7 +44,7 @@ function Validation() {
           alt="drawing of an art svg"
         />
         <p className="text-black font-main-font text-3xl mb-5 text-center">
-          {allWorks.length}
+          {allWorks.filter((work) => work.is_validated === 0).length}
         </p>
         <button
           type="button"

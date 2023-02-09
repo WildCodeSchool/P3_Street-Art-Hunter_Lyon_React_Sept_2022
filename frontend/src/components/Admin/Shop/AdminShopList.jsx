@@ -339,7 +339,11 @@ export default function AdminShopList() {
                         scope="row"
                         padding="none"
                       >
-                        <img src={row.url_shop} alt="Shoppicture" />
+                        <img
+                          className="w-40 h-40 object-contain"
+                          src={row.url_shop}
+                          alt="Shoppicture"
+                        />
                       </TableCell>
                       <TableCell align="right">{row.shop_name}</TableCell>
                       <TableCell align="right">{row.longitude}</TableCell>

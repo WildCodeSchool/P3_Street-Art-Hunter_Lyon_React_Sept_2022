@@ -8,9 +8,9 @@ function Board() {
   return (
     <div className="w-full h-screen flex justify-around items-center mt-20">
       <Validation />
+      <ReportedPictures />
       <Works />
       <Users />
-      <ReportedPictures />
     </div>
   );
 }

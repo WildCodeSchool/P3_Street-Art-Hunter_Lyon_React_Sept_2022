@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import CardMedia from "@mui/material/CardMedia";
-import isConnected from "@services/isConnected";
 
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
@@ -11,6 +10,7 @@ import IconButton from "@mui/material/IconButton";
 import { purple } from "@mui/material/colors";
 
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import isConnected from "../../../services/isConnected";
 
 import { useCurrentUserContext } from "../../../contexts/userContext";
 

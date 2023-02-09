@@ -1,11 +1,11 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import isConnected from "@services/isConnected";
 import { toast, Toaster } from "react-hot-toast";
 
 import Dialog from "@mui/material/Dialog";
 import Slide from "@mui/material/Slide";
+import isConnected from "../../services/isConnected";
 import Allive from "../../components/User/Gallery/AllLive";
 import BottomNav from "../../components/User/Global/BottomNav";
 
@@ -126,7 +126,7 @@ export default function GalleryLive() {
 
           <img
             src={image.picture_url}
-            className="h-[75vh] shadow-2xl shadow-lightblue mt-10"
+            className="h-[75vh] shadow-2xl shadow-lightblue mt-10 object-contain"
             alt=""
           />
           <div className="w-screen flex justify-center">

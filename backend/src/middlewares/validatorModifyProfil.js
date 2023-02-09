@@ -1,19 +1,19 @@
 const Joi = require("joi");
 
-const profileSchema = Joi.object({
-  firstname: Joi.string().min(3).max(100).required(),
-  lastname: Joi.string().min(3).max(100).required(),
+const modifySchema = Joi.object({
   pseudo: Joi.string().min(3).max(100).required(),
+  email: Joi.string().email().max(200).required(),
+  id: Joi.number().max(100).required(),
 });
 
 const validatorProfile = (req, res, next) => {
-  const { firstname, lastname, pseudo } = req.body;
+  const { pseudo, email, id } = req.body;
 
-  const { error } = profileSchema.validate(
+  const { error } = modifySchema.validate(
     {
-      firstname,
-      lastname,
       pseudo,
+      email,
+      id,
     },
     { abortEarly: false }
   );

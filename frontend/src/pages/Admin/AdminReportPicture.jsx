@@ -1,6 +1,6 @@
 import React from "react";
 
-import PictureModif from "@components/Admin/Dashboard/PictureModif";
+import PictureModif from "../../components/Admin/Dashboard/PictureModif";
 
 import LateralMenu from "../../components/Admin/Global/LateralMenu";
 import HeaderAdmin from "../../components/Admin/Global/HeaderAdmin";

@@ -75,6 +75,7 @@ router.post(
 router.post(
   "/photo",
   verifyToken,
+
   pictureControllers.verifyIfUserHasPictureOnWork,
   cloudinaryUpload,
   pictureControllers.addAndPassToNext,
@@ -96,12 +97,16 @@ router.get("/api/avatars/:fileName", fileControllers.sendAvatar);
 // router.put(`/api/avatars/:id`, verifyToken, fileControllers.updateAvatar);
 
 // modify profil
+const { validatorProfile } = require("./middlewares/validatorModifyProfil");
 
-router.put("/modifyprofil/:id", verifyToken, userControllers.modifyProfil);
+router.put(
+  "/modifyprofil/:id",
+  validatorProfile,
+  verifyToken,
+  userControllers.modifyProfil
+);
 
 // Gestion des users
-
-const { validatorProfile } = require("./middlewares/validatorModifyProfil");
 
 router.get("/users", verifyToken, userControllers.browse);
 router.get("/users/:id", verifyToken, userControllers.read);
@@ -137,8 +142,15 @@ router.put(
   badgeControllers.edit
 );
 
+const { validatorUserMessage } = require("./middlewares/validatorUserMessage");
+
 // Gestion message
-router.post("/userMessage", verifyToken, userMessageControllers.add);
+router.post(
+  "/userMessage",
+  verifyToken,
+  validatorUserMessage,
+  userMessageControllers.add
+);
 router.get("/userMessage", verifyToken, userMessageControllers.getMessage);
 
 // Gestion des artistes
@@ -156,10 +168,13 @@ router.get(
 router.get("/workswithpicture", verifyToken, workControllers.getAllWithPicture);
 router.get("/workswithpicture/:id", verifyToken, workControllers.findByID);
 
+const { validatorWork } = require("./middlewares/validatorWork");
+
 router.post("/works", verifyToken, workControllers.add);
 router.post(
   "/workandpicture",
   verifyToken,
+  validatorWork,
   workControllers.addAndPassWorkIdToNext,
   cloudinaryUpload,
   pictureControllers.add
@@ -168,6 +183,7 @@ router.post(
 router.put(
   "/works/:id",
   verifyToken,
+  validatorWork,
   workControllers.editAndNext,
   userControllers.pointsOnWorkValidation
 );

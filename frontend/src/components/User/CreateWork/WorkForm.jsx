@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { toast, Toaster } from "react-hot-toast";
-import isConnected from "@services/isConnected";
+import isConnected from "../../../services/isConnected";
 
 import { useCurrentPhotoContext } from "../../../contexts/photoContext";
 
@@ -48,7 +48,7 @@ function WorkForm({ markerLatitude, markerLongitude }) {
         setArtistList(result);
       });
   }, []);
-
+  console.warn(artistList);
   // soumettre le formulaire
   const handleForm = (e) => {
     e.preventDefault();

@@ -1,9 +1,9 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect, useState } from "react";
-import isConnected from "@services/isConnected";
 import { NavLink, useNavigate } from "react-router-dom";
 import Dialog from "@mui/material/Dialog";
 import Slide from "@mui/material/Slide";
+import isConnected from "../../services/isConnected";
 import HeaderWithBurger from "../../components/User/Global/HeaderWithBurger";
 import FavoriteCard from "../../components/Global/Cards/FavoriteCard";
 
