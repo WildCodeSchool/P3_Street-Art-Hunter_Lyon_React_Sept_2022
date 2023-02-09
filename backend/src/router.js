@@ -168,13 +168,13 @@ router.get(
 router.get("/workswithpicture", verifyToken, workControllers.getAllWithPicture);
 router.get("/workswithpicture/:id", verifyToken, workControllers.findByID);
 
-const { validatorWork } = require("./middlewares/validatorWork");
+// const { validatorWork } = require("./middlewares/validatorWork");
 
 router.post("/works", verifyToken, workControllers.add);
 router.post(
   "/workandpicture",
   verifyToken,
-  validatorWork,
+  // validatorWork,
   workControllers.addAndPassWorkIdToNext,
   cloudinaryUpload,
   pictureControllers.add
@@ -183,7 +183,7 @@ router.post(
 router.put(
   "/works/:id",
   verifyToken,
-  validatorWork,
+  // validatorWork,
   workControllers.editAndNext,
   userControllers.pointsOnWorkValidation
 );
