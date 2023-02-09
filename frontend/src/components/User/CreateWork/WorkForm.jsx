@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { toast, Toaster } from "react-hot-toast";
+import isConnected from "../../../services/isConnected";
 
 import { useCurrentPhotoContext } from "../../../contexts/photoContext";
+
 import { useCurrentUserContext } from "../../../contexts/userContext";
 
 const backURL = import.meta.env.VITE_BACKEND_URL;
 
 function WorkForm({ markerLatitude, markerLongitude }) {
+  const { token, user, setUser } = useCurrentUserContext();
   const { contextPhoto } = useCurrentPhotoContext();
-  const { user, token } = useCurrentUserContext();
-
-  const [idWork] = useState("");
 
   const [name, setName] = useState("Nom Inconnu");
   const [artistList, setArtistList] = useState([]);
@@ -19,59 +20,40 @@ function WorkForm({ markerLatitude, markerLongitude }) {
 
   const navigate = useNavigate();
 
-  const handleSendPhoto = () => {
-    // on vérifie qu'on à toutes les datas
-    if (contextPhoto.current !== "" && idWork !== "" && user.id) {
-      // on upload la photo
-      fetch(`${backURL}/photo`, {
-        method: "POST",
-        body: JSON.stringify({
-          image: contextPhoto.current,
-          filename: `userId-${user.id}-workId-${idWork}`,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `Bearer ${token}`,
-        },
-      }).then((response) => response.json());
-
-      // on met les infos de la photo dans la table picture de la bdd
-
-      fetch(`${backURL}/pictures`, {
-        method: "POST",
-        body: JSON.stringify({
-          url: "https://upload.wikimedia.org/wikipedia/commons/7/75/Banksy-ps.jpg",
-          workId: idWork,
-          userId: user.id,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `Bearer ${token}`,
-        },
-      }).then((response) => response.json());
-    } else if (contextPhoto.current === "") {
-      console.warn("Veuillez prendre une photo d'abord!");
-    } else if (idWork === "") {
-      console.warn(
-        "Veuillez sélectionner une oeuvre, si vous ne la trouvez pas sur la carte, créer la!"
-      );
-    }
+  const workCreated = () => {
+    toast(
+      "L'oeuvre à été créee, tu recevras les points quand elle sera validée",
+      {
+        icon: "👍",
+      }
+    );
   };
 
+  const myHeaders = new Headers({
+    Authorization: `Bearer ${token}`,
+  });
   useEffect(() => {
-    fetch(`${backURL}/artists`)
+    fetch(`${backURL}/artists`, { headers: myHeaders })
+      .then((result) => {
+        if (!isConnected(result)) {
+          localStorage.clear();
+          navigate("/");
+          setUser("");
+          navigate("/");
+        }
+        return result;
+      })
       .then((result) => result.json())
       .then((result) => {
         setArtistList(result);
       });
   }, []);
-
+  console.warn(artistList);
   // soumettre le formulaire
   const handleForm = (e) => {
     e.preventDefault();
-    const myHeaders = new Headers();
+    if (name === "") setName("Nom Inconnu");
     myHeaders.append("Content-Type", "application/json");
-    myHeaders.append("authorization", `Bearer ${token}`);
     const body = JSON.stringify({
       name,
       artistId,
@@ -79,6 +61,8 @@ function WorkForm({ markerLatitude, markerLongitude }) {
       longitude: markerLongitude,
       validated,
       value: 100,
+      image: contextPhoto.current,
+      userId: user.id,
     });
 
     const requestOptions = {
@@ -86,16 +70,21 @@ function WorkForm({ markerLatitude, markerLongitude }) {
       headers: myHeaders,
       body,
     };
-    navigate("/galerie/all");
+    workCreated();
     e.preventDefault();
-    // on créé un nouvel utilisateur et on reutilise
-    fetch(`${backURL}/works`, requestOptions).catch((err) => {
+    fetch(`${backURL}/workandpicture`, requestOptions).catch((err) => {
       console.warn(err);
     });
+    setTimeout(() => {
+      navigate("/galerie/all");
+    }, 2500);
   };
 
   return (
     <div>
+      <div>
+        <Toaster position="bottom" reverseOrder />
+      </div>
       <form
         onSubmit={handleForm}
         className="flex flex-col justify-center items-center mb-4"
@@ -151,7 +140,6 @@ function WorkForm({ markerLatitude, markerLongitude }) {
           <button
             type="submit"
             className="bg-gradient-to-tl from-pink to-lightblue rounded-3xl font-main-font text-[32px] py-1 px-6 w-[50%]  mt-5"
-            onClick={handleSendPhoto}
           >
             CREER
           </button>

@@ -113,11 +113,142 @@ const getMyscore = (req, res) => {
     });
 };
 
-const getRanks = (req, res) => {
+const getRanks = async (req, res) => {
   models.user
     .getIdByScorepoint(req.params.id)
     .then(([results]) => {
       res.send(results);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
+
+const getScoreAndPassToNext = (req, res) => {
+  models.user
+    .getScore(req.params.id)
+    .then(([results]) => {
+      req.body.score = results[0].scorepoint;
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
+
+const addPoints = (req, res) => {
+  const { value, score } = req.body;
+  const userId = req.params.id;
+  const newScore = value + score;
+  models.user
+    .addUserPoints(newScore, userId)
+    .then(([result]) => {
+      if (result.affectedRows === 0) res.sendStatus(404);
+      else {
+        res.send(`${value}`);
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
+
+const pointsOnPictureValidation = async (req, res) => {
+  try {
+    const { workId, userId } = req.body;
+    const [points] = await models.work.getWorkValue(workId);
+    req.body.value = points[0].value_point;
+    const [datas] = await models.user.getScore(userId);
+    req.body.score = datas[0].scorepoint;
+    const { value, score } = req.body;
+    const newScore = value + score;
+    const [result] = await models.user.addUserPoints(newScore, userId);
+    if (result.affectedRows === 0) res.sendStatus(404);
+    else {
+      res.send(`${value}`);
+    }
+  } catch (error) {
+    console.warn(error);
+    res.sendStatus(500);
+  }
+};
+
+const modifyProfil = (req, res) => {
+  const user = req.body;
+  console.warn(user);
+  // on verifie les données
+  models.user
+    .updateProfil(user)
+    .then(([result]) => {
+      if (result.affectedRows === 0) res.sendStatus(404);
+      else res.sendStatus(204);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
+const addAvatar = (req, res) => {
+  const avatar = req.body;
+  // on verifie les données
+
+  models.user
+    .modifyAvatar(avatar)
+    .then(([result]) => {
+      if (result.affectedRows === 0) res.sendStatus(404);
+      else res.sendStatus(204);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
+const pointsOnWorkValidation = async (req, res) => {
+  try {
+    const userId = req.body.added_by;
+    const [datas] = await models.user.getScore(userId);
+    req.body.score = datas[0].scorepoint;
+    const { score } = req.body;
+    const value = 300;
+    const newScore = value + score;
+    const [result] = await models.user.addUserPoints(newScore, userId);
+    if (result.affectedRows === 0) res.sendStatus(404);
+    else {
+      res.send(`${value}`);
+    }
+  } catch (error) {
+    console.warn(error);
+    res.sendStatus(500);
+  }
+};
+
+const putNewAvatar = (req, res) => {
+  const { avatar } = req.body;
+  const { id } = req.params;
+  models.user
+    .updateAvatar(avatar, id)
+    .then(([result]) => {
+      if (result.affectedRows === 0) res.sendStatus(404);
+      else res.sendStatus(204);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
+const updateAvatar = (req, res) => {
+  const id = req.payloads.sub;
+  const { avatar } = req;
+
+  models.user
+    .modifyAvatar(id, avatar)
+    .then(([result]) => {
+      if (result.affectedRows === 0) res.sendStatus(404);
+      else res.status(202).send({ avatar });
     })
     .catch((error) => {
       console.error(error);
@@ -135,4 +266,12 @@ module.exports = {
   getMyscore,
   getRanks,
   modif,
+  addPoints,
+  getScoreAndPassToNext,
+  pointsOnPictureValidation,
+  modifyProfil,
+  addAvatar,
+  pointsOnWorkValidation,
+  putNewAvatar,
+  updateAvatar,
 };

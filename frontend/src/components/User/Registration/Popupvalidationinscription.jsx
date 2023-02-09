@@ -8,7 +8,7 @@ export default function InscriptionDone({ setinscriptions }) {
   });
   return (
     <div className="text-6xl text-lightblue font-main-font blink-2 fixed top-[20vh] w-screen text-center">
-      <div className="fade-out-bottom">Félicitations tu est inscrit !</div>
+      <div className="fade-out-bottom">Félicitations tu es inscrit !</div>
     </div>
   );
 }

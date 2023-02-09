@@ -1,72 +1,133 @@
 const express = require("express");
-const fs = require("fs");
+require("dotenv").config();
+const multer = require("multer");
+
+const upload = multer({ dest: process.env.AVATAR_DIRECTORY });
+
+const cloudinary = require("cloudinary").v2;
 
 const router = express.Router();
 
 // Upload des photos
 
-const multer = require("multer");
-
-const upload = multer({ dest: "./public/uploads/" });
-
-const fsUpload = (req, res) => {
-  const { image, filename } = req.body;
-
-  // eslint-disable-next-line new-cap
-  const buffer = new Buffer.from(
-    image.replace(/^data:image\/\w+;base64,/, ""),
-    "base64"
-  );
-
-  fs.writeFile(`./public/uploads/${filename}.jpeg`, buffer, "binary", (err) => {
-    if (err) {
-      res.status(500).send(err);
-    } else {
-      res.status(200).send("File uploaded!");
-    }
-  });
+const cloudinaryUpload = (req, res, next) => {
+  const { image, userId, workId } = req.body;
+  cloudinary.uploader
+    .upload(image, { public_id: `userId-${userId}-workId-${workId}` })
+    .then((result) => {
+      req.body.url = result.secure_url;
+      next();
+    })
+    .catch((err) => console.warn(err));
 };
-
-// service d'authentification
 
 const {
   hashPassword,
   verifyPassword,
   verifyToken,
 } = require("./services/auth");
+
+const { validateRegister } = require("./middlewares/validatorRegister");
 const authControllers = require("./controllers/authControllers");
 const userControllers = require("./controllers/userControllers");
 const badgeControllers = require("./controllers/badgeControllers");
 const artistControllers = require("./controllers/artistControllers");
 const workControllers = require("./controllers/workControllers");
 const pictureControllers = require("./controllers/pictureControllers");
+const mailControllers = require("./controllers/mailControllers");
+const passwordControllers = require("./controllers/passwordControllers");
+const userMessageControllers = require("./controllers/userMessageControllers");
+const fileControllers = require("./controllers/fileControllers");
+const favoriteControllers = require("./controllers/favoriteControllers");
 
-router.post("/photo", verifyToken, upload.single("photo"), fsUpload);
+const {
+  verifyMailAndPasswordAvailablity,
+} = require("./controllers/validationControllers");
 
 // Auth
-router.post("/inscription", hashPassword, userControllers.add);
+router.post(
+  "/inscription",
+  verifyMailAndPasswordAvailablity,
+  validateRegister,
+  hashPassword,
+  userControllers.add
+);
 router.post(
   "/connexion",
   authControllers.getUserByEmailWithPasswordAndPassToNext,
   verifyPassword
 );
+const shopContrellers = require("./controllers/shopControllers");
+
+router.post(
+  "/forgottenpassword",
+  passwordControllers.verifyEmail,
+  passwordControllers.generatePasswordToken,
+  mailControllers.sendForgottenPassword
+);
+router.post(
+  `/resetpassword`,
+  passwordControllers.verifyTokenPassword,
+  hashPassword,
+  passwordControllers.resetPassword
+);
+
+router.post(
+  "/photo",
+  verifyToken,
+
+  pictureControllers.verifyIfUserHasPictureOnWork,
+  cloudinaryUpload,
+  pictureControllers.addAndPassToNext,
+  userControllers.pointsOnPictureValidation
+);
+
+router.put(
+  "/api/avatars/",
+  verifyToken,
+
+  upload.single("avatar"),
+  fileControllers.renameAvatar,
+  userControllers.updateAvatar
+);
+
+router.get("/api/avatars/:fileName", fileControllers.sendAvatar);
+
+// gestion des avatars
+// router.put(`/api/avatars/:id`, verifyToken, fileControllers.updateAvatar);
+
+// modify profil
+const { validatorProfile } = require("./middlewares/validatorModifyProfil");
+
+router.put(
+  "/modifyprofil/:id",
+  validatorProfile,
+  verifyToken,
+  userControllers.modifyProfil
+);
 
 // Gestion des users
-router.get("/users", userControllers.browse);
-router.get("/users/:id", userControllers.read);
-router.get("/leader", userControllers.leaderboard);
-router.get("/score/:id", userControllers.getMyscore);
-router.get("/rank/:id", userControllers.getRanks);
+
+router.get("/users", verifyToken, userControllers.browse);
+router.get("/users/:id", verifyToken, userControllers.read);
+router.get("/leader", verifyToken, userControllers.leaderboard);
+router.get("/score/:id", verifyToken, userControllers.getMyscore);
+router.get("/rank/:id", verifyToken, userControllers.getRanks);
+router.put(
+  "/users/:id/score",
+  verifyToken,
+  userControllers.pointsOnPictureValidation
+);
 
 router.post("/users", hashPassword, verifyToken, userControllers.add);
-router.put("/users/:id", verifyToken, userControllers.modif);
+router.put("/users/:id", validatorProfile, verifyToken, userControllers.modif);
 router.delete("/users/:id", verifyToken, userControllers.destroy);
 
 router.post("/addUsers", hashPassword, verifyToken, userControllers.add);
 // Gestion des badges
-router.get("/badges", badgeControllers.browse);
-router.get("/badges/:id", badgeControllers.read);
-router.get("/user/badges/:id", badgeControllers.getUserBadges);
+router.get("/badges", verifyToken, badgeControllers.browse);
+router.get("/badges/:id", verifyToken, badgeControllers.read);
+router.get("/user/badges/:id", verifyToken, badgeControllers.getUserBadges);
 
 router.post(
   "/badges",
@@ -81,18 +142,136 @@ router.put(
   badgeControllers.edit
 );
 
+const { validatorUserMessage } = require("./middlewares/validatorUserMessage");
+
+// Gestion message
+router.post(
+  "/userMessage",
+  verifyToken,
+  validatorUserMessage,
+  userMessageControllers.add
+);
+router.get("/userMessage", verifyToken, userMessageControllers.getMessage);
+
 // Gestion des artistes
-router.get("/artists", artistControllers.browse);
+router.get("/artists", verifyToken, artistControllers.browse);
 
 // Gestion des oeuvres
-router.get("/works", workControllers.browse);
-router.get("/works/:id", workControllers.read);
+router.get("/works", verifyToken, workControllers.browse);
+router.get("/validation", verifyToken, workControllers.showValidation);
+router.get("/works/:id", verifyToken, workControllers.read);
+router.get(
+  "/works/value/:id",
+  verifyToken,
+  workControllers.readValuePassItToNext
+);
+router.get("/workswithpicture", verifyToken, workControllers.getAllWithPicture);
+router.get("/workswithpicture/:id", verifyToken, workControllers.findByID);
+
+// const { validatorWork } = require("./middlewares/validatorWork");
+
 router.post("/works", verifyToken, workControllers.add);
+router.post(
+  "/workandpicture",
+  verifyToken,
+  // validatorWork,
+  workControllers.addAndPassWorkIdToNext,
+  cloudinaryUpload,
+  pictureControllers.add
+);
+
+router.put(
+  "/works/:id",
+  verifyToken,
+  // validatorWork,
+  workControllers.editAndNext,
+  userControllers.pointsOnWorkValidation
+);
+router.delete(
+  "/works/:id",
+  verifyToken,
+  pictureControllers.deleteAllPicturesFromWorkAndNext,
+  workControllers.destroy
+);
 
 // Gestion des photos
+router.get("/users/:userId/pictures", verifyToken, pictureControllers.myPict);
+router.get("/:workId/pictures", verifyToken, pictureControllers.workPict);
+router.get("/pictures", verifyToken, pictureControllers.readNonFavoritePicture);
+router.get(
+  "/pictures/reported",
+  verifyToken,
+  pictureControllers.getReportedPictures
+);
+router.get("/pictures/:id", verifyToken, pictureControllers.read);
 
-router.get("/pictures", pictureControllers.browse);
-router.get("/pictures/:id", pictureControllers.read);
-router.post("/pictures", pictureControllers.add);
+router.post("/pictures", verifyToken, pictureControllers.add);
+router.put(
+  "/pictures/changepicture/:id",
+  verifyToken,
+  cloudinaryUpload,
+  pictureControllers.putNewPicture
+);
+router.put(
+  "/pictures/report/:id",
+  verifyToken,
+  pictureControllers.reportPicture
+);
+router.put(
+  "/pictures/unreport/:id",
+  verifyToken,
+  pictureControllers.unReportPicture
+);
+
+router.delete(
+  "/pictures/:id",
+  verifyToken,
+  authControllers.isUserAdmin,
+  favoriteControllers.deleteByIdAndNext,
+  pictureControllers.deletePicture
+);
+
+// Gestion des favoris
+router.post("/favorites/:picture_id", verifyToken, favoriteControllers.add);
+router.delete(
+  "/favorites/:picture_id",
+  verifyToken,
+  favoriteControllers.destroy
+);
+router.get(
+  "/user/favoris/:user_id",
+  verifyToken,
+  pictureControllers.getUserFavorites
+);
+
+// Gestion des shop
+
+router.get(
+  "/shop",
+  verifyToken,
+  authControllers.isUserAdmin,
+  shopContrellers.browse
+);
+
+router.post(
+  "/shop",
+  verifyToken,
+  authControllers.isUserAdmin,
+  shopContrellers.add
+);
+
+router.put(
+  "/shop/:id",
+  verifyToken,
+  authControllers.isUserAdmin,
+  shopContrellers.modif
+);
+
+router.delete(
+  "/shop/:id",
+  verifyToken,
+  authControllers.isUserAdmin,
+  shopContrellers.destroy
+);
 
 module.exports = router;

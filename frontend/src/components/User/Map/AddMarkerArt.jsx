@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import isConnected from "@services/isConnected";
+import { useNavigate } from "react-router-dom";
 import ReactDOMServer from "react-dom/server";
 import L from "leaflet";
 import { useMap } from "react-leaflet";
@@ -14,14 +16,12 @@ const icon = L.icon({
   popupAnchor: [8, -40],
   iconUrl: artMarker,
 });
-const position = [
-  [45.74579881690067, 4.827313676020127],
-  [45.762515857311286, 4.8276275268335045],
-];
 
-function AddMarkerArt({ handleActiveArt, layerGroup }) {
-  const { token } = useCurrentUserContext();
+function AddMarkerArt({ layerGroup }) {
+  const { token, setUser } = useCurrentUserContext();
   const [showWork, setShowWork] = useState([]);
+
+  const navigate = useNavigate();
 
   const myHeaders = new Headers({
     Authorization: `Bearer ${token}`,
@@ -35,6 +35,14 @@ function AddMarkerArt({ handleActiveArt, layerGroup }) {
 
   useEffect(() => {
     fetch(`${backURL}/works`, GETrequestOptions)
+      .then((result) => {
+        if (!isConnected(result)) {
+          localStorage.clear();
+          setUser("");
+          navigate("/");
+        }
+        return result;
+      })
       .then((result) => result.json())
       .then((result) => {
         setShowWork(result);
@@ -42,21 +50,23 @@ function AddMarkerArt({ handleActiveArt, layerGroup }) {
   }, []);
   const map = useMap();
   useEffect(() => {
-    position.forEach((element) => {
-      const coordinate = element;
-      const [lat, lng] = coordinate;
-      L.marker([lat, lng], { icon })
-        .bindPopup(
-          ReactDOMServer.renderToString(
-            <CustomReactPopup showWork={showWork} />
+    showWork.forEach((element) => {
+      if (element.is_validated) {
+        const coordinate = [element.latitude, element.longitude];
+        const [lat, lng] = coordinate;
+        L.marker([lat, lng], { icon })
+          .bindPopup(
+            ReactDOMServer.renderToString(
+              <CustomReactPopup showWork={showWork} />
+            )
           )
-        )
-        .openPopup()
-        .addTo(layerGroup);
+          .openPopup()
+          .addTo(layerGroup);
+      }
     });
 
     map.addLayer(layerGroup);
-  }, [handleActiveArt]);
+  }, [showWork]);
 
   return null;
 }
